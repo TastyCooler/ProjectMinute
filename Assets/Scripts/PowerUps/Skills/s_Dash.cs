@@ -6,9 +6,12 @@ public class s_Dash : BaseSkill {
 
     PlayerController player;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        //startPos = transform.position; // gets the starting position of the object
+        //rend = GetComponent<SpriteRenderer>();
     }
 
     public override void Use()

@@ -27,13 +27,13 @@ public class PowerUpFloating : MonoBehaviour {
     protected Vector3 startPos;
 
     // TODO Awake gets not called properly
-    void Awake()
+    protected virtual void Awake()
     {
         startPos = transform.position; // gets the starting position of the object
         rend = GetComponent<SpriteRenderer>();
     }
     
-    void Update()
+    protected virtual void Update()
     {
         if(!equipped)
         {
