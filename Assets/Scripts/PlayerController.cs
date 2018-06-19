@@ -35,6 +35,14 @@ public class PlayerController : MonoBehaviour {
         {
             GetInput();
             transform.position += moveDirection * speed * Time.deltaTime;
+            if(input.UseItem && playerItem)
+            {
+                playerItem.Use();
+            }
+            if(input.UseSkill && playerSkill)
+            {
+                playerSkill.Use();
+            }
         }
         else if(playerState == State.attacking)
         {
