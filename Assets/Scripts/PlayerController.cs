@@ -57,6 +57,14 @@ public class PlayerController : MonoBehaviour {
     void GetInput()
     {
         moveDirection.x = input.Horizontal;
+        if(moveDirection.x < 0f)
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if(moveDirection.x > 0f)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
         moveDirection.y = input.Vertical;
     }
 
