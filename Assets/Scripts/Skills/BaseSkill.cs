@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class BaseSkill : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [SerializeField] float cooldown = 0.3f;
+
+    // Activate the skill and make use of its benefits
+	public virtual void Use()
+    {
+
+    }
+
 }

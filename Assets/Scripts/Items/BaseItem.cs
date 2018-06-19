@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class BaseItem : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Activate the item and make use of its benefits
+    public virtual void Use()
+    {
+
+    }
+
 }
