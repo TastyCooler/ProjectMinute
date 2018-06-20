@@ -18,6 +18,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public GameObject Cursor
+    {
+        get
+        {
+            return cursor;
+        }
+    }
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -27,6 +35,8 @@ public class PlayerController : MonoBehaviour {
     Vector3 moveDirection;
 
     PlayerInput input;
+
+    [SerializeField] GameObject cursor;
 
     public enum State
     {
@@ -64,6 +74,11 @@ public class PlayerController : MonoBehaviour {
         {
             print("I'm dashing");
         }
+        cursor.transform.position = transform.position + moveDirection;
+        Debug.LogFormat("X: {0} | Y: {1} | Z: {2}", moveDirection.x, moveDirection.y, moveDirection.z);
+        //cursor.transform.localRotation.SetFromToRotation(cursor.transform.up, moveDirection);
+        //cursor.transform.rotation.SetEulerAngles(cursor.transform.rotation.x, cursor.transform.rotation.y, );
+        cursor.transform.rotation.SetLookRotation(moveDirection);
     }
 
     void GetInput()
