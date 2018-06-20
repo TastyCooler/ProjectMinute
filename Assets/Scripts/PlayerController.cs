@@ -6,6 +6,18 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour {
 
+    public State PlayerState
+    {
+        get
+        {
+            return playerState;
+        }
+        set
+        {
+            playerState = value;
+        }
+    }
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -16,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 
     PlayerInput input;
 
-    enum State
+    public enum State
     {
         freeToMove,
         dashing,
@@ -50,14 +62,36 @@ public class PlayerController : MonoBehaviour {
         }
         else if(playerState == State.dashing)
         {
-
+            print("I'm dashing");
         }
     }
 
     void GetInput()
     {
         moveDirection.x = input.Horizontal;
+        if(moveDirection.x < 0f)
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if(moveDirection.x > 0f)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
         moveDirection.y = input.Vertical;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.GetComponent<BaseItem>())
+        {
+            collision.GetComponent<BaseItem>().Equipped = true;
+            playerItem = collision.GetComponent<BaseItem>();
+        }
+        else if(collision.GetComponent<BaseSkill>())
+        {
+            collision.GetComponent<BaseSkill>().Equipped = true;
+            playerSkill = collision.GetComponent<BaseSkill>();
+        }
     }
 
 }
