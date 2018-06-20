@@ -58,6 +58,14 @@ public class PlayerInput : MonoBehaviour, IInput {
         }
     }
 
+    public bool SwitchPowerup
+    {
+        get
+        {
+            return Input.GetButtonDown("SwitchPowerup");
+        }
+    }
+
     #endregion
 
 }

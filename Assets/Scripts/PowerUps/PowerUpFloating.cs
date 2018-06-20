@@ -26,11 +26,13 @@ public class PowerUpFloating : MonoBehaviour {
 
     protected Vector3 startPos;
 
-    // TODO Awake gets not called properly
+    protected PlayerController player;
+    
     protected virtual void Awake()
     {
         startPos = transform.position; // gets the starting position of the object
         rend = GetComponent<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     
     protected virtual void Update()
@@ -55,6 +57,10 @@ public class PowerUpFloating : MonoBehaviour {
         else if (rend.enabled)
         {
             rend.enabled = false;
+        }
+        else
+        {
+            transform.position = player.transform.position;
         }
     }
 
