@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour {
     PlayerController player;
     Vector3 velocity;
 
-    [SerializeField] float CamSpeed = 1;
+    [SerializeField] float camDelay = 1;
 
     // Use this for initialization
     void Awake () {
@@ -17,6 +17,6 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
         Vector3 targetPosition = player.Cursor.transform.TransformPoint(new Vector3(0, 0, 0));
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, CamSpeed);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, camDelay);
     }
 }
