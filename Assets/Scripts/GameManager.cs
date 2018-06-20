@@ -9,14 +9,24 @@ public class GameManager : Singleton<GameManager> {
 
     #region Fields
 
+    [SerializeField] Canvas pauseMenu;
+
     #endregion
 
     #region Unity Messages
-    
+
+    private void Update()
+    {
+        if(Input.GetButtonDown("Cancel"))
+        {
+            pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
+        }
+    }
+
     #endregion
 
     #region Helper Methods
-    
+
     #endregion
 
 }
