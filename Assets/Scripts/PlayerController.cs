@@ -75,10 +75,10 @@ public class PlayerController : MonoBehaviour {
             print("I'm dashing");
         }
         cursor.transform.position = transform.position + moveDirection;
-        Debug.LogFormat("X: {0} | Y: {1} | Z: {2}", moveDirection.x, moveDirection.y, moveDirection.z);
-        //cursor.transform.localRotation.SetFromToRotation(cursor.transform.up, moveDirection);
+        cursor.transform.localRotation = Quaternion.FromToRotation(cursor.transform.up, moveDirection) * cursor.transform.localRotation;
         //cursor.transform.rotation.SetEulerAngles(cursor.transform.rotation.x, cursor.transform.rotation.y, );
-        cursor.transform.rotation.SetLookRotation(moveDirection);
+        //cursor.transform.rotation.SetLookRotation(moveDirection);
+        //cursor.transform.rotation = Quaternion.Euler();
     }
 
     void GetInput()
