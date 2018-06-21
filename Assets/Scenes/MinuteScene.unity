@@ -434,6 +434,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114963111925096068, guid: 4e27815d7892b1e42a75560142f6048b,
+        type: 2}
+      propertyPath: camDelay
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e27815d7892b1e42a75560142f6048b, type: 2}
   m_IsPrefabParent: 0
@@ -594,6 +599,8 @@ MonoBehaviour:
   health: 120
   speed: 1
   sightReach: 15
+  patrolRadius: 1
+  patrollingSpeedMultiplier: 0.3
 --- !u!4 &1161126200
 Transform:
   m_ObjectHideFlags: 0

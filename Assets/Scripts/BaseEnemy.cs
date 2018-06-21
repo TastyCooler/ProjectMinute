@@ -10,13 +10,14 @@ public class BaseEnemy : MonoBehaviour {
 
     protected Vector3 toPlayer;
     protected Vector3 playerLastSpottedAt;
-
-    protected Vector3 startPos;
+    
     protected Vector3 targetPos;
 
     protected PlayerController player;
 
     [SerializeField] protected float sightReach = 1f;
+    [SerializeField] protected float patrolRadius = 1f;
+    [SerializeField] protected float patrollingSpeedMultiplier = 0.3f;
 
     protected enum State
     {
@@ -29,7 +30,6 @@ public class BaseEnemy : MonoBehaviour {
     protected virtual void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        startPos = transform.position;
     }
 
     protected virtual void Update()
