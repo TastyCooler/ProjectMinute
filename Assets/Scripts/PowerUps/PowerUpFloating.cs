@@ -12,7 +12,18 @@ public class PowerUpFloating : MonoBehaviour {
         }
         set
         {
-            equipped = value;
+            if(value)
+            {
+                rend.enabled = false;
+                equipped = value;
+            }
+            else
+            {
+                transform.position = player.transform.position;
+                startPos = player.transform.position;
+                rend.enabled = true;
+                equipped = value;
+            }
         }
     }
 
@@ -26,11 +37,13 @@ public class PowerUpFloating : MonoBehaviour {
 
     protected Vector3 startPos;
 
-    // TODO Awake gets not called properly
+    protected PlayerController player;
+    
     protected virtual void Awake()
     {
         startPos = transform.position; // gets the starting position of the object
         rend = GetComponent<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     
     protected virtual void Update()
@@ -51,10 +64,6 @@ public class PowerUpFloating : MonoBehaviour {
             movementFactor = rawSinWave / 2f + 0.5f; // goes from 0 to +1
 
             transform.position = startPos + (movement * movementFactor); // adds the current movement to the object's transform
-        }
-        else if (rend.enabled)
-        {
-            rend.enabled = false;
         }
     }
 

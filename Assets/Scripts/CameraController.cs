@@ -5,15 +5,18 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
     PlayerController player;
-    [SerializeField] float lerpSpeed = 1f;
+    Vector3 velocity;
 
-	// Use this for initialization
-	void Awake () {
+    [SerializeField] float camDelay = 1;
+
+    // Use this for initialization
+    void Awake () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 	}
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        transform.position = Vector3.Lerp(transform.position, player.Cursor.transform.position, lerpSpeed);
-	}
+        Vector3 targetPosition = player.Cursor.transform.TransformPoint(new Vector3(0, 0, 0));
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, camDelay);
+    }
 }

@@ -19,4 +19,6 @@ public interface IInput
 
     // Use the skill, the player has equipped
     bool UseSkill { get; }
+
+    bool SwitchPowerup { get; }
 }
