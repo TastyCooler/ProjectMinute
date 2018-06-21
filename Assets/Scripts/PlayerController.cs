@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour {
     Vector3 moveDirection;
     Vector3 aimDirection;
 
+    Vector3 velocity;
+
     [SerializeField] Vector2 attackHitboxSize;
 
     [SerializeField] int baseAttack = 3;
