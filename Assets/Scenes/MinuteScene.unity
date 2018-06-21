@@ -813,12 +813,17 @@ Prefab:
     - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
         type: 2}
       propertyPath: dashSpeed
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
         type: 2}
       propertyPath: startDashTime
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+        type: 2}
+      propertyPath: dashSpecialSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cd34d21b8510e94f9b145d768e8e8c8, type: 2}

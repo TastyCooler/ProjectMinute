@@ -40,14 +40,14 @@ public class PlayerController : MonoBehaviour {
 
     
     private Rigidbody2D rb;
+    public float dashSpecialSpeed;
     public float dashSpeed;
-    private float dashTime;
     public float startDashTime;
     private Vector3 target;
-    bool cd = false;
+    
 
     public int combo;
-    public float comboTime = 50f;
+    public float comboTime = 20f;
 
     public enum State
     {
@@ -61,7 +61,6 @@ public class PlayerController : MonoBehaviour {
     {
         input = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
-        dashTime = startDashTime;
         target = transform.position;
         
     }
@@ -91,27 +90,14 @@ public class PlayerController : MonoBehaviour {
             print("I'm dashing");
             if (Input.GetMouseButtonDown(0))
             {
+                float offset = 2f;
                 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 target.z = transform.position.z;
-                transform.position = Vector3.MoveTowards(transform.position, target + new Vector3(0.5f, 0.5f, 0f), dashSpeed);
-            }
-            if (dashTime <= 0)
-            {
-                dashTime = startDashTime;
-                rb.velocity = Vector3.zero;
-
-                
-            } else
-            {
-                dashTime -= Time.deltaTime;
+               transform.position = Vector3.MoveTowards(transform.position, transform.position + offset * (target - transform.position), dashSpeed);
+               // MoveTo(transform.position + offset * (target - transform.position));
                 
             }
-
-            
-        
-
-
-            Debug.Log(dashTime);
+           
             Combo();
         }
         cursor.transform.position = transform.position + moveDirection;
@@ -149,7 +135,7 @@ public class PlayerController : MonoBehaviour {
         float distanceToClosestEnemy = Mathf.Infinity;
         Enemy closestEnemy = null;
         Enemy[] allEnemies = FindObjectsOfType<Enemy>();
-
+        
         foreach (Enemy currentEnemy in allEnemies)
         {
             float distanceToEnemy = (currentEnemy.transform.position - this.transform.position).sqrMagnitude;
@@ -159,12 +145,17 @@ public class PlayerController : MonoBehaviour {
                 closestEnemy = currentEnemy;
             }
         }
+        
         if (Input.GetMouseButtonDown(1))
         {
-           
-            transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position , dashSpeed);
+
+            float offset = 3f;
+ 
+            MoveTo(transform.position + offset * (closestEnemy.transform.position - transform.position));
         }
         Debug.DrawLine(transform.position, closestEnemy.transform.position);
+        
+
     }
     void GetInput()
     {
@@ -178,6 +169,13 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
+    }
+
+    void MoveTo(Vector3 point)
+    {
+        Vector3 toPoint = point - transform.position;
+        moveDirection = toPoint.normalized;
+        transform.position += toPoint.normalized * dashSpecialSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
