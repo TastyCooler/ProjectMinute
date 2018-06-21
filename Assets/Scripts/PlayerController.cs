@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour {
     private float dashTime;
     public float startDashTime;
     private Vector3 target;
+    bool cd = false;
 
     public int combo;
     public float comboTime = 50f;
@@ -62,49 +63,55 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         dashTime = startDashTime;
         target = transform.position;
-
+        
     }
 
     private void Update()
     {
-        if(playerState == State.freeToMove)
+        if (playerState == State.freeToMove)
         {
             GetInput();
             transform.position += moveDirection * speed * Time.deltaTime;
-            if(input.UseItem && playerItem)
+            if (input.UseItem && playerItem)
             {
                 playerItem.Use();
             }
-            if(input.UseSkill && playerSkill)
+            if (input.UseSkill && playerSkill)
             {
                 playerSkill.Use();
             }
         }
-        else if(playerState == State.attacking)
+        else if (playerState == State.attacking)
         {
 
         }
-        else if(playerState == State.dashing)
+        else if (playerState == State.dashing)
         {
+
             print("I'm dashing");
             if (Input.GetMouseButtonDown(0))
             {
                 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 target.z = transform.position.z;
+                transform.position = Vector3.MoveTowards(transform.position, target + new Vector3(0.5f, 0.5f, 0f), dashSpeed);
             }
-            if(dashTime <= 0)
+            if (dashTime <= 0)
             {
                 dashTime = startDashTime;
                 rb.velocity = Vector3.zero;
-            }
-            else
-            {
+
                 
+            } else
+            {
                 dashTime -= Time.deltaTime;
+                
             }
 
+            
+        
 
-            transform.position = Vector3.MoveTowards(transform.position, target, dashSpeed);
+
+            Debug.Log(dashTime);
             Combo();
         }
         cursor.transform.position = transform.position + moveDirection;
@@ -154,7 +161,8 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetMouseButtonDown(1))
         {
-            transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position, dashSpeed * speed);
+           
+            transform.position = Vector3.MoveTowards(transform.position, closestEnemy.transform.position , dashSpeed);
         }
         Debug.DrawLine(transform.position, closestEnemy.transform.position);
     }
