@@ -145,7 +145,18 @@ public class PlayerController : MonoBehaviour {
     // Subtracts damage from the player health and knocks him back
     public void TakeDamage(int damage, Vector3 knockback)
     {
+        health -= damage;
+        if(health <= 0)
+        {
+            Die();
+        }
+        playerState = State.knockedBack;
         // TODO make player take damage
+    }
+
+    void Die()
+    {
+        //TODO make the player die and open gameover menu
     }
 
     // Collects Items or Skills if player walks over them if nothing is equipped before

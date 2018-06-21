@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class CrawlerEnemy : BaseEnemy {
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-    }
-
     protected override void Update()
     {
         base.Update();

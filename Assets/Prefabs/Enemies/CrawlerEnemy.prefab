@@ -54,6 +54,9 @@ MonoBehaviour:
   attack: 124
   health: 120
   speed: 1
+  powerupsToDrop:
+  - {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
+  dropChance: 0.1
   sightReach: 10
   patrolRadius: 3
   patrollingSpeedMultiplier: 0.3

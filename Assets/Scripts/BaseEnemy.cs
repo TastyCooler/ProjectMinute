@@ -13,6 +13,9 @@ public class BaseEnemy : MonoBehaviour {
     
     protected Vector3 targetPos;
 
+    [SerializeField] GameObject[] powerupsToDrop;
+    [Range(0, 1), SerializeField] float dropChance = 0.1f;
+
     protected PlayerController player;
 
     [SerializeField] protected float sightReach = 1f;
@@ -93,7 +96,21 @@ public class BaseEnemy : MonoBehaviour {
         health -= damage;
         if(health <= 0)
         {
-            // TODO kill the enemy
+            Die();
+        }
+    }
+
+    protected void Die()
+    {
+        DropPowerup();
+        Destroy(gameObject);
+    }
+
+    protected void DropPowerup()
+    {
+        if(Random.value <= dropChance)
+        {
+            Instantiate(powerupsToDrop[Random.Range(0, powerupsToDrop.Length - 1)], transform.position, transform.rotation);
         }
     }
 
