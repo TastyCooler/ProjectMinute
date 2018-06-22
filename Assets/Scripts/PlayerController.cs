@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour {
     BaseItem playerItem;
 
     Vector3 moveDirection;
+    Vector3 lastValidMoveDir;
     Vector3 aimDirection;
 
     Vector3 velocity;
@@ -123,7 +124,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if(playerState == State.dashing)
         {
-            velocity = aimDirection.normalized * dashForce;
+            velocity = lastValidMoveDir.normalized * dashForce;
             // TODO Set the dash animation
         }
         transform.position += velocity * Time.deltaTime;
@@ -146,6 +147,11 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
+        // Only overwrite lastValidMoveDir if the player is not standing still. To always dash in a direction
+        if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
+        {
+            lastValidMoveDir = moveDirection;
+        }
         if(GameManager.Instance.IsControllerInput)
         {
             if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
