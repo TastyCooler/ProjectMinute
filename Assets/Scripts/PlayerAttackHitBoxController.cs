@@ -15,7 +15,7 @@ public class PlayerAttackHitBoxController : MonoBehaviour {
     {
         if(collision.gameObject.GetComponent<BaseEnemy>())
         {
-            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage(player.Attack, (collision.gameObject.transform.position - transform.position).normalized * player.KnockbackStrength);
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage((int)(player.Attack * player.AttackMultiplier), (collision.gameObject.transform.position - transform.position).normalized * player.KnockbackStrength);
         }
     }
 

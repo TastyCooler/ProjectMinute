@@ -42,6 +42,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public float AttackMultiplier
+    {
+        get
+        {
+            return attackMultiplier;
+        }
+    }
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -60,12 +68,18 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] int baseAttack = 3;
     int attack;
+    float attackMultiplier = 1f;
     float attackStartedTime;
     [SerializeField] float attackDuration = 0.5f;
+    [SerializeField] float attackTwoDuration = 0.5f;
+    [Range(1, 5), SerializeField] float attackTwoDamageMultiplier = 1.5f;
+    [SerializeField] float attackThreeDuration = 0.5f;
+    [Range(1, 10), SerializeField] float attackThreeDamageMultiplier = 2f;
     [SerializeField] float attackCooldown = 1f;
     [SerializeField] float knockbackStrength = 1f;
     [SerializeField] int baseHealth = 5;
     int health;
+    bool keepAttacking = false;
 
     [SerializeField] float dashForce = 1f;
 
@@ -80,6 +94,8 @@ public class PlayerController : MonoBehaviour {
         freeToMove,
         dashing,
         attacking,
+        attackingTwo,
+        attackingThree,
         knockedBack
     }
     State playerState = State.freeToMove;
@@ -110,14 +126,59 @@ public class PlayerController : MonoBehaviour {
             }
             if(input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
             {
+                keepAttacking = false;
                 playerState = State.attacking;
+                attackMultiplier = 1f;
                 anim.SetTrigger("Attack");
                 attackStartedTime = Time.realtimeSinceStartup;
             }
         }
         else if(playerState == State.attacking)
         {
-            if(Time.realtimeSinceStartup > attackStartedTime + attackDuration)
+            GetInput();
+            velocity = moveDirection * speed;
+            if (input.Attack)
+            {
+                keepAttacking = true;
+            }
+            if(Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
+            {
+                playerState = State.freeToMove;
+            }
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && keepAttacking)
+            {
+                keepAttacking = false;
+                playerState = State.attackingTwo;
+                attackMultiplier = attackTwoDamageMultiplier;
+                anim.SetTrigger("AttackTwo");
+                attackStartedTime = Time.realtimeSinceStartup;
+            }
+        }
+        else if(playerState == State.attackingTwo)
+        {
+            GetInput();
+            velocity = moveDirection * speed;
+            if (input.Attack)
+            {
+                keepAttacking = true;
+            }
+            if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && !keepAttacking)
+            {
+                playerState = State.freeToMove;
+            }
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && keepAttacking)
+            {
+                playerState = State.attackingThree;
+                attackMultiplier = attackThreeDamageMultiplier;
+                anim.SetTrigger("AttackThree");
+                attackStartedTime = Time.realtimeSinceStartup;
+            }
+        }
+        else if(playerState == State.attackingThree)
+        {
+            GetInput();
+            velocity = moveDirection * speed;
+            if (Time.realtimeSinceStartup > attackStartedTime + attackThreeDuration)
             {
                 playerState = State.freeToMove;
             }

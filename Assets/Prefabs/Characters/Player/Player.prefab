@@ -237,6 +237,10 @@ MonoBehaviour:
   speed: 10
   baseAttack: 3
   attackDuration: 0.2
+  attackTwoDuration: 0.6
+  attackTwoDamageMultiplier: 1.5
+  attackThreeDuration: 0.7
+  attackThreeDamageMultiplier: 2
   attackCooldown: 0.3
   knockbackStrength: 1
   baseHealth: 5
