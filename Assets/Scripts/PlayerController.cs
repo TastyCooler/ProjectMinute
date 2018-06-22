@@ -124,19 +124,7 @@ public class PlayerController : MonoBehaviour {
         else if(playerState == State.dashing)
         {
             velocity = aimDirection.normalized * dashForce;
-            //if (timeWhenDashStarted < 0)
-            //{
-            //    timeWhenDashStarted = Time.realtimeSinceStartup;
-            //}
-            //if(Time.realtimeSinceStartup < timeWhenDashStarted + dashDuration)
-            //{
-            //    velocity = aimDirection.normalized * dashForce;
-            //}
-            //else
-            //{
-            //    playerState = State.freeToMove;
-            //    timeWhenDashStarted = -1f;
-            //}
+            // TODO Set the dash animation
         }
         transform.position += velocity * Time.deltaTime;
     }
