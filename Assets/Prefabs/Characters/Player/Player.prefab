@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4360866808284416}
   - component: {fileID: 212880864318986262}
+  - component: {fileID: 61242641604890400}
+  - component: {fileID: 114901172938798008}
   m_Layer: 0
   m_Name: Cursor
   m_TagString: Untagged
@@ -41,6 +43,7 @@ GameObject:
   - component: {fileID: 61087954675993068}
   - component: {fileID: 61424201628298850}
   - component: {fileID: 50394012049176268}
+  - component: {fileID: 95092999779981272}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -120,6 +123,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6851689, y: 0.800171}
   m_EdgeRadius: 0
+--- !u!61 &61242641604890400
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137881042855716}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.98, y: 1.08}
+    newSize: {x: 0.98, y: 1.08}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.98, y: 1.08}
+  m_EdgeRadius: 0
 --- !u!61 &61424201628298850
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -145,6 +173,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3817177, y: 1.4979364}
   m_EdgeRadius: 0
+--- !u!95 &95092999779981272
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1287659559633724}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dd566bd75e6ca6a4d930aed1a43b3124, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114171267047006488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -168,11 +214,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  attackHitboxSize: {x: 0, y: 0}
   baseAttack: 3
+  attackDuration: 0.2
+  attackCooldown: 0.3
   knockbackStrength: 1
   baseHealth: 5
   cursor: {fileID: 1137881042855716}
+--- !u!114 &114901172938798008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1137881042855716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed4c35567a8e3e4581445f5f10470d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212509708932630636
 SpriteRenderer:
   m_ObjectHideFlags: 1

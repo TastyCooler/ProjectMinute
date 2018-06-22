@@ -26,6 +26,22 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public int Attack
+    {
+        get
+        {
+            return attack;
+        }
+    }
+
+    public float KnockbackStrength
+    {
+        get
+        {
+            return knockbackStrength;
+        }
+    }
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -37,10 +53,15 @@ public class PlayerController : MonoBehaviour {
 
     Vector3 velocity;
 
-    [SerializeField] Vector2 attackHitboxSize;
+    Animator anim;
+
+    
 
     [SerializeField] int baseAttack = 3;
     int attack;
+    float attackStartedTime;
+    [SerializeField] float attackDuration = 0.5f;
+    [SerializeField] float attackCooldown = 1f;
     [SerializeField] float knockbackStrength = 1f;
     [SerializeField] int baseHealth = 5;
     int health;
@@ -64,6 +85,10 @@ public class PlayerController : MonoBehaviour {
     {
         input = GetComponent<PlayerInput>();
         cam = Camera.main;
+        anim = GetComponent<Animator>();
+
+        attack = baseAttack;
+        health = baseHealth;
     }
 
     private void Update()
@@ -80,10 +105,19 @@ public class PlayerController : MonoBehaviour {
             {
                 playerSkill.Use();
             }
+            if(input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
+            {
+                playerState = State.attacking;
+                anim.SetTrigger("Attack");
+                attackStartedTime = Time.realtimeSinceStartup;
+            }
         }
         else if(playerState == State.attacking)
         {
-
+            if(Time.realtimeSinceStartup > attackStartedTime + attackDuration)
+            {
+                playerState = State.freeToMove;
+            }
         }
         else if(playerState == State.dashing)
         {
@@ -127,19 +161,6 @@ public class PlayerController : MonoBehaviour {
     {
         cursor.transform.position = transform.position + aimDirection * 2f;
         cursor.transform.rotation = Quaternion.FromToRotation(cursor.transform.up, aimDirection) * cursor.transform.rotation;
-    }
-
-    // This method will only be called by the attack animation. Therefore has to be public
-    public void AttackHitbox()
-    {
-        Collider2D[] hitColls = Physics2D.OverlapBoxAll(transform.position + aimDirection, attackHitboxSize, 0f);
-        foreach(Collider2D coll in hitColls)
-        {
-            if(coll.gameObject.GetComponent<BaseEnemy>())
-            {
-                coll.gameObject.GetComponent<BaseEnemy>().TakeDamage(attack, (coll.gameObject.transform.position - transform.position).normalized * knockbackStrength);
-            }
-        }
     }
 
     // Subtracts damage from the player health and knocks him back

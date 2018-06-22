@@ -48,14 +48,15 @@ public class BaseEnemy : MonoBehaviour {
         }
         if (toPlayer.magnitude < sightReach)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f);
-            if(hit.collider)
-            {
-                if (hit.collider.gameObject.tag == "Player")
-                {
-                    enemyState = State.playerSpotted;
-                }
-            }
+            enemyState = State.playerSpotted;
+            //RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f);
+            //if(hit.collider)
+            //{
+            //    if (hit.collider.gameObject.tag == "Player")
+            //    {
+            //        enemyState = State.playerSpotted;
+            //    }
+            //}
         }
         if (!V3Equal(transform.position, targetPos, 0.1f))
         {
