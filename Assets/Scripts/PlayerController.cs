@@ -144,7 +144,10 @@ public class PlayerController : MonoBehaviour {
         moveDirection.y = input.Vertical;
         if(GameManager.Instance.IsControllerInput)
         {
-            aimDirection = moveDirection;
+            if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
+            {
+                aimDirection = moveDirection;
+            }
         }
         else
         {
@@ -159,7 +162,7 @@ public class PlayerController : MonoBehaviour {
     // Set the arrow position and rotation
     void SetArrow()
     {
-        cursor.transform.position = transform.position + aimDirection * 2f;
+        cursor.transform.position = transform.position + aimDirection.normalized;
         cursor.transform.rotation = Quaternion.FromToRotation(cursor.transform.up, aimDirection) * cursor.transform.rotation;
     }
 
