@@ -240,6 +240,8 @@ MonoBehaviour:
   attackCooldown: 0.3
   knockbackStrength: 1
   baseHealth: 5
+  dashDuration: 0.3
+  dashForce: 20
   cursor: {fileID: 1137881042855716}
 --- !u!114 &114901172938798008
 MonoBehaviour:

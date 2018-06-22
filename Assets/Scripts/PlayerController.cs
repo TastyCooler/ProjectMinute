@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] int baseHealth = 5;
     int health;
 
+    [SerializeField] float dashForce = 1f;
+
     PlayerInput input;
 
     Camera cam;
@@ -96,7 +98,7 @@ public class PlayerController : MonoBehaviour {
         if(playerState == State.freeToMove)
         {
             GetInput();
-            transform.position += moveDirection * speed * Time.deltaTime;
+            velocity = moveDirection * speed;
             if(input.UseItem && playerItem)
             {
                 playerItem.Use();
@@ -121,8 +123,22 @@ public class PlayerController : MonoBehaviour {
         }
         else if(playerState == State.dashing)
         {
-            print("I'm dashing");
+            velocity = aimDirection.normalized * dashForce;
+            //if (timeWhenDashStarted < 0)
+            //{
+            //    timeWhenDashStarted = Time.realtimeSinceStartup;
+            //}
+            //if(Time.realtimeSinceStartup < timeWhenDashStarted + dashDuration)
+            //{
+            //    velocity = aimDirection.normalized * dashForce;
+            //}
+            //else
+            //{
+            //    playerState = State.freeToMove;
+            //    timeWhenDashStarted = -1f;
+            //}
         }
+        transform.position += velocity * Time.deltaTime;
     }
 
     private void OnDrawGizmos()
