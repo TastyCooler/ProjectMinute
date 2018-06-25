@@ -26,6 +26,30 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public int Attack
+    {
+        get
+        {
+            return attack;
+        }
+    }
+
+    public float KnockbackStrength
+    {
+        get
+        {
+            return knockbackStrength;
+        }
+    }
+
+    public float AttackMultiplier
+    {
+        get
+        {
+            return attackMultiplier;
+        }
+    }
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -33,17 +57,31 @@ public class PlayerController : MonoBehaviour {
     BaseItem playerItem;
 
     Vector3 moveDirection;
+    Vector3 lastValidMoveDir;
     Vector3 aimDirection;
 
     Vector3 velocity;
 
-    [SerializeField] Vector2 attackHitboxSize;
+    Animator anim;
+
+    
 
     [SerializeField] int baseAttack = 3;
     int attack;
+    float attackMultiplier = 1f;
+    float attackStartedTime;
+    [SerializeField] float attackDuration = 0.5f;
+    [SerializeField] float attackTwoDuration = 0.5f;
+    [Range(1, 5), SerializeField] float attackTwoDamageMultiplier = 1.5f;
+    [SerializeField] float attackThreeDuration = 0.5f;
+    [Range(1, 10), SerializeField] float attackThreeDamageMultiplier = 2f;
+    [SerializeField] float attackCooldown = 1f;
     [SerializeField] float knockbackStrength = 1f;
     [SerializeField] int baseHealth = 5;
     int health;
+    bool keepAttacking = false;
+
+    [SerializeField] float dashForce = 1f;
 
     PlayerInput input;
 
@@ -56,6 +94,8 @@ public class PlayerController : MonoBehaviour {
         freeToMove,
         dashing,
         attacking,
+        attackingTwo,
+        attackingThree,
         knockedBack
     }
     State playerState = State.freeToMove;
@@ -64,6 +104,10 @@ public class PlayerController : MonoBehaviour {
     {
         input = GetComponent<PlayerInput>();
         cam = Camera.main;
+        anim = GetComponent<Animator>();
+
+        attack = baseAttack;
+        health = baseHealth;
     }
 
     private void Update()
@@ -71,7 +115,7 @@ public class PlayerController : MonoBehaviour {
         if(playerState == State.freeToMove)
         {
             GetInput();
-            transform.position += moveDirection * speed * Time.deltaTime;
+            velocity = moveDirection * speed;
             if(input.UseItem && playerItem)
             {
                 playerItem.Use();
@@ -80,15 +124,71 @@ public class PlayerController : MonoBehaviour {
             {
                 playerSkill.Use();
             }
+            if(input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
+            {
+                keepAttacking = false;
+                playerState = State.attacking;
+                attackMultiplier = 1f;
+                anim.SetTrigger("Attack");
+                attackStartedTime = Time.realtimeSinceStartup;
+            }
         }
         else if(playerState == State.attacking)
         {
-
+            GetInput();
+            velocity = moveDirection * speed;
+            if (input.Attack)
+            {
+                keepAttacking = true;
+            }
+            if(Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
+            {
+                playerState = State.freeToMove;
+            }
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && keepAttacking)
+            {
+                keepAttacking = false;
+                playerState = State.attackingTwo;
+                attackMultiplier = attackTwoDamageMultiplier;
+                anim.SetTrigger("AttackTwo");
+                attackStartedTime = Time.realtimeSinceStartup;
+            }
+        }
+        else if(playerState == State.attackingTwo)
+        {
+            GetInput();
+            velocity = moveDirection * speed;
+            if (input.Attack)
+            {
+                keepAttacking = true;
+            }
+            if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && !keepAttacking)
+            {
+                playerState = State.freeToMove;
+            }
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && keepAttacking)
+            {
+                playerState = State.attackingThree;
+                attackMultiplier = attackThreeDamageMultiplier;
+                anim.SetTrigger("AttackThree");
+                attackStartedTime = Time.realtimeSinceStartup;
+            }
+        }
+        else if(playerState == State.attackingThree)
+        {
+            GetInput();
+            velocity = moveDirection * speed;
+            if (Time.realtimeSinceStartup > attackStartedTime + attackThreeDuration)
+            {
+                playerState = State.freeToMove;
+            }
         }
         else if(playerState == State.dashing)
         {
-            print("I'm dashing");
+            velocity = lastValidMoveDir.normalized * dashForce;
+            // TODO Set the dash animation
         }
+        transform.position += velocity * Time.deltaTime;
     }
 
     private void OnDrawGizmos()
@@ -108,9 +208,17 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
+        // Only overwrite lastValidMoveDir if the player is not standing still. To always dash in a direction
+        if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
+        {
+            lastValidMoveDir = moveDirection;
+        }
         if(GameManager.Instance.IsControllerInput)
         {
-            aimDirection = moveDirection;
+            if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
+            {
+                aimDirection = moveDirection;
+            }
         }
         else
         {
@@ -125,21 +233,8 @@ public class PlayerController : MonoBehaviour {
     // Set the arrow position and rotation
     void SetArrow()
     {
-        cursor.transform.position = transform.position + aimDirection * 2f;
+        cursor.transform.position = transform.position + aimDirection.normalized;
         cursor.transform.rotation = Quaternion.FromToRotation(cursor.transform.up, aimDirection) * cursor.transform.rotation;
-    }
-
-    // This method will only be called by the attack animation. Therefore has to be public
-    public void AttackHitbox()
-    {
-        Collider2D[] hitColls = Physics2D.OverlapBoxAll(transform.position + aimDirection, attackHitboxSize, 0f);
-        foreach(Collider2D coll in hitColls)
-        {
-            if(coll.gameObject.GetComponent<BaseEnemy>())
-            {
-                coll.gameObject.GetComponent<BaseEnemy>().TakeDamage(attack, (coll.gameObject.transform.position - transform.position).normalized * knockbackStrength);
-            }
-        }
     }
 
     // Subtracts damage from the player health and knocks him back

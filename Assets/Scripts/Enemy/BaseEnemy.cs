@@ -42,22 +42,23 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void Patrolling()
     {
-        if (V3Equal(targetPos, Vector3.zero, 0.1f))
+        if (HelperMethods.V3Equal(targetPos, Vector3.zero, 0.1f))
         {
             DefineNewTargetPos();
         }
         if (toPlayer.magnitude < sightReach)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f);
-            if(hit.collider)
-            {
-                if (hit.collider.gameObject.tag == "Player")
-                {
-                    enemyState = State.playerSpotted;
-                }
-            }
+            enemyState = State.playerSpotted;
+            //RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f);
+            //if(hit.collider)
+            //{
+            //    if (hit.collider.gameObject.tag == "Player")
+            //    {
+            //        enemyState = State.playerSpotted;
+            //    }
+            //}
         }
-        if (!V3Equal(transform.position, targetPos, 0.1f))
+        if (!HelperMethods.V3Equal(transform.position, targetPos, 0.1f))
         {
             transform.position += (targetPos - transform.position).normalized * (speed * patrollingSpeedMultiplier) * Time.deltaTime;
         }
@@ -84,7 +85,7 @@ public class BaseEnemy : MonoBehaviour {
             enemyState = State.playerSpotted;
         }
         transform.position += (playerLastSpottedAt - transform.position).normalized * speed * Time.deltaTime;
-        if (V3Equal(transform.position, playerLastSpottedAt, 0.1f))
+        if (HelperMethods.V3Equal(transform.position, playerLastSpottedAt, 0.1f))
         {
             enemyState = State.patrolling;
             DefineNewTargetPos();
@@ -118,11 +119,5 @@ public class BaseEnemy : MonoBehaviour {
     {
         Vector2 relativePoint = Random.insideUnitCircle * patrolRadius;
         targetPos = transform.position + new Vector3(relativePoint.x, relativePoint.y, 0f);
-    }
-
-    // Check if two vectors are the same taking into account a small margin, in this case, the aimingtolerance
-    protected bool V3Equal(Vector3 a, Vector3 b, float aimingTolerance)
-    {
-        return Vector3.SqrMagnitude(a - b) < aimingTolerance;
     }
 }
