@@ -22,22 +22,44 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float patrolRadius = 1f;
     [SerializeField] protected float patrollingSpeedMultiplier = 0.3f;
 
+    [SerializeField] protected float distanceToKeep = 1f;
+    float saveSpeed;
+
     protected enum State
     {
         patrolling,
         playerSpotted,
+        retreat,
         searchingForPlayer
     }
     protected State enemyState = State.patrolling;
 
+    RaycastHit2D hit;
+    public LayerMask hitLayer;
+
     protected virtual void Awake()
     {
+        saveSpeed = speed;
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int obstacleLayer = LayerMask.NameToLayer("Obstacles");
+        hitLayer = 1 << playerLayer;
+        LayerMask obsLayer = 1 << obstacleLayer;
+        hitLayer = hitLayer | obsLayer;
     }
 
     protected virtual void Update()
     {
         toPlayer = player.transform.position - transform.position;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (toPlayer.magnitude < sightReach)
+        {
+            Debug.DrawRay(transform.position, toPlayer.normalized * (sightReach + 10f));
+        }
     }
 
     protected virtual void Patrolling()
@@ -48,15 +70,15 @@ public class BaseEnemy : MonoBehaviour {
         }
         if (toPlayer.magnitude < sightReach)
         {
-            enemyState = State.playerSpotted;
-            //RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f);
-            //if(hit.collider)
-            //{
-            //    if (hit.collider.gameObject.tag == "Player")
-            //    {
-            //        enemyState = State.playerSpotted;
-            //    }
-            //}
+            //enemyState = State.playerSpotted;
+            hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
+            if (hit.collider != null)
+            {
+                if  (hit.collider.gameObject.tag == "Player")
+                {
+                    enemyState = State.playerSpotted;
+                }
+            }
         }
         if (!HelperMethods.V3Equal(transform.position, targetPos, 0.1f))
         {
@@ -71,18 +93,56 @@ public class BaseEnemy : MonoBehaviour {
     protected virtual void PursuitPlayer()
     {
         transform.position += toPlayer.normalized * speed * Time.deltaTime;
+        hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
+
+        if (hit.collider.gameObject.tag != "Player")
+        {
+            enemyState = State.patrolling;
+        }
+
         if (toPlayer.magnitude > sightReach)
         {
             enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
         }
+
+        if (toPlayer.magnitude < distanceToKeep)
+        {
+            enemyState = State.retreat;
+        }
+    }
+
+    protected virtual void KeepDistance()
+    {
+        if (toPlayer.magnitude < distanceToKeep)
+        {
+            transform.position -= toPlayer.normalized * speed * Time.deltaTime;
+        }
+        else if (toPlayer.magnitude < distanceToKeep + 1)
+        {
+            speed = 0;
+        }
+        else
+        {
+            speed = saveSpeed;
+        }
+
+        if (toPlayer.magnitude > distanceToKeep)
+        {
+            enemyState = State.playerSpotted;
+        }
     }
 
     protected virtual void SearchForPlayer()
     {
+        hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
+
         if (toPlayer.magnitude < sightReach)
         {
-            enemyState = State.playerSpotted;
+            if (hit.collider.gameObject.tag == "Player")
+            {
+                enemyState = State.playerSpotted;
+            }
         }
         transform.position += (playerLastSpottedAt - transform.position).normalized * speed * Time.deltaTime;
         if (HelperMethods.V3Equal(transform.position, playerLastSpottedAt, 0.1f))
