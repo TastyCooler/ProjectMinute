@@ -87,7 +87,6 @@ public class GameManager : Singleton<GameManager> {
         {
             highscoreAddition = 0;
         }
-        print(highscoreAddition);
     }
 
     #endregion
