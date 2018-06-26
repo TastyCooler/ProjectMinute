@@ -483,7 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 1
   health: 1
-  speed: 1
+  speed: 3
   powerupsToDrop: []
   dropChance: 0.1
   sightReach: 10

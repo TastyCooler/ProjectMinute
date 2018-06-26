@@ -30,6 +30,8 @@ public class BaseEnemy : MonoBehaviour {
         patrolling,
         playerSpotted,
         retreat,
+        rangeAttack,
+        meleeAttack,
         searchingForPlayer
     }
     protected State enemyState = State.patrolling;
@@ -112,13 +114,24 @@ public class BaseEnemy : MonoBehaviour {
         }
     }
 
+    protected virtual void RangeAttack()
+    {
+        
+    }
+
+    protected virtual void MeleeAttack()
+    {
+
+    }
+
     protected virtual void KeepDistance()
     {
         if (toPlayer.magnitude < distanceToKeep)
         {
             transform.position -= toPlayer.normalized * speed * Time.deltaTime;
         }
-        else if (toPlayer.magnitude < distanceToKeep + 1)
+
+        if (toPlayer.magnitude > distanceToKeep && toPlayer.magnitude < distanceToKeep + 1)
         {
             speed = 0;
         }
@@ -127,7 +140,7 @@ public class BaseEnemy : MonoBehaviour {
             speed = saveSpeed;
         }
 
-        if (toPlayer.magnitude > distanceToKeep)
+        if (toPlayer.magnitude > distanceToKeep + 1)
         {
             enemyState = State.playerSpotted;
         }

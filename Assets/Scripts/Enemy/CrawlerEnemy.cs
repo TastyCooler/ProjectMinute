@@ -14,6 +14,7 @@ public class CrawlerEnemy : BaseEnemy {
         else if (enemyState == State.playerSpotted)
         {
             PursuitPlayer();
+            MeleeAttack();
         }
         else if (enemyState == State.searchingForPlayer)
         {

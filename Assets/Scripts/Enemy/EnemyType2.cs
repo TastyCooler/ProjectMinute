@@ -18,6 +18,7 @@ public class EnemyType2 : BaseEnemy {
         else if (enemyState == State.retreat)
         {
             KeepDistance();
+            RangeAttack();
         }
         else if (enemyState == State.searchingForPlayer)
         {
