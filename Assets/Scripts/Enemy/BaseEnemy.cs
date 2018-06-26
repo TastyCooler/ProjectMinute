@@ -22,8 +22,8 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float patrolRadius = 1f;
     [SerializeField] protected float patrollingSpeedMultiplier = 0.3f;
 
-    [SerializeField] protected float distanceToKeep = 1f;
-    float saveSpeed;
+    [Range(0.1f, 1), SerializeField] float sightReachMultiplier = 0.5f;
+    [Range(0.1f, 0.3f), SerializeField] float attackAreaTolerance = 3f;
 
     [SerializeField] int highscoreValue;
 
@@ -31,9 +31,6 @@ public class BaseEnemy : MonoBehaviour {
     {
         patrolling,
         playerSpotted,
-        retreat,
-        rangeAttack,
-        meleeAttack,
         searchingForPlayer
     }
     protected State enemyState = State.patrolling;
@@ -43,7 +40,6 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void Awake()
     {
-        saveSpeed = speed;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         int playerLayer = LayerMask.NameToLayer("Player");
         int obstacleLayer = LayerMask.NameToLayer("Obstacles");
@@ -55,18 +51,14 @@ public class BaseEnemy : MonoBehaviour {
     protected virtual void Update()
     {
         toPlayer = player.transform.position - transform.position;
-    }
-
-    protected virtual void OnDestroy()
-    {
-        GameManager.Instance.Highscore += highscoreValue;
+        toPlayer.z = 0f;
     }
 
     private void OnDrawGizmos()
     {
         if (toPlayer.magnitude < sightReach)
         {
-            Debug.DrawRay(transform.position, toPlayer.normalized * (sightReach + 10f));
+            Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
         }
     }
 
@@ -113,11 +105,6 @@ public class BaseEnemy : MonoBehaviour {
             enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
         }
-
-        if (toPlayer.magnitude < distanceToKeep)
-        {
-            enemyState = State.retreat;
-        }
     }
 
     protected virtual void RangeAttack()
@@ -132,23 +119,24 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void KeepDistance()
     {
-        if (toPlayer.magnitude < distanceToKeep)
+        if (toPlayer.magnitude < sightReach * sightReachMultiplier)
         {
-            transform.position -= toPlayer.normalized * speed * Time.deltaTime;
+            transform.position += -toPlayer.normalized * speed * Time.deltaTime;
         }
 
-        if (toPlayer.magnitude > distanceToKeep && toPlayer.magnitude < distanceToKeep + 1)
+        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
         {
-            speed = 0;
-        }
-        else
-        {
-            speed = saveSpeed;
+            RangeAttack();
         }
 
-        if (toPlayer.magnitude > distanceToKeep + 1)
+        if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)
         {
-            enemyState = State.playerSpotted;
+            transform.position += toPlayer.normalized * speed * Time.deltaTime;
+        }
+
+        if (toPlayer.magnitude > sightReach)
+        {
+            enemyState = State.searchingForPlayer;
         }
     }
 
@@ -183,6 +171,7 @@ public class BaseEnemy : MonoBehaviour {
     protected void Die()
     {
         DropPowerup();
+        GameManager.Instance.Highscore += highscoreValue;
         Destroy(gameObject);
     }
 

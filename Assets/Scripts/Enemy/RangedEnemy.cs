@@ -13,12 +13,7 @@ public class RangedEnemy : BaseEnemy {
         }
         else if (enemyState == State.playerSpotted)
         {
-            PursuitPlayer();
-        }
-        else if (enemyState == State.retreat)
-        {
             KeepDistance();
-            RangeAttack();
         }
         else if (enemyState == State.searchingForPlayer)
         {
