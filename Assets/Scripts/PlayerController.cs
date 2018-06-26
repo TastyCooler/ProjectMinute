@@ -42,9 +42,10 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     public float dashSpecialSpeed;
     public float dashSpeed;
-    public float startDashTime;
     private Vector3 target;
-    
+    public float timer;
+    public float dashStart;
+    bool dashNow;
 
     public int combo;
     public float comboTime = 20f;
@@ -99,6 +100,7 @@ public class PlayerController : MonoBehaviour {
             }
            
             Combo();
+            
         }
         cursor.transform.position = transform.position + moveDirection;
         Debug.LogFormat("X: {0} | Y: {1} | Z: {2}", moveDirection.x, moveDirection.y, moveDirection.z);
@@ -148,15 +150,25 @@ public class PlayerController : MonoBehaviour {
         
         if (Input.GetMouseButtonDown(1))
         {
-
-            float offset = 3f;
- 
-            MoveTo(transform.position + offset * (closestEnemy.transform.position - transform.position));
+            dashNow = true;
         }
-        Debug.DrawLine(transform.position, closestEnemy.transform.position);
-        
 
+        if (dashNow)
+        {
+            float offset = 3f;
+            MoveTo(transform.position + offset * (closestEnemy.transform.position - transform.position));
+
+            if (Time.realtimeSinceStartup > dashStart + timer)
+            {
+                dashStart = Time.realtimeSinceStartup;
+                dashNow = false;
+            }
+        }
+
+        Debug.Log(dashStart);
+        Debug.DrawLine(transform.position, closestEnemy.transform.position);
     }
+
     void GetInput()
     {
         moveDirection.x = input.Horizontal;
@@ -175,7 +187,7 @@ public class PlayerController : MonoBehaviour {
     {
         Vector3 toPoint = point - transform.position;
         moveDirection = toPoint.normalized;
-        transform.position += toPoint.normalized * dashSpecialSpeed;
+        transform.position += toPoint.normalized * dashSpecialSpeed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
