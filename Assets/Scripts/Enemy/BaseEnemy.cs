@@ -56,12 +56,9 @@ public class BaseEnemy : MonoBehaviour {
         toPlayer = player.transform.position - transform.position;
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDestroy()
     {
-        if (toPlayer.magnitude < sightReach)
-        {
-            Debug.DrawRay(transform.position, toPlayer.normalized * (sightReach + 10f));
-        }
+        GameManager.Instance.Highscore += highscoreValue;
     }
 
     protected virtual void Patrolling()
