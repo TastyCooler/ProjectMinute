@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrawlerEnemy : BaseEnemy {
+public class EnemyType2 : BaseEnemy {
 
     protected override void Update()
     {
@@ -14,7 +14,11 @@ public class CrawlerEnemy : BaseEnemy {
         else if (enemyState == State.playerSpotted)
         {
             PursuitPlayer();
-            MeleeAttack();
+        }
+        else if (enemyState == State.retreat)
+        {
+            KeepDistance();
+            RangeAttack();
         }
         else if (enemyState == State.searchingForPlayer)
         {
