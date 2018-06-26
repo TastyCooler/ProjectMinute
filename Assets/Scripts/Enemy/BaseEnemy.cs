@@ -22,6 +22,8 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float patrolRadius = 1f;
     [SerializeField] protected float patrollingSpeedMultiplier = 0.3f;
 
+    [SerializeField] int highscoreValue = 50;
+
     protected enum State
     {
         patrolling,
@@ -38,6 +40,11 @@ public class BaseEnemy : MonoBehaviour {
     protected virtual void Update()
     {
         toPlayer = player.transform.position - transform.position;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        GameManager.Instance.Highscore += highscoreValue;
     }
 
     protected virtual void Patrolling()

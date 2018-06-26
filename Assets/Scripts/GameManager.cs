@@ -15,12 +15,50 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+    public int Highscore
+    {
+        get
+        {
+            return highscore;
+        }
+        set
+        {
+            if (value > highscore)
+            {
+                highscore = value;
+            }
+            else
+            {
+                Debug.LogWarning("Highscore cannot be decreased");
+            }
+        }
+    }
+
+    public bool IsBossSpawned
+    {
+        get
+        {
+            return isBossSpawned;
+        }
+        set
+        {
+            isBossSpawned = value;
+            GameObject.FindGameObjectWithTag("Boss").GetComponent<BossController>().OnBossDefeated += SettleHighscore;
+        }
+    }
+
     #region Fields
 
     [SerializeField] Canvas pauseMenu;
 
     bool isControllerInput = false;
     int controllerCount = 0;
+
+    int highscore = 0;
+    int highscoreAddition = 6000;
+    int finalHighscore;
+
+    bool isBossSpawned = false;
 
     #endregion
 
@@ -41,11 +79,25 @@ public class GameManager : Singleton<GameManager> {
         {
             isControllerInput = false;
         }
+        if(highscoreAddition > 0)
+        {
+            highscoreAddition -= (int)(Time.deltaTime * 100f);
+        }
+        else
+        {
+            highscoreAddition = 0;
+        }
+        print(highscoreAddition);
     }
 
     #endregion
 
     #region Helper Methods
+
+    void SettleHighscore()
+    {
+        finalHighscore = highscore + highscoreAddition;
+    }
 
     // Looks for any connected controller and updates the counter for every connected controller
     void GetControllerCount()
