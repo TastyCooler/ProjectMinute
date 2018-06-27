@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114901172938798008}
   - component: {fileID: 50560686656898720}
   m_Layer: 8
-  m_Name: Cursor
+  m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

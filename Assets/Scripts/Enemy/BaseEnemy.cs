@@ -26,6 +26,7 @@ public class BaseEnemy : MonoBehaviour {
     [Range(0.1f, 0.3f), SerializeField] float attackAreaTolerance = 3f;
 
     [SerializeField] int highscoreValue;
+    [SerializeField] int expToGive = 3;
 
     protected enum State
     {
@@ -172,6 +173,7 @@ public class BaseEnemy : MonoBehaviour {
     {
         DropPowerup();
         GameManager.Instance.Highscore += highscoreValue;
+        player.GainExp(expToGive);
         Destroy(gameObject);
     }
 

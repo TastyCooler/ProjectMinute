@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour {
         attack = baseAttack;
         health = baseHealth;
 
-        expToNextLevel = (int)Mathf.Pow(level, 2);
+        expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
 
         footprintsMainModule = footprints.main;
         footprintsShapeModule = footprints.shape;
@@ -125,6 +125,15 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+        // FOR DEBUGGING THE LEVEL SYSTEM
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            exp++;
+        }
+        if(exp >= expToNextLevel)
+        {
+            LevelUp();
+        }
         if(playerState == State.freeToMove)
         {
             GetInput();
@@ -209,22 +218,29 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine(transform.position, transform.position + aimDirection);
     }
 
+    public void GainExp(int expGain)
+    {
+        exp += expGain;
+    }
+
     void LevelUp()
     {
         attack += attackGainPerLevel;
         health += healthGainPerLevel;
         level++;
+        exp = exp - expToNextLevel;
+        expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
         // TODO call delegate to update level ui number
     }
 
     void GetInput()
     {
         moveDirection.x = input.Horizontal;
-        if(aimDirection.x < 0f)
+        if(moveDirection.x < 0f)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
-        else if(aimDirection.x > 0f)
+        else if(moveDirection.x > 0f)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
