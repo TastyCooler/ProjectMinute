@@ -64,9 +64,12 @@ public class PlayerController : MonoBehaviour {
 
     Animator anim;
 
-    
+    int level;
+    int exp = 0;
+    int expToNextLevel;
 
     [SerializeField] int baseAttack = 3;
+    [SerializeField] int attackGainPerLevel = 3;
     int attack;
     float attackMultiplier = 1f;
     float attackStartedTime;
@@ -77,7 +80,9 @@ public class PlayerController : MonoBehaviour {
     [Range(1, 10), SerializeField] float attackThreeDamageMultiplier = 2f;
     [SerializeField] float attackCooldown = 1f;
     [SerializeField] float knockbackStrength = 1f;
+
     [SerializeField] int baseHealth = 5;
+    [SerializeField] int healthGainPerLevel = 3;
     int health;
     bool keepAttacking = false;
 
@@ -88,6 +93,8 @@ public class PlayerController : MonoBehaviour {
     Camera cam;
 
     [SerializeField] GameObject cursor;
+    [SerializeField] ParticleSystem footprints;
+    ParticleSystem.MainModule footprintsMainModule;
 
     public enum State
     {
@@ -108,6 +115,10 @@ public class PlayerController : MonoBehaviour {
 
         attack = baseAttack;
         health = baseHealth;
+
+        expToNextLevel = (int)Mathf.Pow(level, 2);
+
+        footprintsMainModule = footprints.main;
     }
 
     private void Update()
@@ -196,18 +207,37 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine(transform.position, transform.position + aimDirection);
     }
 
+    void LevelUp()
+    {
+        attack += attackGainPerLevel;
+        health += healthGainPerLevel;
+        level++;
+        // TODO call delegate to update level ui number
+    }
+
     void GetInput()
     {
         moveDirection.x = input.Horizontal;
-        if(moveDirection.x < 0f)
+        if(aimDirection.x < 0f)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
-        else if(moveDirection.x > 0f)
+        else if(aimDirection.x > 0f)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
+        if(footprints)
+        {
+            footprints.transform.forward = moveDirection;
+            float moveAngle = Vector3.Angle(Vector3.up, moveDirection);
+            if(moveDirection.x < 0f)
+            {
+                moveAngle = -moveAngle;
+            }
+            print(moveAngle);
+            footprintsMainModule.startRotation = 0.0175f * moveAngle;
+        }
         // Only overwrite lastValidMoveDir if the player is not standing still. To always dash in a direction
         if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
         {
