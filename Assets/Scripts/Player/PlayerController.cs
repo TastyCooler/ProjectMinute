@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] GameObject cursor;
     [SerializeField] ParticleSystem footprints;
     ParticleSystem.MainModule footprintsMainModule;
+    ParticleSystem.ShapeModule footprintsShapeModule;
 
     public enum State
     {
@@ -119,6 +120,7 @@ public class PlayerController : MonoBehaviour {
         expToNextLevel = (int)Mathf.Pow(level, 2);
 
         footprintsMainModule = footprints.main;
+        footprintsShapeModule = footprints.shape;
     }
 
     private void Update()
@@ -229,13 +231,12 @@ public class PlayerController : MonoBehaviour {
         moveDirection.y = input.Vertical;
         if(footprints)
         {
-            footprints.transform.forward = moveDirection;
             float moveAngle = Vector3.Angle(Vector3.up, moveDirection);
             if(moveDirection.x < 0f)
             {
                 moveAngle = -moveAngle;
             }
-            print(moveAngle);
+            footprintsShapeModule.rotation = new Vector3(0f, moveAngle, 0f);
             footprintsMainModule.startRotation = 0.0175f * moveAngle;
         }
         // Only overwrite lastValidMoveDir if the player is not standing still. To always dash in a direction
