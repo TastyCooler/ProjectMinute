@@ -146,6 +146,17 @@ public class BaseEnemy : MonoBehaviour {
         if (toPlayer.magnitude > sightReach)
         {
             enemyState = State.searchingForPlayer;
+            playerLastSpottedAt = player.transform.position;
+        }
+
+        hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.tag != "Player")
+            {
+                enemyState = State.searchingForPlayer;
+                playerLastSpottedAt = player.transform.position;
+            }
         }
     }
 
