@@ -89,6 +89,10 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] GameObject cursor;
 
+    public GameObject projectile;
+    
+  
+
     public enum State
     {
         freeToMove,
@@ -108,10 +112,20 @@ public class PlayerController : MonoBehaviour {
 
         attack = baseAttack;
         health = baseHealth;
+
+      
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Instantiate(projectile, transform.position, Quaternion.identity);
+            
+        }
+
+        
+        
         if(playerState == State.freeToMove)
         {
             GetInput();
@@ -196,6 +210,11 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine(transform.position, transform.position + aimDirection);
     }
 
+    
+
+   
+
+  
     void GetInput()
     {
         moveDirection.x = input.Horizontal;

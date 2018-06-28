@@ -173,7 +173,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &241559532
 Prefab:
@@ -550,7 +550,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4480620348386404, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
@@ -709,6 +709,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224590819025754660, guid: c86963905b89a354c8d67aad1ee04898,
     type: 2}
   m_PrefabInternal: {fileID: 1606127637}
+--- !u!4 &1441063818 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4495398635640680, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1514258114}
 --- !u!1001 &1477246451
 Prefab:
   m_ObjectHideFlags: 0
@@ -764,7 +769,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4495398635640680, guid: 3cd34d21b8510e94f9b145d768e8e8c8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4495398635640680, guid: 3cd34d21b8510e94f9b145d768e8e8c8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -803,6 +808,12 @@ Prefab:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+        type: 2}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 1163686279246560, guid: c9d1dff6b5b58b443a695fd0da023fc3,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cd34d21b8510e94f9b145d768e8e8c8, type: 2}
   m_IsPrefabParent: 0
@@ -990,4 +1001,51 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c86963905b89a354c8d67aad1ee04898, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1930732428
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468176976016626, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 198489093374798388, guid: ad08fc3ffc6ec324088ad724d3ca8654,
+        type: 2}
+      propertyPath: CollisionModule.plane0
+      value: 
+      objectReference: {fileID: 1441063818}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ad08fc3ffc6ec324088ad724d3ca8654, type: 2}
   m_IsPrefabParent: 0
