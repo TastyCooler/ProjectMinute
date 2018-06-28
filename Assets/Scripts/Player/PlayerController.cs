@@ -97,6 +97,9 @@ public class PlayerController : MonoBehaviour {
     ParticleSystem.MainModule footprintsMainModule;
     ParticleSystem.ShapeModule footprintsShapeModule;
 
+    [SerializeField] ParticleSystem dash;
+    ParticleSystem.EmissionModule dashEmission;
+
     public enum State
     {
         freeToMove,
@@ -121,6 +124,8 @@ public class PlayerController : MonoBehaviour {
 
         footprintsMainModule = footprints.main;
         footprintsShapeModule = footprints.shape;
+
+        dashEmission = dash.emission;
     }
 
     private void Update()
@@ -137,6 +142,10 @@ public class PlayerController : MonoBehaviour {
         if(!footprints.gameObject.activeSelf)
         {
             footprints.gameObject.SetActive(true);
+        }
+        if(dash)
+        {
+            dashEmission.rateOverDistance = 0f;
         }
         if(playerState == State.freeToMove)
         {
@@ -216,6 +225,10 @@ public class PlayerController : MonoBehaviour {
             {
                 footprints.gameObject.SetActive(false);
             }
+            if(dash)
+            {
+                dashEmission.rateOverDistance = 1f;
+            }
             // TODO Set the dash animation
         }
         transform.position += velocity * Time.deltaTime;
@@ -253,18 +266,23 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
-        if(footprints)
+        // Create the angle for the movement vector
+        float moveAngle = Vector3.Angle(Vector3.up, lastValidMoveDir);
+        if (moveDirection.x < 0f)
         {
-            float moveAngle = Vector3.Angle(Vector3.up, moveDirection);
-            if(moveDirection.x < 0f)
-            {
-                moveAngle = -moveAngle;
-            }
+            moveAngle = -moveAngle;
+        }
+        if (dash)
+        {
+            dash.transform.rotation = Quaternion.Euler(moveAngle + 90f, 90f, 90f);
+        }
+        if (footprints)
+        {
             footprintsShapeModule.rotation = new Vector3(0f, moveAngle, 0f);
             footprintsMainModule.startRotation = 0.0175f * moveAngle;
         }
         // Only overwrite lastValidMoveDir if the player is not standing still. To always dash in a direction
-        if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
+        if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.01f))
         {
             lastValidMoveDir = moveDirection;
         }
