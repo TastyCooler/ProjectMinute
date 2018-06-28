@@ -7,6 +7,48 @@ using UnityEngine;
 /// </summary>
 public class GameManager : Singleton<GameManager> {
 
+    [SerializeField] GameObject arrow;
+    [SerializeField] GameObject arrowParent;
+    Stack<GameObject> arrowStack = new Stack<GameObject>();
+    int maxStack = 50;
+
+    //public Stack<GameObject> GetProjectileStack
+    //{
+    //    get
+    //    {
+    //        return projectileStack;
+    //    }
+    //    set
+    //    {
+    //        projectileStack = value;
+    //    }
+    //}
+
+    public void Awake()
+    {
+        for (int i = 0; i < maxStack; i++)
+        {
+            GameObject newArrow = Instantiate(arrow, transform.position, transform.rotation);
+            newArrow.transform.parent = arrowParent.transform;
+            newArrow.SetActive(false);
+            arrowStack.Push(newArrow);
+        }
+    }
+
+    public void PushArrow(GameObject newObject)
+    {
+        newObject.SetActive(false);
+        arrowStack.Push(newObject);
+    }
+
+    public GameObject GetArrow(Vector3 pos)
+    {
+        GameObject arrowReturned = arrowStack.Pop();
+        arrowReturned.transform.position = pos;
+        arrowReturned.SetActive(true);
+        return arrowReturned;
+    }
+
     public bool IsControllerInput
     {
         get
