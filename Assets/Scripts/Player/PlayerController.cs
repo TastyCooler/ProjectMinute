@@ -64,9 +64,12 @@ public class PlayerController : MonoBehaviour {
 
     Animator anim;
 
-    
+    int level;
+    int exp = 0;
+    int expToNextLevel;
 
     [SerializeField] int baseAttack = 3;
+    [SerializeField] int attackGainPerLevel = 3;
     int attack;
     float attackMultiplier = 1f;
     float attackStartedTime;
@@ -77,7 +80,9 @@ public class PlayerController : MonoBehaviour {
     [Range(1, 10), SerializeField] float attackThreeDamageMultiplier = 2f;
     [SerializeField] float attackCooldown = 1f;
     [SerializeField] float knockbackStrength = 1f;
+
     [SerializeField] int baseHealth = 5;
+    [SerializeField] int healthGainPerLevel = 3;
     int health;
     bool keepAttacking = false;
 
@@ -88,6 +93,9 @@ public class PlayerController : MonoBehaviour {
     Camera cam;
 
     [SerializeField] GameObject cursor;
+    [SerializeField] ParticleSystem footprints;
+    ParticleSystem.MainModule footprintsMainModule;
+    ParticleSystem.ShapeModule footprintsShapeModule;
 
     public enum State
     {
@@ -108,10 +116,28 @@ public class PlayerController : MonoBehaviour {
 
         attack = baseAttack;
         health = baseHealth;
+
+        expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
+
+        footprintsMainModule = footprints.main;
+        footprintsShapeModule = footprints.shape;
     }
 
     private void Update()
     {
+        // FOR DEBUGGING THE LEVEL SYSTEM
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            exp++;
+        }
+        if(exp >= expToNextLevel)
+        {
+            LevelUp();
+        }
+        if(!footprints.gameObject.activeSelf)
+        {
+            footprints.gameObject.SetActive(true);
+        }
         if(playerState == State.freeToMove)
         {
             GetInput();
@@ -186,6 +212,10 @@ public class PlayerController : MonoBehaviour {
         else if(playerState == State.dashing)
         {
             velocity = lastValidMoveDir.normalized * dashForce;
+            if(footprints.gameObject.activeSelf)
+            {
+                footprints.gameObject.SetActive(false);
+            }
             // TODO Set the dash animation
         }
         transform.position += velocity * Time.deltaTime;
@@ -194,6 +224,21 @@ public class PlayerController : MonoBehaviour {
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + aimDirection);
+    }
+
+    public void GainExp(int expGain)
+    {
+        exp += expGain;
+    }
+
+    void LevelUp()
+    {
+        attack += attackGainPerLevel;
+        health += healthGainPerLevel;
+        level++;
+        exp = exp - expToNextLevel;
+        expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
+        // TODO call delegate to update level ui number
     }
 
     void GetInput()
@@ -208,6 +253,16 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
+        if(footprints)
+        {
+            float moveAngle = Vector3.Angle(Vector3.up, moveDirection);
+            if(moveDirection.x < 0f)
+            {
+                moveAngle = -moveAngle;
+            }
+            footprintsShapeModule.rotation = new Vector3(0f, moveAngle, 0f);
+            footprintsMainModule.startRotation = 0.0175f * moveAngle;
+        }
         // Only overwrite lastValidMoveDir if the player is not standing still. To always dash in a direction
         if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
         {
