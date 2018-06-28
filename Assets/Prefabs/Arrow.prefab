@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4789919148794946}
   - component: {fileID: 114716239040588566}
   - component: {fileID: 212152518175129866}
-  - component: {fileID: 58782734793923610}
+  - component: {fileID: 61673810695537870}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -36,14 +36,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447066411944162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.3948137, y: -1.9808972, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58782734793923610
-CircleCollider2D:
+--- !u!61 &61673810695537870
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -51,12 +51,22 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.022571564, y: -0.045143366}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.98, y: 1.08}
+    newSize: {x: 0.98, y: 1.08}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.54
+  m_Size: {x: 0.7091408, y: 0.7865691}
+  m_EdgeRadius: 0
 --- !u!114 &114716239040588566
 MonoBehaviour:
   m_ObjectHideFlags: 1

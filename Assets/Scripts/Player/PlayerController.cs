@@ -86,6 +86,10 @@ public class PlayerController : MonoBehaviour {
     int health;
     bool keepAttacking = false;
 
+    float knockBackStarted;
+    float knockBackDuration;
+    Vector3 knockbackDir;
+
     [SerializeField] float dashForce = 1f;
 
     PlayerInput input;
@@ -231,6 +235,17 @@ public class PlayerController : MonoBehaviour {
             }
             // TODO Set the dash animation
         }
+        else if(playerState == State.knockedBack)
+        {
+            if(Time.realtimeSinceStartup <= knockBackStarted + knockBackDuration)
+            {
+                velocity = knockbackDir * Time.deltaTime;
+            }
+            else
+            {
+                playerState = State.freeToMove;
+            }
+        }
         transform.position += velocity * Time.deltaTime;
     }
 
@@ -311,13 +326,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Subtracts damage from the player health and knocks him back
-    public void TakeDamage(int damage, Vector3 knockback)
+    public void TakeDamage(int damage, Vector3 knockback, float time, float duration)
     {
         health -= damage;
         if(health <= 0)
         {
             Die();
         }
+        knockbackDir = knockback;
+        knockBackStarted = time;
+        knockBackDuration = duration;
         playerState = State.knockedBack;
         // TODO make player take damage
     }
