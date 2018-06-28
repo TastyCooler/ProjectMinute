@@ -134,6 +134,10 @@ public class PlayerController : MonoBehaviour {
         {
             LevelUp();
         }
+        if(!footprints.gameObject.activeSelf)
+        {
+            footprints.gameObject.SetActive(true);
+        }
         if(playerState == State.freeToMove)
         {
             GetInput();
@@ -208,6 +212,10 @@ public class PlayerController : MonoBehaviour {
         else if(playerState == State.dashing)
         {
             velocity = lastValidMoveDir.normalized * dashForce;
+            if(footprints.gameObject.activeSelf)
+            {
+                footprints.gameObject.SetActive(false);
+            }
             // TODO Set the dash animation
         }
         transform.position += velocity * Time.deltaTime;
