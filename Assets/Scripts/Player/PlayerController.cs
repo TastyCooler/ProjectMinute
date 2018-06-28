@@ -86,6 +86,10 @@ public class PlayerController : MonoBehaviour {
     int health;
     bool keepAttacking = false;
 
+    float knockBackStarted;
+    float knockBackDuration;
+    Vector3 knockbackDir;
+
     [SerializeField] float dashForce = 1f;
 
     PlayerInput input;
@@ -96,6 +100,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] ParticleSystem footprints;
     ParticleSystem.MainModule footprintsMainModule;
     ParticleSystem.ShapeModule footprintsShapeModule;
+
+    [SerializeField] ParticleSystem dash;
+    ParticleSystem.EmissionModule dashEmission;
 
     public enum State
     {
@@ -121,6 +128,8 @@ public class PlayerController : MonoBehaviour {
 
         footprintsMainModule = footprints.main;
         footprintsShapeModule = footprints.shape;
+
+        dashEmission = dash.emission;
     }
 
     private void Update()
@@ -137,6 +146,10 @@ public class PlayerController : MonoBehaviour {
         if(!footprints.gameObject.activeSelf)
         {
             footprints.gameObject.SetActive(true);
+        }
+        if(dash)
+        {
+            dashEmission.rateOverDistance = 0f;
         }
         if(playerState == State.freeToMove)
         {
@@ -216,7 +229,22 @@ public class PlayerController : MonoBehaviour {
             {
                 footprints.gameObject.SetActive(false);
             }
+            if(dash)
+            {
+                dashEmission.rateOverDistance = 1f;
+            }
             // TODO Set the dash animation
+        }
+        else if(playerState == State.knockedBack)
+        {
+            if(Time.realtimeSinceStartup <= knockBackStarted + knockBackDuration)
+            {
+                velocity = knockbackDir * Time.deltaTime;
+            }
+            else
+            {
+                playerState = State.freeToMove;
+            }
         }
         transform.position += velocity * Time.deltaTime;
     }
@@ -253,18 +281,23 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
-        if(footprints)
+        // Create the angle for the movement vector
+        float moveAngle = Vector3.Angle(Vector3.up, lastValidMoveDir);
+        if (moveDirection.x < 0f)
         {
-            float moveAngle = Vector3.Angle(Vector3.up, moveDirection);
-            if(moveDirection.x < 0f)
-            {
-                moveAngle = -moveAngle;
-            }
+            moveAngle = -moveAngle;
+        }
+        if (dash)
+        {
+            dash.transform.rotation = Quaternion.Euler(moveAngle + 90f, 90f, 90f);
+        }
+        if (footprints)
+        {
             footprintsShapeModule.rotation = new Vector3(0f, moveAngle, 0f);
             footprintsMainModule.startRotation = 0.0175f * moveAngle;
         }
         // Only overwrite lastValidMoveDir if the player is not standing still. To always dash in a direction
-        if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.1f))
+        if(!HelperMethods.V3Equal(moveDirection, Vector3.zero, 0.01f))
         {
             lastValidMoveDir = moveDirection;
         }
@@ -293,13 +326,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Subtracts damage from the player health and knocks him back
-    public void TakeDamage(int damage, Vector3 knockback)
+    public void TakeDamage(int damage, Vector3 knockback, float time, float duration)
     {
         health -= damage;
         if(health <= 0)
         {
             Die();
         }
+        knockbackDir = knockback;
+        knockBackStarted = time;
+        knockBackDuration = duration;
         playerState = State.knockedBack;
         // TODO make player take damage
     }

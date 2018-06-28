@@ -5,6 +5,8 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour {
 
     [Header("Stats"), SerializeField] protected int attack = 1;
+    [SerializeField] float knockbackDuration = 1f;
+    [SerializeField] float knockbackStrength = 1f;
     [SerializeField] protected int health = 1;
     [SerializeField] protected float speed = 1f;
 
@@ -115,6 +117,9 @@ public class BaseEnemy : MonoBehaviour {
     {
         timeWhenLastShot = Time.realtimeSinceStartup;
         GameObject arrowToShoot = GameManager.Instance.GetArrow(transform.position);
+        arrowToShoot.GetComponent<ArrowController>().Damage = attack;
+        arrowToShoot.GetComponent<ArrowController>().KnockbackDuration = knockbackDuration;
+        arrowToShoot.GetComponent<ArrowController>().KnockbackStrength = knockbackStrength;
         arrowToShoot.transform.up = toPlayer;
     }
 
