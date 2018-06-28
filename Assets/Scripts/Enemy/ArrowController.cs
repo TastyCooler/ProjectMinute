@@ -68,6 +68,8 @@ public class ArrowController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameManager.Instance.PushArrow(gameObject);
+
         if (collision.tag == "Player")
         {
             GameManager.Instance.PushArrow(gameObject);
