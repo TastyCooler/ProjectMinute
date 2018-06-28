@@ -28,6 +28,9 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] int highscoreValue;
     [SerializeField] int expToGive = 3;
 
+    float timeWhenLastShot;
+    [SerializeField] float shotCooldown = 1f;
+
     protected enum State
     {
         patrolling,
@@ -110,7 +113,9 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void RangeAttack()
     {
-        
+        timeWhenLastShot = Time.realtimeSinceStartup;
+        GameObject arrowToShoot = GameManager.Instance.GetArrow(transform.position);
+        arrowToShoot.transform.up = toPlayer;
     }
 
     protected virtual void MeleeAttack()
@@ -127,7 +132,10 @@ public class BaseEnemy : MonoBehaviour {
 
         if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
         {
-            RangeAttack();
+            if(Time.realtimeSinceStartup > timeWhenLastShot + shotCooldown)
+            {
+                RangeAttack();
+            }
         }
 
         if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)
