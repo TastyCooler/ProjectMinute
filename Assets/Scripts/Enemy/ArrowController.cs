@@ -40,6 +40,18 @@ public class ArrowController : MonoBehaviour {
         }
     }
 
+    public GameObject Owner
+    {
+        get
+        {
+            return owner;
+        }
+        set
+        {
+            owner = value;
+        }
+    }
+
     protected PlayerController player;
 
     [SerializeField] float speed = 10f;
@@ -48,6 +60,8 @@ public class ArrowController : MonoBehaviour {
     int damage;
     float knockbackStrength;
     float knockbackDuration;
+
+    GameObject owner;
 
     float timeWhenShot;
 
@@ -68,13 +82,16 @@ public class ArrowController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameManager.Instance.PushArrow(gameObject);
-
         if (collision.tag == "Player")
         {
-            GameManager.Instance.PushArrow(gameObject);
             // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
+            GameManager.Instance.PushArrow(gameObject);
+        }
+        else if (collision.gameObject != owner)
+        {
+            // TODO Make particle system explode
+            GameManager.Instance.PushArrow(gameObject);
         }
     }
 }

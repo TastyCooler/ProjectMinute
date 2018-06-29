@@ -5,8 +5,8 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour {
 
     [Header("Stats"), SerializeField] protected int attack = 1;
-    [SerializeField] float knockbackDuration = 1f;
-    [SerializeField] float knockbackStrength = 1f;
+    [SerializeField] protected float knockbackDuration = 1f;
+    [SerializeField] protected float knockbackStrength = 1f;
     [SerializeField] protected int health = 1;
     [SerializeField] protected float speed = 1f;
 
@@ -15,8 +15,8 @@ public class BaseEnemy : MonoBehaviour {
     
     protected Vector3 targetPos;
 
-    [SerializeField] GameObject[] powerupsToDrop;
-    [Range(0, 1), SerializeField] float dropChance = 0.1f;
+    [SerializeField] protected GameObject[] powerupsToDrop;
+    [Range(0, 1), SerializeField] protected float dropChance = 0.1f;
 
     protected PlayerController player;
 
@@ -24,14 +24,20 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float patrolRadius = 1f;
     [SerializeField] protected float patrollingSpeedMultiplier = 0.3f;
 
-    [Range(0.1f, 1), SerializeField] float sightReachMultiplier = 0.5f;
-    [Range(0.1f, 0.3f), SerializeField] float attackAreaTolerance = 3f;
+    [Range(0.1f, 1), SerializeField] protected float sightReachMultiplier = 0.5f;
+    [Range(0.1f, 0.3f), SerializeField] protected float attackAreaTolerance = 3f;
 
-    [SerializeField] int highscoreValue;
-    [SerializeField] int expToGive = 3;
+    [SerializeField] protected int highscoreValue;
+    [SerializeField] protected int expToGive = 3;
 
-    float timeWhenLastShot;
-    [SerializeField] float shotCooldown = 1f;
+    protected float timeWhenLastAttacked;
+    [SerializeField] protected float attackCooldown = 1f;
+    [SerializeField] protected float attackDuration = 0.4f;
+
+    protected bool attacking;
+    protected float attackDistance = 1f;
+
+    protected Animator anim;
 
     protected enum State
     {
@@ -41,8 +47,8 @@ public class BaseEnemy : MonoBehaviour {
     }
     protected State enemyState = State.patrolling;
 
-    RaycastHit2D hit;
-    public LayerMask hitLayer;
+    protected RaycastHit2D hit;
+    protected LayerMask hitLayer;
 
     protected virtual void Awake()
     {
@@ -52,6 +58,7 @@ public class BaseEnemy : MonoBehaviour {
         hitLayer = 1 << playerLayer;
         LayerMask obsLayer = 1 << obstacleLayer;
         hitLayer = hitLayer | obsLayer;
+        anim = GetComponent<Animator>();
     }
 
     protected virtual void Update()
@@ -98,9 +105,7 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void PursuitPlayer()
     {
-        transform.position += toPlayer.normalized * speed * Time.deltaTime;
         hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
-
         if (hit.collider.gameObject.tag != "Player")
         {
             enemyState = State.patrolling;
@@ -111,21 +116,39 @@ public class BaseEnemy : MonoBehaviour {
             enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
         }
-    }
 
-    protected virtual void RangeAttack()
-    {
-        timeWhenLastShot = Time.realtimeSinceStartup;
-        GameObject arrowToShoot = GameManager.Instance.GetArrow(transform.position);
-        arrowToShoot.GetComponent<ArrowController>().Damage = attack;
-        arrowToShoot.GetComponent<ArrowController>().KnockbackDuration = knockbackDuration;
-        arrowToShoot.GetComponent<ArrowController>().KnockbackStrength = knockbackStrength;
-        arrowToShoot.transform.up = toPlayer;
+        if(toPlayer.magnitude < attackDistance && !attacking)
+        {
+            MeleeAttack();
+        }
+
+        if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown)
+        {
+            attacking = false;
+        }
+
+        if (!attacking)
+        {
+            transform.position += toPlayer.normalized * speed * Time.deltaTime;
+        }
     }
 
     protected virtual void MeleeAttack()
     {
+        attacking = true;
+        timeWhenLastAttacked = Time.realtimeSinceStartup;
+        anim.SetTrigger("Attack");
+    }
 
+    protected virtual void RangeAttack()
+    {
+        timeWhenLastAttacked = Time.realtimeSinceStartup;
+        ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
+        arrowToShoot.Damage = attack;
+        arrowToShoot.KnockbackDuration = knockbackDuration;
+        arrowToShoot.KnockbackStrength = knockbackStrength;
+        arrowToShoot.Owner = gameObject;
+        arrowToShoot.transform.up = toPlayer;
     }
 
     protected virtual void KeepDistance()
@@ -137,7 +160,7 @@ public class BaseEnemy : MonoBehaviour {
 
         if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
         {
-            if(Time.realtimeSinceStartup > timeWhenLastShot + shotCooldown)
+            if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
             {
                 RangeAttack();
             }

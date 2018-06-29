@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 61242641604890400}
   - component: {fileID: 114901172938798008}
   - component: {fileID: 50560686656898720}
-  - component: {fileID: 212423170282524010}
+  - component: {fileID: 212310462359763324}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -148,19 +148,19 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1287659559633724}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!50 &50560686656898720
 Rigidbody2D:
   serializedVersion: 4
@@ -193,7 +193,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09157395, y: -0.4700663}
+  m_Offset: {x: -0.09157395, y: 0.093384266}
   m_SpriteTilingProperty:
     border: {x: 0.85999995, y: 0, z: 0.62, w: 0.94}
     pivot: {x: 0.4828356, y: 0.2722851}
@@ -204,7 +204,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.48832726, y: 1.5978973}
+  m_Size: {x: 0.48832726, y: 1.5790107}
   m_EdgeRadius: 0
 --- !u!61 &61242641604890400
 BoxCollider2D:
@@ -243,7 +243,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.013389349, y: -0.4204216}
+  m_Offset: {x: 0.013389349, y: 0.048595786}
   m_SpriteTilingProperty:
     border: {x: 0.85999995, y: 0, z: 0.62, w: 0.94}
     pivot: {x: 0.4828356, y: 0.2722851}
@@ -254,7 +254,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3817177, y: 2.2024224}
+  m_Size: {x: 1.3817177, y: 2.2842646}
   m_EdgeRadius: 0
 --- !u!95 &95092999779981272
 Animator:
@@ -9497,7 +9497,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!212 &212423170282524010
+--- !u!212 &212310462359763324
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
