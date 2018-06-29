@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 1
   knockbackDuration: 0.2
-  knockbackStrength: 150
+  knockbackStrength: 3000
   health: 1
   speed: 4
   powerupsToDrop:
@@ -113,7 +113,6 @@ MonoBehaviour:
   attackAreaTolerance: 0.3
   highscoreValue: 0
   expToGive: 3
-  shotCooldown: 1
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  attackCooldown: 1
+  attackDuration: 0.4
+  attackDistance: 1

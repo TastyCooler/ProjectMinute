@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour {
         {
             if(Time.realtimeSinceStartup <= knockBackStarted + knockBackDuration)
             {
-                velocity = knockbackDir * Time.deltaTime;
+                velocity = knockbackDir  * ((knockBackStarted + knockBackDuration) - Time.realtimeSinceStartup) * Time.deltaTime;
             }
             else
             {

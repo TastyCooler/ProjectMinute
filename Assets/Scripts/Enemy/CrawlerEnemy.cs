@@ -23,9 +23,8 @@ public class CrawlerEnemy : BaseEnemy {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player" && Time.realtimeSinceStartup < timeWhenLastAttacked + attackDuration)
         {
-            print("attack");
             collision.GetComponent<PlayerController>().TakeDamage(attack, toPlayer * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
         }
     }

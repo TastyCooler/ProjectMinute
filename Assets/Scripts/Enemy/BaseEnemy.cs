@@ -35,7 +35,7 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float attackDuration = 0.4f;
 
     protected bool attacking;
-    protected float attackDistance = 1f;
+    [SerializeField] protected float attackDistance = 1f;
 
     protected Animator anim;
 
