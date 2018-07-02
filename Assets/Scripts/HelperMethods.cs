@@ -10,8 +10,18 @@ public class HelperMethods : MonoBehaviour {
         return Vector3.SqrMagnitude(a - b) < aimingTolerance;
     }
 
-    // This is the calculation to create a quartic beziercurve
-   public static Vector3 CalculateQuarticBezierPoint(float t, Vector3 start, Vector3 p1, Vector3 p2, Vector3 p3, Vector3 end)
+
+    /// <summary>
+    /// Calculates a quartic Bezier Curve
+    /// </summary>
+    /// <param name="t">The time determines how long the projectile travels</param>
+    /// <param name="start">First Point</param>
+    /// <param name="p1">Second Point</param>
+    /// <param name="p2">Third Point</param>
+    /// <param name="p3">Fourth Point</param>
+    /// <param name="end">Fifth Point</param>
+    /// <returns></returns>
+    public static Vector3 CalculateQuarticBezierPoint(float t, Vector3 start, Vector3 p1, Vector3 p2, Vector3 p3, Vector3 end)
     {
         float u = 1 - t;
         float tt = t * t;
@@ -30,7 +40,16 @@ public class HelperMethods : MonoBehaviour {
         return p;
     }
 
-    // This is the calculation to create a cubic beziercurve
+    /// <summary>
+    /// Calculates a cubic Bezier Curve
+    /// </summary>
+    /// <param name="t">The time determines how long the projectile travels</param>
+    /// <param name="start">First Point</param>
+    /// <param name="p1">Second Point</param>
+    /// <param name="p2">Third Point</param>
+    /// <param name="p3">Fourth Point</param>
+    /// <param name="end">Fifth Point</param>
+    /// <returns></returns>
     public static Vector3 CalculateCubicBezierPoint(float t, Vector3 start, Vector3 p1, Vector3 p2, Vector3 end)
     {
         float u = 1 - t;
@@ -48,7 +67,16 @@ public class HelperMethods : MonoBehaviour {
         return p;
     }
 
-    // This is the calculation to create a quadratic beziercurve
+    /// <summary>
+    /// Calculates a quad Bezier Curve
+    /// </summary>
+    /// <param name="t">The time determines how long the projectile travels</param>
+    /// <param name="start">First Point</param>
+    /// <param name="p1">Second Point</param>
+    /// <param name="p2">Third Point</param>
+    /// <param name="p3">Fourth Point</param>
+    /// <param name="end">Fifth Point</param>
+    /// <returns></returns>
     public static Vector3 CalculateQuadBezierPoint(float t, Vector3 start, Vector3 p1, Vector3 end)
     {
         float u = 1 - t;

@@ -128,7 +128,8 @@ public class BaseEnemy : MonoBehaviour {
 
         if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
         {
-            RangeAttack();
+            RangeAttack(); //TODO: Enemy Shoots only on collision enter?
+            //TODO: Adding a Reaction Time!
         }
 
         if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)

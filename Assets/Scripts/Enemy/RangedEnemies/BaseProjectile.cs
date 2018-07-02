@@ -26,7 +26,7 @@ public class BaseProjectile : MonoBehaviour {
         if (done == false)
         {
             beziertime = beziertime + Time.deltaTime;
-            transform.position += HelperMethods.CalculateCubicBezierPoint(beziertime, start, p0, p1, end);
+            this.transform.position += HelperMethods.CalculateCubicBezierPoint(beziertime, start, p0, p1, end);
             Debug.Log(beziertime);
             if (beziertime > 1)
             {

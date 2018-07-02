@@ -117,15 +117,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Instantiate(projectile, transform.position, Quaternion.identity);
-            
-        }
-
-        
-        
+    {        
         if(playerState == State.freeToMove)
         {
             GetInput();

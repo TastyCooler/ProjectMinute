@@ -10,7 +10,7 @@ public class Projectile_Bat : BaseProjectile {
         if (done == false)
         {
             beziertime = beziertime + Time.deltaTime;
-            transform.position += HelperMethods.CalculateQuadBezierPoint(beziertime, start, p0, end);
+            this.transform.position += HelperMethods.CalculateQuadBezierPoint(beziertime, start, p0, end);
             Debug.Log(beziertime);
             if (beziertime > 1)
             {
