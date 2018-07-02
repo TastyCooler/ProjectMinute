@@ -23,6 +23,7 @@ public class RangedEnemy_Bat : BaseEnemy {
 
     protected override void RangeAttack()
     {
+        base.RangeAttack();
         Instantiate(projectile,transform.position,Quaternion.identity);
     }
 }

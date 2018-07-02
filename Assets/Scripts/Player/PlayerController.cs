@@ -137,16 +137,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update()
-    {    
-        expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
-
-        footprintsMainModule = footprints.main;
-        footprintsShapeModule = footprints.shape;
-
-        dashEmission = dash.emission;
-    }
-
-    private void Update()
     {
         // FOR DEBUGGING THE LEVEL SYSTEM
         if(Input.GetKeyDown(KeyCode.L))
