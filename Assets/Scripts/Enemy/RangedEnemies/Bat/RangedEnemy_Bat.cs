@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemy : BaseEnemy {
+public class RangedEnemy_Bat : BaseEnemy {
 
     protected override void Update()
     {
@@ -19,5 +19,10 @@ public class RangedEnemy : BaseEnemy {
         {
             SearchForPlayer();
         }
+    }
+
+    protected override void RangeAttack()
+    {
+        Instantiate(projectile);
     }
 }

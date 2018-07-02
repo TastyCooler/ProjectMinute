@@ -16,6 +16,8 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] GameObject[] powerupsToDrop;
     [Range(0, 1), SerializeField] float dropChance = 0.1f;
 
+    [SerializeField]protected GameObject projectile;
+
     protected PlayerController player;
 
     [SerializeField] protected float sightReach = 1f;
