@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4226808399019480}
   - component: {fileID: 61809783635644720}
   - component: {fileID: 114126804328460428}
+  - component: {fileID: 50783134815168450}
   m_Layer: 0
   m_Name: RangedEnemy
   m_TagString: Untagged
@@ -41,6 +42,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50783134815168450
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1928323416012008}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &61809783635644720
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -78,17 +99,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack: 1
+  knockbackDuration: 0.2
+  knockbackStrength: 3000
   health: 1
   speed: 4
   powerupsToDrop:
   - {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
   dropChance: 0.1
   sightReach: 10
-  patrolRadius: 1
+  patrolRadius: 5
   patrollingSpeedMultiplier: 0.3
   sightReachMultiplier: 0.5
   attackAreaTolerance: 0.3
   highscoreValue: 0
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  expToGive: 3
+  attackCooldown: 1
+  attackDuration: 0.4
+  attackDistance: 1

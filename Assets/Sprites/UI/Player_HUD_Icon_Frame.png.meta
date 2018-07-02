@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: 379c2e72379375445b0b103097e7aae2
+guid: 25381420980b9ca4f85bf006464cac24
 TextureImporter:
   fileIDToRecycleName:
-    21300000: HP_Bar_Full_Transparent_0
+    21300000: Player_HUD_Icon_Frame_0
+    21300002: Player_HUD_Icon_Frame_1
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -45,7 +46,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 11, y: 0, z: 11, w: 0}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -105,21 +106,41 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HP_Bar_Full_Transparent_0
+      name: Player_HUD_Icon_Frame_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 0
+        x: 0
+        y: 64
         width: 62
-        height: 80
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 0, z: 1, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9fb3a1c671c5e541807296e5d3ac732
+      spriteID: 51e2d7e2a4fd4654bb9df16ce04bc385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_HUD_Icon_Frame_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 62
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a2f69c921f7ddb43a46f625efc55ca3
       vertices: []
       indices: 
       edges: []
@@ -127,7 +148,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 48fd5e1197caf2b4ea4f27fe208a2834
+    spriteID: a4e78f086b2012342ab356d98e65b207
     vertices: []
     indices: 
     edges: []
