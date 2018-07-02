@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour {
 
+    #region Properties
+
     public int Damage
     {
         get
@@ -51,6 +53,8 @@ public class ArrowController : MonoBehaviour {
             owner = value;
         }
     }
+
+    #endregion
 
     protected PlayerController player;
 

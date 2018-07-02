@@ -14,6 +14,7 @@ public class RangedEnemy_Bat : BaseEnemy {
         else if (enemyState == State.playerSpotted)
         {
             KeepDistance();
+            Attack();
         }
         else if (enemyState == State.searchingForPlayer)
         {
@@ -21,9 +22,21 @@ public class RangedEnemy_Bat : BaseEnemy {
         }
     }
 
-    protected override void RangeAttack()
+    void Attack()
     {
-        base.RangeAttack();
-        Instantiate(projectile,transform.position,Quaternion.identity);
+        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
+        {
+            if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
+            {
+                timeWhenLastAttacked = Time.realtimeSinceStartup;
+
+                Projectile_Bat laserToShoot = GameManager.Instance.GetLaser(transform.position).GetComponent<Projectile_Bat>();
+                laserToShoot.Damage = attack;
+                laserToShoot.KnockbackDuration = knockbackDuration;
+                laserToShoot.KnockbackStrength = knockbackStrength;
+                laserToShoot.Owner = gameObject;
+                laserToShoot.transform.up = toPlayer;
+            }
+        }
     }
 }

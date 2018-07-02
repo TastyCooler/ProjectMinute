@@ -18,8 +18,6 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected GameObject[] powerupsToDrop;
     [Range(0, 1), SerializeField] protected float dropChance = 0.1f;
 
-    [SerializeField]protected GameObject projectile;
-
     protected PlayerController player;
 
     [SerializeField] protected float sightReach = 1f;
@@ -142,16 +140,16 @@ public class BaseEnemy : MonoBehaviour {
         anim.SetTrigger("Attack");
     }
 
-    protected virtual void RangeAttack()
-    {
-        timeWhenLastAttacked = Time.realtimeSinceStartup;
-        ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
-        arrowToShoot.Damage = attack;
-        arrowToShoot.KnockbackDuration = knockbackDuration;
-        arrowToShoot.KnockbackStrength = knockbackStrength;
-        arrowToShoot.Owner = gameObject;
-        arrowToShoot.transform.up = toPlayer;
-    }
+    //protected virtual void RangeAttack()
+    //{
+    //    timeWhenLastAttacked = Time.realtimeSinceStartup;
+    //    ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
+    //    arrowToShoot.Damage = attack;
+    //    arrowToShoot.KnockbackDuration = knockbackDuration;
+    //    arrowToShoot.KnockbackStrength = knockbackStrength;
+    //    arrowToShoot.Owner = gameObject;
+    //    arrowToShoot.transform.up = toPlayer;
+    //}
 
     protected virtual void KeepDistance()
     {
@@ -160,13 +158,13 @@ public class BaseEnemy : MonoBehaviour {
             transform.position += -toPlayer.normalized * speed * Time.deltaTime;
         }
 
-        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
-        {
-            if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
-            {
-                RangeAttack();
-            }
-        }
+        //if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
+        //{
+        //    if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
+        //    {
+        //        RangeAttack();
+        //    }
+        //}
 
         if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)
         {
