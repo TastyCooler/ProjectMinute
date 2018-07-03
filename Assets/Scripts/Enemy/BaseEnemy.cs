@@ -38,6 +38,7 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float attackDistance = 1f;
 
     protected Animator anim;
+        float newTargetPosTimer = 0;
 
     protected enum State
     {
@@ -65,6 +66,7 @@ public class BaseEnemy : MonoBehaviour {
     {
         toPlayer = player.transform.position - transform.position;
         toPlayer.z = 0f;
+        newTargetPosTimer += 1;
     }
 
     private void OnDrawGizmos()
@@ -77,9 +79,6 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void Patrolling()
     {
-        float newTargetPos = 0;
-        newTargetPos += 1;
-
         if (HelperMethods.V3Equal(targetPos, Vector3.zero, 0.1f))
         {
             DefineNewTargetPos();
@@ -105,9 +104,9 @@ public class BaseEnemy : MonoBehaviour {
             DefineNewTargetPos();
         }
 
-        if (newTargetPos >= 30)
+        if (newTargetPosTimer >= 100)
         {
-            newTargetPos = 0;
+            newTargetPosTimer = 0;
             DefineNewTargetPos();
         }
     }
