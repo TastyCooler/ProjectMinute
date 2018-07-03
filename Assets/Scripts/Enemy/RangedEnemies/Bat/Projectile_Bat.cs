@@ -57,9 +57,10 @@ public class Projectile_Bat : BaseProjectile {
     #endregion
 
     protected PlayerController player;
+    BaseEnemy baseEnemy;
 
     [SerializeField] float speed = 10f;
-    [SerializeField] float despawnDelay = 3f;
+    float despawnDelay;
 
     int damage;
     float knockbackStrength;
@@ -72,14 +73,17 @@ public class Projectile_Bat : BaseProjectile {
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        baseEnemy = FindObjectOfType<BaseEnemy>();
         timeWhenShot = Time.realtimeSinceStartup;
     }
 
     private void Update()
     {
+        transform.position += transform.up * speed * Time.deltaTime;
+        despawnDelay = baseEnemy.Hit.distance / 10;
+
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            BezierShoot();
             GameManager.Instance.PushLaser(gameObject);
         }
     }
@@ -96,20 +100,6 @@ public class Projectile_Bat : BaseProjectile {
         {
             // TODO Make particle system explode
             GameManager.Instance.PushLaser(gameObject);
-        }
-    }
-
-    protected override void BezierShoot()
-    {
-        if (done == false)
-        {
-            beziertime = beziertime + Time.deltaTime;
-            transform.position += HelperMethods.CalculateQuadBezierPoint(beziertime, transform.position, player.transform.position, player.transform.position);
-            if (beziertime > 1)
-            {
-                done = true;
-                beziertime = 0;
-            }
         }
     }
 }
