@@ -38,6 +38,7 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float attackDistance = 1f;
 
     protected Animator anim;
+        float newTargetPosTimer = 0;
 
     protected enum State
     {
@@ -65,6 +66,7 @@ public class BaseEnemy : MonoBehaviour {
     {
         toPlayer = player.transform.position - transform.position;
         toPlayer.z = 0f;
+        newTargetPosTimer += 1;
     }
 
     private void OnDrawGizmos()
@@ -101,6 +103,12 @@ public class BaseEnemy : MonoBehaviour {
         {
             DefineNewTargetPos();
         }
+
+        if (newTargetPosTimer >= 100)
+        {
+            newTargetPosTimer = 0;
+            DefineNewTargetPos();
+        }
     }
 
     protected virtual void PursuitPlayer()
@@ -108,13 +116,14 @@ public class BaseEnemy : MonoBehaviour {
         hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
         if (hit.collider.gameObject.tag != "Player")
         {
-            enemyState = State.patrolling;
+            playerLastSpottedAt = player.transform.position;
+            enemyState = State.searchingForPlayer;
         }
 
         if (toPlayer.magnitude > sightReach)
         {
-            enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
+            enemyState = State.searchingForPlayer;
         }
 
         if(toPlayer.magnitude < attackDistance && !attacking)
