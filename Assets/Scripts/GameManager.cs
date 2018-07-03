@@ -142,7 +142,7 @@ public class GameManager : Singleton<GameManager> {
             highscoreAddition = 0;
         }
 
-        Debug.LogFormat("arrowStack {0}, laserStack {1}", arrowStack.Count, laserStack.Count);
+        //Debug.LogFormat("arrowStack {0}, laserStack {1}", arrowStack.Count, laserStack.Count);
     }
 
     #endregion
