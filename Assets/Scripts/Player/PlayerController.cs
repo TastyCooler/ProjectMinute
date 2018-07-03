@@ -138,8 +138,11 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+        //unparent the particle system and it does work
+        footprints.transform.position = transform.position + new Vector3(0, -0.8f);
+
         // FOR DEBUGGING THE LEVEL SYSTEM
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             exp++;
         }
