@@ -77,6 +77,9 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void Patrolling()
     {
+        float newTargetPos = 0;
+        newTargetPos += 1;
+
         if (HelperMethods.V3Equal(targetPos, Vector3.zero, 0.1f))
         {
             DefineNewTargetPos();
@@ -101,6 +104,12 @@ public class BaseEnemy : MonoBehaviour {
         {
             DefineNewTargetPos();
         }
+
+        if (newTargetPos >= 30)
+        {
+            newTargetPos = 0;
+            DefineNewTargetPos();
+        }
     }
 
     protected virtual void PursuitPlayer()
@@ -108,13 +117,14 @@ public class BaseEnemy : MonoBehaviour {
         hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
         if (hit.collider.gameObject.tag != "Player")
         {
-            enemyState = State.patrolling;
+            playerLastSpottedAt = player.transform.position;
+            enemyState = State.searchingForPlayer;
         }
 
         if (toPlayer.magnitude > sightReach)
         {
-            enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
+            enemyState = State.searchingForPlayer;
         }
 
         if(toPlayer.magnitude < attackDistance && !attacking)
