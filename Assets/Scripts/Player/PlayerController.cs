@@ -104,6 +104,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] ParticleSystem dash;
     ParticleSystem.EmissionModule dashEmission;
 
+    public GameObject projectile;
+    
+  
+
     public enum State
     {
         freeToMove,
@@ -123,7 +127,7 @@ public class PlayerController : MonoBehaviour {
 
         attack = baseAttack;
         health = baseHealth;
-
+        
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
 
         footprintsMainModule = footprints.main;
@@ -151,6 +155,7 @@ public class PlayerController : MonoBehaviour {
         {
             dashEmission.rateOverDistance = 0f;
         }
+        
         if(playerState == State.freeToMove)
         {
             GetInput();
@@ -268,7 +273,7 @@ public class PlayerController : MonoBehaviour {
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
         // TODO call delegate to update level ui number
     }
-
+    
     void GetInput()
     {
         moveDirection.x = input.Horizontal;

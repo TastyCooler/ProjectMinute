@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowController : MonoBehaviour {
+public class Projectile_Bat : BaseProjectile {
 
     #region Properties
 
@@ -77,10 +77,10 @@ public class ArrowController : MonoBehaviour {
 
     private void Update()
     {
-        transform.position += transform.up * speed * Time.deltaTime;
-        if(Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
+        if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            GameManager.Instance.PushArrow(gameObject);
+            BezierShoot();
+            GameManager.Instance.PushLaser(gameObject);
         }
     }
 
@@ -90,12 +90,26 @@ public class ArrowController : MonoBehaviour {
         {
             // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
-            GameManager.Instance.PushArrow(gameObject);
+            GameManager.Instance.PushLaser(gameObject);
         }
         else if (collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            GameManager.Instance.PushArrow(gameObject);
+            GameManager.Instance.PushLaser(gameObject);
+        }
+    }
+
+    protected override void BezierShoot()
+    {
+        if (done == false)
+        {
+            beziertime = beziertime + Time.deltaTime;
+            transform.position += HelperMethods.CalculateQuadBezierPoint(beziertime, transform.position, player.transform.position, player.transform.position);
+            if (beziertime > 1)
+            {
+                done = true;
+                beziertime = 0;
+            }
         }
     }
 }
