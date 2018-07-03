@@ -9,48 +9,69 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1362358222096696}
+  m_RootGameObject: {fileID: 1204257157218690}
   m_IsPrefabParent: 1
---- !u!1 &1362358222096696
+--- !u!1 &1204257157218690
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4806248906740540}
-  - component: {fileID: 61153212520876668}
-  - component: {fileID: 114062696877497696}
+  - component: {fileID: 4419551452986682}
+  - component: {fileID: 61134300825810182}
+  - component: {fileID: 50571364194503214}
+  - component: {fileID: 114286214769985410}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Batman
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4806248906740540
+--- !u!4 &4419551452986682
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362358222096696}
+  m_GameObject: {fileID: 1204257157218690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8733664, y: 3.5298185, z: 1.5178288}
+  m_LocalPosition: {x: 9.73, y: 2.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61153212520876668
+--- !u!50 &50571364194503214
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1204257157218690}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!61 &61134300825810182
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362358222096696}
+  m_GameObject: {fileID: 1204257157218690}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -66,21 +87,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114062696877497696
+--- !u!114 &114286214769985410
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1362358222096696}
+  m_GameObject: {fileID: 1204257157218690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ac1522a8e27f946ab0bd8f36d4a5aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 76d50024271386346965feede9bd2f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {x: 0, y: 0, z: 0}
-  p0: {x: 0, y: 0, z: 0}
-  p1: {x: 0, y: 0, z: 0}
-  p2: {x: 0, y: 0, z: 0}
-  end: {x: 0, y: 0, z: 0}
-  speed: 10
-  despawnDelay: 3
+  attack: 1
+  knockbackDuration: 1
+  knockbackStrength: 1
+  health: 1
+  speed: 1
+  powerupsToDrop: []
+  dropChance: 0.1
+  sightReach: 15
+  patrolRadius: 1
+  patrollingSpeedMultiplier: 0.3
+  sightReachMultiplier: 0.1
+  attackAreaTolerance: 3
+  highscoreValue: 0
+  expToGive: 3
+  attackCooldown: 1
+  attackDuration: 0.4
+  attackDistance: 1

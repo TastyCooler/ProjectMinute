@@ -150,16 +150,16 @@ public class BaseEnemy : MonoBehaviour {
         anim.SetTrigger("Attack");
     }
 
-    protected virtual void RangeAttack()
-    {
-        timeWhenLastAttacked = Time.realtimeSinceStartup;
-        ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
-        arrowToShoot.Damage = attack;
-        arrowToShoot.KnockbackDuration = knockbackDuration;
-        arrowToShoot.KnockbackStrength = knockbackStrength;
-        arrowToShoot.Owner = gameObject;
-        arrowToShoot.transform.up = toPlayer;
-    }
+    //protected virtual void RangeAttack()
+    //{
+    //    timeWhenLastAttacked = Time.realtimeSinceStartup;
+    //    ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
+    //    arrowToShoot.Damage = attack;
+    //    arrowToShoot.KnockbackDuration = knockbackDuration;
+    //    arrowToShoot.KnockbackStrength = knockbackStrength;
+    //    arrowToShoot.Owner = gameObject;
+    //    arrowToShoot.transform.up = toPlayer;
+    //}
 
     protected virtual void KeepDistance()
     {
@@ -168,13 +168,13 @@ public class BaseEnemy : MonoBehaviour {
             transform.position += -toPlayer.normalized * speed * Time.deltaTime;
         }
 
-        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
-        {
-            if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
-            {
-                RangeAttack();
-            }
-        }
+        //if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
+        //{
+        //    if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
+        //    {
+        //        RangeAttack();
+        //    }
+        //}
 
         if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)
         {
