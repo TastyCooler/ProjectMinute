@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowController : MonoBehaviour {
+public class Projectile_Bat : BaseProjectile {
 
     #region Properties
 
@@ -57,9 +57,10 @@ public class ArrowController : MonoBehaviour {
     #endregion
 
     protected PlayerController player;
+    BaseEnemy baseEnemy;
 
     [SerializeField] float speed = 10f;
-    [SerializeField] float despawnDelay = 3f;
+    float despawnDelay;
 
     int damage;
     float knockbackStrength;
@@ -72,15 +73,18 @@ public class ArrowController : MonoBehaviour {
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        baseEnemy = FindObjectOfType<BaseEnemy>();
         timeWhenShot = Time.realtimeSinceStartup;
     }
 
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        if(Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
+        despawnDelay = baseEnemy.Hit.distance / 10;
+
+        if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            GameManager.Instance.PushArrow(gameObject);
+            GameManager.Instance.PushLaser(gameObject);
         }
     }
 
@@ -90,12 +94,12 @@ public class ArrowController : MonoBehaviour {
         {
             // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
-            GameManager.Instance.PushArrow(gameObject);
+            GameManager.Instance.PushLaser(gameObject);
         }
         else if (collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            GameManager.Instance.PushArrow(gameObject);
+            GameManager.Instance.PushLaser(gameObject);
         }
     }
 }

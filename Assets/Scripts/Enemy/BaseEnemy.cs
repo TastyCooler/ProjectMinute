@@ -38,6 +38,12 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float attackDistance = 1f;
 
     protected Animator anim;
+    private float newTargetPosTimer = 0;
+
+    public RaycastHit2D Hit
+    {
+        get { return hit; }
+    }
 
     protected enum State
     {
@@ -65,6 +71,7 @@ public class BaseEnemy : MonoBehaviour {
     {
         toPlayer = player.transform.position - transform.position;
         toPlayer.z = 0f;
+        newTargetPosTimer += 1;
     }
 
     private void OnDrawGizmos()
@@ -83,13 +90,13 @@ public class BaseEnemy : MonoBehaviour {
         }
         if (toPlayer.magnitude < sightReach)
         {
-            //enemyState = State.playerSpotted;
             hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
             if (hit.collider != null)
             {
                 if  (hit.collider.gameObject.tag == "Player")
                 {
                     enemyState = State.playerSpotted;
+                    timeWhenLastAttacked = Time.realtimeSinceStartup;
                 }
             }
         }
@@ -101,6 +108,12 @@ public class BaseEnemy : MonoBehaviour {
         {
             DefineNewTargetPos();
         }
+
+        if (newTargetPosTimer >= 100)
+        {
+            newTargetPosTimer = 0;
+            DefineNewTargetPos();
+        }
     }
 
     protected virtual void PursuitPlayer()
@@ -108,13 +121,14 @@ public class BaseEnemy : MonoBehaviour {
         hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
         if (hit.collider.gameObject.tag != "Player")
         {
-            enemyState = State.patrolling;
+            playerLastSpottedAt = player.transform.position;
+            enemyState = State.searchingForPlayer;
         }
 
         if (toPlayer.magnitude > sightReach)
         {
-            enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
+            enemyState = State.searchingForPlayer;
         }
 
         if(toPlayer.magnitude < attackDistance && !attacking)
@@ -140,30 +154,11 @@ public class BaseEnemy : MonoBehaviour {
         anim.SetTrigger("Attack");
     }
 
-    protected virtual void RangeAttack()
-    {
-        timeWhenLastAttacked = Time.realtimeSinceStartup;
-        ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
-        arrowToShoot.Damage = attack;
-        arrowToShoot.KnockbackDuration = knockbackDuration;
-        arrowToShoot.KnockbackStrength = knockbackStrength;
-        arrowToShoot.Owner = gameObject;
-        arrowToShoot.transform.up = toPlayer;
-    }
-
     protected virtual void KeepDistance()
     {
         if (toPlayer.magnitude < sightReach * sightReachMultiplier)
         {
             transform.position += -toPlayer.normalized * speed * Time.deltaTime;
-        }
-
-        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
-        {
-            if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
-            {
-                RangeAttack();
-            }
         }
 
         if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)
@@ -199,8 +194,15 @@ public class BaseEnemy : MonoBehaviour {
                 enemyState = State.playerSpotted;
             }
         }
+        newTargetPosTimer -= 2;
+        Debug.Log(newTargetPosTimer);
         transform.position += (playerLastSpottedAt - transform.position).normalized * speed * Time.deltaTime;
         if (HelperMethods.V3Equal(transform.position, playerLastSpottedAt, 0.1f))
+        {
+            enemyState = State.patrolling;
+            DefineNewTargetPos();
+        }
+        if (newTargetPosTimer <= 0)
         {
             enemyState = State.patrolling;
             DefineNewTargetPos();

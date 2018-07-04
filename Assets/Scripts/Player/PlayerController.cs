@@ -110,6 +110,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] ParticleSystem dash;
     ParticleSystem.EmissionModule dashEmission;
 
+    public GameObject projectile;
+    
+  
+
     public enum State
     {
         freeToMove,
@@ -157,8 +161,11 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+        //unparent the particle system and it does work
+        footprints.transform.position = transform.position + new Vector3(0, -0.8f);
+
         // FOR DEBUGGING THE LEVEL SYSTEM
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             exp++;
         }
@@ -174,6 +181,7 @@ public class PlayerController : MonoBehaviour {
         {
             dashEmission.rateOverDistance = 0f;
         }
+        
         if(playerState == State.freeToMove)
         {
             GetInput();
@@ -308,7 +316,7 @@ public class PlayerController : MonoBehaviour {
         }
         // TODO call delegate to update level ui number
     }
-
+    
     void GetInput()
     {
         moveDirection.x = input.Horizontal;
