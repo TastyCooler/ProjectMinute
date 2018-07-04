@@ -111,8 +111,12 @@ public class PlayerController : MonoBehaviour {
     ParticleSystem.EmissionModule dashEmission;
 
     public GameObject projectile;
-    
-  
+
+    public float yOffset;
+    public float by;
+    float layer;
+    SpriteRenderer rend;
+    Vector3 centerBottom;
 
     public enum State
     {
@@ -141,6 +145,8 @@ public class PlayerController : MonoBehaviour {
         footprintsShapeModule = footprints.shape;
 
         dashEmission = dash.emission;
+
+        rend = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -161,6 +167,13 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+
+        centerBottom = transform.TransformPoint(rend.sprite.bounds.min);
+
+        layer = centerBottom.y + yOffset;
+
+        rend.sortingOrder = -(int)(layer * 10);
+
         //unparent the particle system and it does work
         footprints.transform.position = transform.position + new Vector3(0, -0.8f);
 

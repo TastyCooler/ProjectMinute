@@ -71,7 +71,11 @@ public class BaseEnemy : MonoBehaviour {
     {
         toPlayer = player.transform.position - transform.position;
         toPlayer.z = 0f;
-        newTargetPosTimer += 1;
+
+        if (newTargetPosTimer <= 100)
+        {
+            newTargetPosTimer += 1;
+        }
     }
 
     private void OnDrawGizmos()
