@@ -50,6 +50,11 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public event System.Action<int, int> OnHealthChanged;
+    public event System.Action<int, int> OnExpChanged;
+
+    public event System.Action<int> OnLevelChanged;
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -84,6 +89,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] int baseHealth = 5;
     [SerializeField] int healthGainPerLevel = 3;
     int health;
+    int maxHealth;
     bool keepAttacking = false;
 
     float knockBackStarted;
@@ -127,13 +133,30 @@ public class PlayerController : MonoBehaviour {
 
         attack = baseAttack;
         health = baseHealth;
-        
+        maxHealth = baseHealth;
+
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
 
         footprintsMainModule = footprints.main;
         footprintsShapeModule = footprints.shape;
 
         dashEmission = dash.emission;
+    }
+
+    private void Start()
+    {
+        if (OnExpChanged != null)
+        {
+            OnExpChanged(expToNextLevel, exp);
+        }
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(maxHealth, health);
+        }
+        if (OnLevelChanged != null)
+        {
+            OnLevelChanged(level);
+        }
     }
 
     private void Update()
@@ -265,15 +288,32 @@ public class PlayerController : MonoBehaviour {
     public void GainExp(int expGain)
     {
         exp += expGain;
+        if(OnExpChanged != null)
+        {
+            OnExpChanged(expToNextLevel, exp);
+        }
     }
 
     void LevelUp()
     {
         attack += attackGainPerLevel;
-        health += healthGainPerLevel;
+        maxHealth += healthGainPerLevel;
+        health = maxHealth;
         level++;
         exp = exp - expToNextLevel;
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
+        if(OnExpChanged != null)
+        {
+            OnExpChanged(expToNextLevel, exp);
+        }
+        if(OnHealthChanged != null)
+        {
+            OnHealthChanged(maxHealth, health);
+        }
+        if(OnLevelChanged != null)
+        {
+            OnLevelChanged(level);
+        }
         // TODO call delegate to update level ui number
     }
     
@@ -345,7 +385,10 @@ public class PlayerController : MonoBehaviour {
         knockBackStarted = time;
         knockBackDuration = duration;
         playerState = State.knockedBack;
-        // TODO make player take damage
+        if(OnHealthChanged != null)
+        {
+            OnHealthChanged(maxHealth, health);
+        }
     }
 
     void Die()
