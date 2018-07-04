@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61737702535112622}
   - component: {fileID: 50859025425796844}
   - component: {fileID: 95846094831897104}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CrawlerEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
