@@ -194,8 +194,15 @@ public class BaseEnemy : MonoBehaviour {
                 enemyState = State.playerSpotted;
             }
         }
+        newTargetPosTimer -= 2;
+        Debug.Log(newTargetPosTimer);
         transform.position += (playerLastSpottedAt - transform.position).normalized * speed * Time.deltaTime;
         if (HelperMethods.V3Equal(transform.position, playerLastSpottedAt, 0.1f))
+        {
+            enemyState = State.patrolling;
+            DefineNewTargetPos();
+        }
+        if (newTargetPosTimer <= 0)
         {
             enemyState = State.patrolling;
             DefineNewTargetPos();
