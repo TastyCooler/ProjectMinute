@@ -50,6 +50,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public Vector3 AimDirection
+    {
+        get 
+        {
+            return aimDirection;
+        }
+    }
+
     public event System.Action<int, int> OnHealthChanged;
     public event System.Action<int, int> OnExpChanged;
 
