@@ -270,7 +270,7 @@ public class PlayerController : MonoBehaviour {
             }
             if (dash)
             {
-                dashEmission.rateOverDistance = 1f;
+                dashEmission.rateOverDistance = 15f;
             }
             // TODO Set the dash animation
         }
