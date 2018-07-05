@@ -53,6 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 1447066411944162, guid: 0bb889d60beaf3c469a702a4d5f33320, type: 2}
   arrowParent: {fileID: 0}
-  laser: {fileID: 0}
+  laser: {fileID: 1627037805189694, guid: e706cb73702410e4ca455d8915aa8dd9, type: 2}
   laserParent: {fileID: 0}
   pauseMenu: {fileID: 0}

@@ -24,7 +24,7 @@ public class RangedEnemy : BaseEnemy {
 
     void Attack()
     {
-        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
+        if (rangeAttacking)
         {
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
             {

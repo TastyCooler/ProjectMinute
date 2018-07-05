@@ -35,6 +35,7 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float attackDuration = 0.4f;
 
     protected bool meleeAttacking;
+    protected bool rangeAttacking;
     [SerializeField] protected float attackDistance = 1f;
 
     protected Animator anim;
@@ -162,18 +163,24 @@ public class BaseEnemy : MonoBehaviour {
     protected virtual void KeepDistance()
     {
         // Go away from player
-        if (toPlayer.magnitude < sightReach * sightReachMultiplier)
+        if (toPlayer.magnitude < sightReach * sightReachMultiplier && !rangeAttacking)
         {
             transform.position += -toPlayer.normalized * speed * Time.deltaTime;
         }
 
         // Go near to player
-        if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)
+        if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach && !rangeAttacking)
         {
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
         }
 
-        if (toPlayer.magnitude > sightReach)
+        // Attacking Player
+        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
+        {
+            rangeAttacking = true;
+        }
+
+            if (toPlayer.magnitude > sightReach)
         {
             enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
