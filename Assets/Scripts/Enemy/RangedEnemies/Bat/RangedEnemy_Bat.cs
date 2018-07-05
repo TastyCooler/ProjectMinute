@@ -24,8 +24,6 @@ public class RangedEnemy_Bat : BaseEnemy {
 
     void Attack()
     {
-        rangedAttacking = true;
-
         if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
         {
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
@@ -38,8 +36,6 @@ public class RangedEnemy_Bat : BaseEnemy {
                 laserToShoot.KnockbackStrength = knockbackStrength;
                 laserToShoot.Owner = gameObject;
                 laserToShoot.transform.up = toPlayer;
-
-                rangedAttacking = false;
             }
         }
     }
