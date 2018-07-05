@@ -24,8 +24,10 @@ public class RangedEnemy_Bat : BaseEnemy {
 
     void Attack()
     {
-        if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
+        if (rangeAttacking)
         {
+            // TODO: Finish attack than moving
+
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
             {
                 timeWhenLastAttacked = Time.realtimeSinceStartup;
@@ -36,6 +38,8 @@ public class RangedEnemy_Bat : BaseEnemy {
                 laserToShoot.KnockbackStrength = knockbackStrength;
                 laserToShoot.Owner = gameObject;
                 laserToShoot.transform.up = toPlayer;
+
+                rangeAttacking = false;
             }
         }
     }

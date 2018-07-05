@@ -114,6 +114,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] ParticleSystem footprints;
     ParticleSystem.MainModule footprintsMainModule;
     ParticleSystem.ShapeModule footprintsShapeModule;
+    ParticleSystem.EmissionModule footprintsEmissionModule;
+    ParticleSystem.MinMaxCurve standardRateOverDistance;
 
     [SerializeField] ParticleSystem dash;
     ParticleSystem.EmissionModule dashEmission;
@@ -151,6 +153,9 @@ public class PlayerController : MonoBehaviour {
 
         footprintsMainModule = footprints.main;
         footprintsShapeModule = footprints.shape;
+        footprintsEmissionModule = footprints.emission;
+
+        standardRateOverDistance = footprintsEmissionModule.rateOverDistance;
 
         dashEmission = dash.emission;
 
@@ -175,47 +180,37 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-
-        centerBottom = transform.TransformPoint(rend.sprite.bounds.min);
-
-        layer = centerBottom.y + yOffset;
-
-        rend.sortingOrder = -(int)(layer * 10);
+        CalculateOrderInLayer();
 
         //unparent the particle system and it does work
         footprints.transform.position = transform.position + new Vector3(0, -0.8f);
-
-        // FOR DEBUGGING THE LEVEL SYSTEM
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            exp++;
-        }
-        if(exp >= expToNextLevel)
+        
+        if (exp >= expToNextLevel)
         {
             LevelUp();
         }
-        if(!footprints.gameObject.activeSelf)
+        if(string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
         {
-            footprints.gameObject.SetActive(true);
+            footprintsEmissionModule.rateOverDistance = standardRateOverDistance;
         }
-        if(dash)
+        if (dash)
         {
             dashEmission.rateOverDistance = 0f;
         }
-        
-        if(playerState == State.freeToMove)
+
+        if (playerState == State.freeToMove)
         {
             GetInput();
             velocity = moveDirection * speed;
-            if(input.UseItem && playerItem)
+            if (input.UseItem && playerItem)
             {
                 playerItem.Use();
             }
-            if(input.UseSkill && playerSkill)
+            if (input.UseSkill && playerSkill)
             {
                 playerSkill.Use();
             }
-            if(input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
+            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
             {
                 keepAttacking = false;
                 playerState = State.attacking;
@@ -224,7 +219,7 @@ public class PlayerController : MonoBehaviour {
                 attackStartedTime = Time.realtimeSinceStartup;
             }
         }
-        else if(playerState == State.attacking)
+        else if (playerState == State.attacking)
         {
             GetInput();
             velocity = moveDirection * speed;
@@ -232,7 +227,7 @@ public class PlayerController : MonoBehaviour {
             {
                 keepAttacking = true;
             }
-            if(Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
@@ -245,7 +240,7 @@ public class PlayerController : MonoBehaviour {
                 attackStartedTime = Time.realtimeSinceStartup;
             }
         }
-        else if(playerState == State.attackingTwo)
+        else if (playerState == State.attackingTwo)
         {
             GetInput();
             velocity = moveDirection * speed;
@@ -265,7 +260,7 @@ public class PlayerController : MonoBehaviour {
                 attackStartedTime = Time.realtimeSinceStartup;
             }
         }
-        else if(playerState == State.attackingThree)
+        else if (playerState == State.attackingThree)
         {
             GetInput();
             velocity = moveDirection * speed;
@@ -274,24 +269,24 @@ public class PlayerController : MonoBehaviour {
                 playerState = State.freeToMove;
             }
         }
-        else if(playerState == State.dashing)
+        else if (playerState == State.dashing)
         {
             velocity = lastValidMoveDir.normalized * dashForce;
-            if(footprints.gameObject.activeSelf)
+            if(string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
             {
-                footprints.gameObject.SetActive(false);
+                footprintsEmissionModule.rateOverDistance = 0f;
             }
-            if(dash)
+            if (dash)
             {
-                dashEmission.rateOverDistance = 1f;
+                dashEmission.rateOverDistance = 15f;
             }
             // TODO Set the dash animation
         }
-        else if(playerState == State.knockedBack)
+        else if (playerState == State.knockedBack)
         {
-            if(Time.realtimeSinceStartup <= knockBackStarted + knockBackDuration)
+            if (Time.realtimeSinceStartup <= knockBackStarted + knockBackDuration)
             {
-                velocity = knockbackDir  * ((knockBackStarted + knockBackDuration) - Time.realtimeSinceStartup) * Time.deltaTime;
+                velocity = knockbackDir * ((knockBackStarted + knockBackDuration) - Time.realtimeSinceStartup) * Time.deltaTime;
             }
             else
             {
@@ -299,6 +294,15 @@ public class PlayerController : MonoBehaviour {
             }
         }
         transform.position += velocity * Time.deltaTime;
+    }
+
+    private void CalculateOrderInLayer()
+    {
+        centerBottom = transform.TransformPoint(rend.sprite.bounds.min);
+
+        layer = centerBottom.y + yOffset;
+
+        rend.sortingOrder = -(int)(layer * 10);
     }
 
     private void OnDrawGizmos()
