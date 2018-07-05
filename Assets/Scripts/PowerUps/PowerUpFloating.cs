@@ -16,6 +16,8 @@ public class PowerUpFloating : MonoBehaviour {
             {
                 rend.enabled = false;
                 equipped = value;
+                gameObject.transform.SetParent(player.transform,true);
+                gameObject.transform.position = player.transform.position;
             }
             else
             {
@@ -23,6 +25,7 @@ public class PowerUpFloating : MonoBehaviour {
                 startPos = player.transform.position;
                 rend.enabled = true;
                 equipped = value;
+                gameObject.transform.SetParent(null,true);
             }
         }
     }

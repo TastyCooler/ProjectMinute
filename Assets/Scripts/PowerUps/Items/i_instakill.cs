@@ -14,6 +14,7 @@ public class i_instakill : BaseItem {
 
     public override void Use()
     {
+        
         if(usageTimes >= 1)
         {
             usageTimes--;
