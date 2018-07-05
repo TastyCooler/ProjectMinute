@@ -22,12 +22,18 @@ public class GameManager : Singleton<GameManager> {
         for (int i = 0; i < maxStack; i++)
         {
             GameObject newArrow = Instantiate(arrow, transform.position, transform.rotation);
-            newArrow.transform.parent = arrowParent.transform;
+            if(arrowParent)
+            {
+                newArrow.transform.parent = arrowParent.transform;
+            }
             newArrow.SetActive(false);
             arrowStack.Push(newArrow);
 
             GameObject newLaser = Instantiate(laser, transform.position, transform.rotation);
-            newLaser.transform.parent = laserParent.transform;
+            if(laserParent)
+            {
+                newLaser.transform.parent = laserParent.transform;
+            }
             newLaser.SetActive(false);
             laserStack.Push(newLaser);
         }

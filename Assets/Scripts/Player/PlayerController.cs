@@ -176,22 +176,23 @@ public class PlayerController : MonoBehaviour {
 
         //unparent the particle system and it does work
         footprints.transform.position = transform.position + new Vector3(0, -0.8f);
+        dash.transform.position = transform.position;
         
         if (exp >= expToNextLevel)
         {
             LevelUp();
         }
-        if(string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
-        {
-            footprintsEmissionModule.rateOverDistance = standardRateOverDistance;
-        }
-        if (dash)
-        {
-            dashEmission.rateOverDistance = 0f;
-        }
 
         if (playerState == State.freeToMove)
         {
+            if (string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
+            {
+                footprintsEmissionModule.rateOverDistance = standardRateOverDistance;
+            }
+            if (dash)
+            {
+                dashEmission.rateOverDistance = 0f;
+            }
             GetInput();
             velocity = moveDirection * speed;
             if (input.UseItem && playerItem)
@@ -270,7 +271,7 @@ public class PlayerController : MonoBehaviour {
             }
             if (dash)
             {
-                dashEmission.rateOverDistance = 15f;
+                dashEmission.rateOverDistance = 2f;
             }
             // TODO Set the dash animation
         }
@@ -354,7 +355,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (dash)
         {
-            dash.transform.rotation = Quaternion.Euler(moveAngle + 90f, 90f, 90f);
+            dash.transform.up = -lastValidMoveDir;
         }
         if (footprints)
         {
