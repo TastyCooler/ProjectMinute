@@ -50,6 +50,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public Vector3 AimDirection
+    {
+        get 
+        {
+            return aimDirection;
+        }
+    }
+
+    public event System.Action<int, int> OnHealthChanged;
+    public event System.Action<int, int> OnExpChanged;
+
+    public event System.Action<int> OnLevelChanged;
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -84,6 +97,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] int baseHealth = 5;
     [SerializeField] int healthGainPerLevel = 3;
     int health;
+    int maxHealth;
     bool keepAttacking = false;
 
     float knockBackStarted;
@@ -100,9 +114,19 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] ParticleSystem footprints;
     ParticleSystem.MainModule footprintsMainModule;
     ParticleSystem.ShapeModule footprintsShapeModule;
+    ParticleSystem.EmissionModule footprintsEmissionModule;
+    ParticleSystem.MinMaxCurve standardRateOverDistance;
 
     [SerializeField] ParticleSystem dash;
     ParticleSystem.EmissionModule dashEmission;
+
+    public GameObject projectile;
+
+    public float yOffset;
+    public float by;
+    float layer;
+    SpriteRenderer rend;
+    Vector3 centerBottom;
 
     public enum State
     {
@@ -123,47 +147,71 @@ public class PlayerController : MonoBehaviour {
 
         attack = baseAttack;
         health = baseHealth;
+        maxHealth = baseHealth;
 
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
 
         footprintsMainModule = footprints.main;
         footprintsShapeModule = footprints.shape;
+        footprintsEmissionModule = footprints.emission;
+
+        standardRateOverDistance = footprintsEmissionModule.rateOverDistance;
 
         dashEmission = dash.emission;
+
+        rend = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        if (OnExpChanged != null)
+        {
+            OnExpChanged(expToNextLevel, exp);
+        }
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(maxHealth, health);
+        }
+        if (OnLevelChanged != null)
+        {
+            OnLevelChanged(level);
+        }
     }
 
     private void Update()
     {
-        // FOR DEBUGGING THE LEVEL SYSTEM
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            exp++;
-        }
-        if(exp >= expToNextLevel)
+        CalculateOrderInLayer();
+
+        //unparent the particle system and it does work
+        footprints.transform.position = transform.position + new Vector3(0, -0.8f);
+        dash.transform.position = transform.position;
+        
+        if (exp >= expToNextLevel)
         {
             LevelUp();
         }
-        if(!footprints.gameObject.activeSelf)
+
+        if (playerState == State.freeToMove)
         {
-            footprints.gameObject.SetActive(true);
-        }
-        if(dash)
-        {
-            dashEmission.rateOverDistance = 0f;
-        }
-        if(playerState == State.freeToMove)
-        {
+            if (string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
+            {
+                footprintsEmissionModule.rateOverDistance = standardRateOverDistance;
+            }
+            if (dash)
+            {
+                dashEmission.rateOverDistance = 0f;
+            }
             GetInput();
             velocity = moveDirection * speed;
-            if(input.UseItem && playerItem)
+            if (input.UseItem && playerItem)
             {
                 playerItem.Use();
             }
-            if(input.UseSkill && playerSkill)
+            if (input.UseSkill && playerSkill)
             {
                 playerSkill.Use();
             }
-            if(input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
+            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
             {
                 keepAttacking = false;
                 playerState = State.attacking;
@@ -172,7 +220,7 @@ public class PlayerController : MonoBehaviour {
                 attackStartedTime = Time.realtimeSinceStartup;
             }
         }
-        else if(playerState == State.attacking)
+        else if (playerState == State.attacking)
         {
             GetInput();
             velocity = moveDirection * speed;
@@ -180,7 +228,7 @@ public class PlayerController : MonoBehaviour {
             {
                 keepAttacking = true;
             }
-            if(Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
@@ -193,7 +241,7 @@ public class PlayerController : MonoBehaviour {
                 attackStartedTime = Time.realtimeSinceStartup;
             }
         }
-        else if(playerState == State.attackingTwo)
+        else if (playerState == State.attackingTwo)
         {
             GetInput();
             velocity = moveDirection * speed;
@@ -213,7 +261,7 @@ public class PlayerController : MonoBehaviour {
                 attackStartedTime = Time.realtimeSinceStartup;
             }
         }
-        else if(playerState == State.attackingThree)
+        else if (playerState == State.attackingThree)
         {
             GetInput();
             velocity = moveDirection * speed;
@@ -222,24 +270,24 @@ public class PlayerController : MonoBehaviour {
                 playerState = State.freeToMove;
             }
         }
-        else if(playerState == State.dashing)
+        else if (playerState == State.dashing)
         {
             velocity = lastValidMoveDir.normalized * dashForce;
-            if(footprints.gameObject.activeSelf)
+            if(string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
             {
-                footprints.gameObject.SetActive(false);
+                footprintsEmissionModule.rateOverDistance = 0f;
             }
-            if(dash)
+            if (dash)
             {
-                dashEmission.rateOverDistance = 1f;
+                dashEmission.rateOverDistance = 2f;
             }
             // TODO Set the dash animation
         }
-        else if(playerState == State.knockedBack)
+        else if (playerState == State.knockedBack)
         {
-            if(Time.realtimeSinceStartup <= knockBackStarted + knockBackDuration)
+            if (Time.realtimeSinceStartup <= knockBackStarted + knockBackDuration)
             {
-                velocity = knockbackDir  * ((knockBackStarted + knockBackDuration) - Time.realtimeSinceStartup) * Time.deltaTime;
+                velocity = knockbackDir * ((knockBackStarted + knockBackDuration) - Time.realtimeSinceStartup) * Time.deltaTime;
             }
             else
             {
@@ -247,6 +295,15 @@ public class PlayerController : MonoBehaviour {
             }
         }
         transform.position += velocity * Time.deltaTime;
+    }
+
+    private void CalculateOrderInLayer()
+    {
+        centerBottom = transform.TransformPoint(rend.sprite.bounds.min);
+
+        layer = centerBottom.y + yOffset;
+
+        rend.sortingOrder = -(int)(layer * 10);
     }
 
     private void OnDrawGizmos()
@@ -257,18 +314,35 @@ public class PlayerController : MonoBehaviour {
     public void GainExp(int expGain)
     {
         exp += expGain;
+        if(OnExpChanged != null)
+        {
+            OnExpChanged(expToNextLevel, exp);
+        }
     }
 
     void LevelUp()
     {
         attack += attackGainPerLevel;
-        health += healthGainPerLevel;
+        maxHealth += healthGainPerLevel;
+        health = maxHealth;
         level++;
         exp = exp - expToNextLevel;
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
+        if(OnExpChanged != null)
+        {
+            OnExpChanged(expToNextLevel, exp);
+        }
+        if(OnHealthChanged != null)
+        {
+            OnHealthChanged(maxHealth, health);
+        }
+        if(OnLevelChanged != null)
+        {
+            OnLevelChanged(level);
+        }
         // TODO call delegate to update level ui number
     }
-
+    
     void GetInput()
     {
         moveDirection.x = input.Horizontal;
@@ -289,7 +363,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (dash)
         {
-            dash.transform.rotation = Quaternion.Euler(moveAngle + 90f, 90f, 90f);
+            dash.transform.up = -lastValidMoveDir;
         }
         if (footprints)
         {
@@ -337,7 +411,10 @@ public class PlayerController : MonoBehaviour {
         knockBackStarted = time;
         knockBackDuration = duration;
         playerState = State.knockedBack;
-        // TODO make player take damage
+        if(OnHealthChanged != null)
+        {
+            OnHealthChanged(maxHealth, health);
+        }
     }
 
     void Die()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour {
 
+    #region Properties
+
     public int Damage
     {
         get
@@ -52,6 +54,8 @@ public class ArrowController : MonoBehaviour {
         }
     }
 
+    #endregion
+
     protected PlayerController player;
 
     [SerializeField] float speed = 10f;
@@ -82,7 +86,7 @@ public class ArrowController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "Player" && collision.gameObject != owner)
         {
             // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);

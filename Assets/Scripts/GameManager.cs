@@ -7,31 +7,35 @@ using UnityEngine;
 /// </summary>
 public class GameManager : Singleton<GameManager> {
 
+    int maxStack = 50;
+
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject arrowParent;
     Stack<GameObject> arrowStack = new Stack<GameObject>();
-    int maxStack = 50;
 
-    //public Stack<GameObject> GetProjectileStack
-    //{
-    //    get
-    //    {
-    //        return projectileStack;
-    //    }
-    //    set
-    //    {
-    //        projectileStack = value;
-    //    }
-    //}
+    [SerializeField] GameObject laser;
+    [SerializeField] GameObject laserParent;
+    Stack<GameObject> laserStack = new Stack<GameObject>();
 
     public void Awake()
     {
         for (int i = 0; i < maxStack; i++)
         {
             GameObject newArrow = Instantiate(arrow, transform.position, transform.rotation);
-            newArrow.transform.parent = arrowParent.transform;
+            if(arrowParent)
+            {
+                newArrow.transform.parent = arrowParent.transform;
+            }
             newArrow.SetActive(false);
             arrowStack.Push(newArrow);
+
+            GameObject newLaser = Instantiate(laser, transform.position, transform.rotation);
+            if(laserParent)
+            {
+                newLaser.transform.parent = laserParent.transform;
+            }
+            newLaser.SetActive(false);
+            laserStack.Push(newLaser);
         }
     }
 
@@ -47,6 +51,20 @@ public class GameManager : Singleton<GameManager> {
         arrowReturned.transform.position = pos;
         arrowReturned.SetActive(true);
         return arrowReturned;
+    }
+
+    public void PushLaser(GameObject newObject)
+    {
+        newObject.SetActive(false);
+        laserStack.Push(newObject);
+    }
+
+    public GameObject GetLaser(Vector3 pos)
+    {
+        GameObject laserReturned = laserStack.Pop();
+        laserReturned.transform.position = pos;
+        laserReturned.SetActive(true);
+        return laserReturned;
     }
 
     public bool IsControllerInput
@@ -129,6 +147,8 @@ public class GameManager : Singleton<GameManager> {
         {
             highscoreAddition = 0;
         }
+
+        //Debug.LogFormat("arrowStack {0}, laserStack {1}", arrowStack.Count, laserStack.Count);
     }
 
     #endregion
