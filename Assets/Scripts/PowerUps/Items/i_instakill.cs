@@ -9,15 +9,16 @@ public class i_instakill : BaseItem {
     CircleCollider2D circColl;
     [SerializeField] float riseSpeed;
     [SerializeField] float radiusMax;
-
+    [SerializeField] int usages = 1;
     float waitTime = 0.000001f;
 
     public override void Use()
     {
         
-        if(usageTimes >= 1)
+        if(usageTimes <= usages)
         {
-            usageTimes--;
+            usages--;
+            Debug.Log("Instakill used");
             IncreaseTheRadius();
         }
         
