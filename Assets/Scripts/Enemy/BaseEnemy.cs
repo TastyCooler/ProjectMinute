@@ -49,7 +49,8 @@ public class BaseEnemy : MonoBehaviour {
     {
         patrolling,
         playerSpotted,
-        searchingForPlayer
+        searchingForPlayer,
+        knockedBack
     }
     protected State enemyState = State.patrolling;
 
@@ -215,6 +216,7 @@ public class BaseEnemy : MonoBehaviour {
 
 	public void TakeDamage(int damage, Vector3 knockback)
     {
+        // TODO apply knockback
         health -= damage;
         if(health <= 0)
         {

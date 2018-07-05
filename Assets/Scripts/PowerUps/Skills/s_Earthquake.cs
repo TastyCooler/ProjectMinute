@@ -10,9 +10,18 @@ public class s_Earthquake : BaseSkill {
     [SerializeField] float riseSpeed;
     [SerializeField] float radiusMax;
     float radiusOrigin;
+
+    LayerMask enemyLayer;
   
     
     float waitTime = 0.000001f;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        int layer = LayerMask.NameToLayer("Enemy");
+        enemyLayer = 1 << layer;
+    }
 
     public override void Use()
     {
@@ -67,6 +76,10 @@ public class s_Earthquake : BaseSkill {
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //TODO: STUN AND DAMAGE ENEMIES
+        if(collision.gameObject.layer == enemyLayer)
+        {
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage(player.Attack / 2, collision.gameObject.transform.position - player.transform.position);
+        }
         if (collision.gameObject.tag == "Player")
         {
             Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
