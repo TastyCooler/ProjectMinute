@@ -166,12 +166,16 @@ public class BaseEnemy : MonoBehaviour {
         if (toPlayer.magnitude < sightReach * sightReachMultiplier && !rangeAttacking)
         {
             transform.position += -toPlayer.normalized * speed * Time.deltaTime;
+            timeWhenLastAttacked = Time.realtimeSinceStartup;
+            rangeAttacking = false;
         }
 
         // Go near to player
         if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach && !rangeAttacking)
         {
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
+            timeWhenLastAttacked = Time.realtimeSinceStartup;
+            rangeAttacking = false;
         }
 
         // Attacking Player

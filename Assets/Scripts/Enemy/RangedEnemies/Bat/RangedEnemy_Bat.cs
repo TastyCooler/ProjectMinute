@@ -26,8 +26,6 @@ public class RangedEnemy_Bat : BaseEnemy {
     {
         if (rangeAttacking)
         {
-            // TODO: Finish attack than moving
-
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
             {
                 timeWhenLastAttacked = Time.realtimeSinceStartup;

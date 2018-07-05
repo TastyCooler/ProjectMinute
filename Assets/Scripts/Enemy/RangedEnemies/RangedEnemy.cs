@@ -36,6 +36,8 @@ public class RangedEnemy : BaseEnemy {
                 arrowToShoot.KnockbackStrength = knockbackStrength;
                 arrowToShoot.Owner = gameObject;
                 arrowToShoot.transform.up = toPlayer;
+
+                rangeAttacking = false;
             }
         }
     }
