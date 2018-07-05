@@ -34,7 +34,8 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] protected float attackCooldown = 1f;
     [SerializeField] protected float attackDuration = 0.4f;
 
-    protected bool attacking;
+    protected bool meleeAttacking;
+    protected bool rangedAttacking;
     [SerializeField] protected float attackDistance = 1f;
 
     protected Animator anim;
@@ -136,17 +137,17 @@ public class BaseEnemy : MonoBehaviour {
             enemyState = State.searchingForPlayer;
         }
 
-        if(toPlayer.magnitude < attackDistance && !attacking)
+        if(toPlayer.magnitude < attackDistance && !meleeAttacking)
         {
             MeleeAttack();
         }
 
         if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown)
         {
-            attacking = false;
+            meleeAttacking = false;
         }
 
-        if (!attacking)
+        if (!meleeAttacking)
         {
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
         }
@@ -154,19 +155,21 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void MeleeAttack()
     {
-        attacking = true;
+        meleeAttacking = true;
         timeWhenLastAttacked = Time.realtimeSinceStartup;
         anim.SetTrigger("Attack");
     }
 
     protected virtual void KeepDistance()
     {
-        if (toPlayer.magnitude < sightReach * sightReachMultiplier)
+        // Go away from player
+        if (toPlayer.magnitude < sightReach * sightReachMultiplier && !rangedAttacking)
         {
             transform.position += -toPlayer.normalized * speed * Time.deltaTime;
         }
 
-        if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach)
+        // Go near to player
+        if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach && !rangedAttacking)
         {
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
         }
@@ -200,7 +203,7 @@ public class BaseEnemy : MonoBehaviour {
             }
         }
         newTargetPosTimer -= 2;
-        Debug.Log(newTargetPosTimer);
+        //Debug.Log(newTargetPosTimer);
         transform.position += (playerLastSpottedAt - transform.position).normalized * speed * Time.deltaTime;
         if (HelperMethods.V3Equal(transform.position, playerLastSpottedAt, 0.1f))
         {

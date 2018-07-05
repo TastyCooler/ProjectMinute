@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile_Bat : BaseProjectile {
+public class Projectile_Bat : MonoBehaviour {
 
     #region Properties
 
@@ -60,7 +60,7 @@ public class Projectile_Bat : BaseProjectile {
     BaseEnemy baseEnemy;
 
     [SerializeField] float speed = 10f;
-    float despawnDelay;
+    [SerializeField] float despawnDelay;
 
     int damage;
     float knockbackStrength;
@@ -80,7 +80,7 @@ public class Projectile_Bat : BaseProjectile {
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        despawnDelay = baseEnemy.Hit.distance / 10;
+        //despawnDelay = baseEnemy.Hit.distance / 10;
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
