@@ -12,7 +12,7 @@ public class BaseItem : PowerUpFloating {
     // Activate the item and make use of its benefits
     public virtual void Use()
     {
-
+      
     }
 
 }
