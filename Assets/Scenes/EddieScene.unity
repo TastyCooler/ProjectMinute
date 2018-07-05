@@ -756,6 +756,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8abaa5cd5b0dcc24ea74bc228b30dacb, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1648601970
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -7.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862346112407946, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 73d6d8208a3100d47be30dce6a6c5757, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2029196819
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,11 +853,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fcdb9cf16899ec4793d1a36efe215c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {x: 10, y: 0, z: 0}
+  movement: {x: 0, y: 1, z: 0}
   period: 2
   usageTimes: 1
   riseSpeed: 10
   radiusMax: 12
+  usages: 1
 --- !u!4 &2029196822
 Transform:
   m_ObjectHideFlags: 0
