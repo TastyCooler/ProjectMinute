@@ -29,9 +29,6 @@ public class s_Earthquake : BaseSkill {
         //TODO: ADD COOLDOWN
             IncreaseTheRadius();
         
-        
-        
-
     }
 
     void IncreaseTheRadius()
@@ -40,7 +37,7 @@ public class s_Earthquake : BaseSkill {
         circColl.radius = radiusOrigin;
         circColl.enabled = true;
 
-        Debug.Log(radiusOrigin);
+        
         if (circColl.radius <= radiusMax)
         {
             Debug.Log("Rise() started");
