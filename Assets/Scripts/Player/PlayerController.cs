@@ -193,10 +193,7 @@ public class PlayerController : MonoBehaviour {
 
         if (playerState == State.freeToMove)
         {
-            if (string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
-            {
-                footprintsEmissionModule.rateOverDistance = standardRateOverDistance;
-            }
+            footprintsEmissionModule.rateOverDistance = 1f;
             if (dash)
             {
                 dashEmission.rateOverDistance = 0f;
@@ -273,10 +270,7 @@ public class PlayerController : MonoBehaviour {
         else if (playerState == State.dashing)
         {
             velocity = lastValidMoveDir.normalized * dashForce;
-            if(string.Equals(footprintsEmissionModule.rateOverDistance.ToString(), standardRateOverDistance.ToString()))
-            {
-                footprintsEmissionModule.rateOverDistance = 0f;
-            }
+            footprintsEmissionModule.rateOverDistance = 0f;
             if (dash)
             {
                 dashEmission.rateOverDistance = 2f;
