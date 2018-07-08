@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 
 /// <summary>
 /// The GameManager script, which controls several aspects of the game unaffected by loading scenes etc.
@@ -58,6 +59,8 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] GameObject laser;
     [SerializeField] GameObject laserParent;
     Stack<GameObject> laserStack = new Stack<GameObject>();
+
+    [SerializeField] PostProcessingProfile bossPost;
 
     [SerializeField] int preparationTime = 60;
     int timer;
@@ -122,6 +125,10 @@ public class GameManager : Singleton<GameManager> {
         {
             isPreparing = false;
             CancelInvoke();
+            if(bossPost)
+            {
+                Camera.main.GetComponent<PostProcessingBehaviour>().profile = bossPost;
+            }
             InvokeRepeating("IncreaseTimer", 1f, 1f);
             print("BossCalled");
         }

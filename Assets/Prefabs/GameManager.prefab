@@ -55,4 +55,6 @@ MonoBehaviour:
   arrowParent: {fileID: 0}
   laser: {fileID: 1627037805189694, guid: e706cb73702410e4ca455d8915aa8dd9, type: 2}
   laserParent: {fileID: 0}
+  bossPost: {fileID: 11400000, guid: d8fc6f47a591a204198f548415cac6b2, type: 2}
+  preparationTime: 5
   pauseMenu: {fileID: 0}
