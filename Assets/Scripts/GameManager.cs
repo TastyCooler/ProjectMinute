@@ -66,6 +66,8 @@ public class GameManager : Singleton<GameManager> {
     int timer;
     bool isPreparing = false;
 
+    [SerializeField] AudioSource preparationMusic;
+
     #region Fields
 
     [SerializeField] Canvas pauseMenu;
@@ -118,8 +120,12 @@ public class GameManager : Singleton<GameManager> {
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            InvokeRepeating("DecreaseTimer", 0f, 1f);
+            InvokeRepeating("DecreaseTimer", 0f, 1.03f); // Yes this causes the game to run longer than one minute. I'm a ninja
             isPreparing = true;
+            if(preparationMusic)
+            {
+                preparationMusic.Play();
+            }
         }
         if(timer <= 0 && isPreparing)
         {
