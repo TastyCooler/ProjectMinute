@@ -47,6 +47,8 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+    public event System.Action<int> OnTimerChanged;
+
     int maxStack = 50;
 
     [SerializeField] GameObject arrow;
@@ -58,7 +60,8 @@ public class GameManager : Singleton<GameManager> {
     Stack<GameObject> laserStack = new Stack<GameObject>();
 
     [SerializeField] int preparationTime = 60;
-    int timer = 0;
+    int timer;
+    bool isPreparing = false;
 
     #region Fields
 
@@ -97,12 +100,29 @@ public class GameManager : Singleton<GameManager> {
             newLaser.SetActive(false);
             laserStack.Push(newLaser);
         }
+        timer = preparationTime;
+    }
+
+    private void Start()
+    {
+        if(OnTimerChanged != null)
+        {
+            OnTimerChanged(preparationTime);
+        }
     }
 
     private void Update()
     {
-        if(timer > preparationTime)
+        if (Input.GetKeyDown(KeyCode.L))
         {
+            InvokeRepeating("DecreaseTimer", 0f, 1f);
+            isPreparing = true;
+        }
+        if(timer <= 0 && isPreparing)
+        {
+            isPreparing = false;
+            CancelInvoke();
+            InvokeRepeating("IncreaseTimer", 1f, 1f);
             print("BossCalled");
         }
         if(Input.GetButtonDown("Cancel"))
@@ -133,6 +153,24 @@ public class GameManager : Singleton<GameManager> {
     #endregion
 
     #region Helper Methods
+
+    void DecreaseTimer()
+    {
+        timer--;
+        if(OnTimerChanged != null)
+        {
+            OnTimerChanged(timer);
+        }
+    }
+
+    void IncreaseTimer()
+    {
+        timer++;
+        if(OnTimerChanged != null)
+        {
+            OnTimerChanged(timer);
+        }
+    }
 
     public void PushArrow(GameObject newObject)
     {

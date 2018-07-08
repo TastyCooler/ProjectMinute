@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class layerDepht : MonoBehaviour {
+public class LayerDepth : MonoBehaviour {
 
     public float yOffset;
     public float by; // This is not used?!
