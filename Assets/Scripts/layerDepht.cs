@@ -5,7 +5,7 @@ using UnityEngine;
 public class layerDepht : MonoBehaviour {
 
     public float yOffset;
-    public float by;
+    public float by; // This is not used?!
     float layer;
     SpriteRenderer rend;
     Vector3 centerBottom;

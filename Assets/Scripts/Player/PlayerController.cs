@@ -155,8 +155,6 @@ public class PlayerController : MonoBehaviour {
         footprintsShapeModule = footprints.shape;
         footprintsEmissionModule = footprints.emission;
 
-        standardRateOverDistance = footprintsEmissionModule.rateOverDistance;
-
         dashEmission = dash.emission;
 
         rend = GetComponent<SpriteRenderer>();

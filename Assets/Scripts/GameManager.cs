@@ -7,66 +7,6 @@ using UnityEngine;
 /// </summary>
 public class GameManager : Singleton<GameManager> {
 
-    int maxStack = 50;
-
-    [SerializeField] GameObject arrow;
-    [SerializeField] GameObject arrowParent;
-    Stack<GameObject> arrowStack = new Stack<GameObject>();
-
-    [SerializeField] GameObject laser;
-    [SerializeField] GameObject laserParent;
-    Stack<GameObject> laserStack = new Stack<GameObject>();
-
-    public void Awake()
-    {
-        for (int i = 0; i < maxStack; i++)
-        {
-            GameObject newArrow = Instantiate(arrow, transform.position, transform.rotation);
-            if(arrowParent)
-            {
-                newArrow.transform.parent = arrowParent.transform;
-            }
-            newArrow.SetActive(false);
-            arrowStack.Push(newArrow);
-
-            GameObject newLaser = Instantiate(laser, transform.position, transform.rotation);
-            if(laserParent)
-            {
-                newLaser.transform.parent = laserParent.transform;
-            }
-            newLaser.SetActive(false);
-            laserStack.Push(newLaser);
-        }
-    }
-
-    public void PushArrow(GameObject newObject)
-    {
-        newObject.SetActive(false);
-        arrowStack.Push(newObject);
-    }
-
-    public GameObject GetArrow(Vector3 pos)
-    {
-        GameObject arrowReturned = arrowStack.Pop();
-        arrowReturned.transform.position = pos;
-        arrowReturned.SetActive(true);
-        return arrowReturned;
-    }
-
-    public void PushLaser(GameObject newObject)
-    {
-        newObject.SetActive(false);
-        laserStack.Push(newObject);
-    }
-
-    public GameObject GetLaser(Vector3 pos)
-    {
-        GameObject laserReturned = laserStack.Pop();
-        laserReturned.transform.position = pos;
-        laserReturned.SetActive(true);
-        return laserReturned;
-    }
-
     public bool IsControllerInput
     {
         get
@@ -107,6 +47,19 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+    int maxStack = 50;
+
+    [SerializeField] GameObject arrow;
+    [SerializeField] GameObject arrowParent;
+    Stack<GameObject> arrowStack = new Stack<GameObject>();
+
+    [SerializeField] GameObject laser;
+    [SerializeField] GameObject laserParent;
+    Stack<GameObject> laserStack = new Stack<GameObject>();
+
+    [SerializeField] int preparationTime = 60;
+    int timer = 0;
+
     #region Fields
 
     [SerializeField] Canvas pauseMenu;
@@ -124,8 +77,34 @@ public class GameManager : Singleton<GameManager> {
 
     #region Unity Messages
 
+    public void Awake()
+    {
+        for (int i = 0; i < maxStack; i++)
+        {
+            GameObject newArrow = Instantiate(arrow, transform.position, transform.rotation);
+            if (arrowParent)
+            {
+                newArrow.transform.parent = arrowParent.transform;
+            }
+            newArrow.SetActive(false);
+            arrowStack.Push(newArrow);
+
+            GameObject newLaser = Instantiate(laser, transform.position, transform.rotation);
+            if (laserParent)
+            {
+                newLaser.transform.parent = laserParent.transform;
+            }
+            newLaser.SetActive(false);
+            laserStack.Push(newLaser);
+        }
+    }
+
     private void Update()
     {
+        if(timer > preparationTime)
+        {
+            print("BossCalled");
+        }
         if(Input.GetButtonDown("Cancel"))
         {
             pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
@@ -154,6 +133,34 @@ public class GameManager : Singleton<GameManager> {
     #endregion
 
     #region Helper Methods
+
+    public void PushArrow(GameObject newObject)
+    {
+        newObject.SetActive(false);
+        arrowStack.Push(newObject);
+    }
+
+    public GameObject GetArrow(Vector3 pos)
+    {
+        GameObject arrowReturned = arrowStack.Pop();
+        arrowReturned.transform.position = pos;
+        arrowReturned.SetActive(true);
+        return arrowReturned;
+    }
+
+    public void PushLaser(GameObject newObject)
+    {
+        newObject.SetActive(false);
+        laserStack.Push(newObject);
+    }
+
+    public GameObject GetLaser(Vector3 pos)
+    {
+        GameObject laserReturned = laserStack.Pop();
+        laserReturned.transform.position = pos;
+        laserReturned.SetActive(true);
+        return laserReturned;
+    }
 
     void SettleHighscore()
     {

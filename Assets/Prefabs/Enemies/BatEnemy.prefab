@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50075752136723140}
   - component: {fileID: 114933501763153022}
   m_Layer: 12
-  m_Name: Batman
+  m_Name: BatEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
