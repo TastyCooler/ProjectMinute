@@ -448,11 +448,6 @@ Prefab:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 901128019}
-    - target: {fileID: 114857256471455524, guid: 8abaa5cd5b0dcc24ea74bc228b30dacb,
-        type: 2}
-      propertyPath: preparationTime
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8abaa5cd5b0dcc24ea74bc228b30dacb, type: 2}
   m_IsPrefabParent: 0
@@ -721,6 +716,11 @@ Prefab:
     - target: {fileID: 4560978129980282, guid: 124b830047082c34eb944e0c8638be8e, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 212850816173894492, guid: 124b830047082c34eb944e0c8638be8e,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 124b830047082c34eb944e0c8638be8e, type: 2}

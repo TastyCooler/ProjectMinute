@@ -60,6 +60,8 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] GameObject laserParent;
     Stack<GameObject> laserStack = new Stack<GameObject>();
 
+    GameObject player;
+
     [SerializeField] PostProcessingProfile bossPost;
 
     [SerializeField] int preparationTime = 60;
@@ -67,6 +69,8 @@ public class GameManager : Singleton<GameManager> {
     bool isPreparing = false;
 
     [SerializeField] AudioSource preparationMusic;
+
+    [SerializeField] GameObject boss;
 
     #region Fields
 
@@ -106,6 +110,7 @@ public class GameManager : Singleton<GameManager> {
             laserStack.Push(newLaser);
         }
         timer = preparationTime;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Start()
@@ -136,7 +141,7 @@ public class GameManager : Singleton<GameManager> {
                 Camera.main.GetComponent<PostProcessingBehaviour>().profile = bossPost;
             }
             InvokeRepeating("IncreaseTimer", 1f, 1f);
-            print("BossCalled");
+            SummonBoss();
         }
         if(Input.GetButtonDown("Cancel"))
         {
@@ -166,6 +171,11 @@ public class GameManager : Singleton<GameManager> {
     #endregion
 
     #region Helper Methods
+
+    void SummonBoss()
+    {
+        Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
+    }
 
     void DecreaseTimer()
     {
