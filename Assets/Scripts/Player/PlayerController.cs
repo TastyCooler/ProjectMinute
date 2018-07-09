@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (OnHealthChanged != null)
         {
-            OnHealthChanged(maxHealth, health);
+            OnHealthChanged(health, maxHealth);
         }
         if (OnLevelChanged != null)
         {
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour {
         }
         if(OnHealthChanged != null)
         {
-            OnHealthChanged(maxHealth, health);
+            OnHealthChanged(health, maxHealth);
         }
         if(OnLevelChanged != null)
         {
@@ -416,7 +416,7 @@ public class PlayerController : MonoBehaviour {
             playerState = State.knockedBack;
             if (OnHealthChanged != null)
             {
-                OnHealthChanged(maxHealth, health);
+                OnHealthChanged(health, maxHealth);
             }
         }
     }
