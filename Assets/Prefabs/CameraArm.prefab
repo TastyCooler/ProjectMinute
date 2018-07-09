@@ -235,7 +235,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c09bb711772cd24fbebc28ff191a17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camDelay: 0.1
+  camDelay: 0.15
+  titleCamDelay: 3
+  cameraPathForTitle:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  titleScreenController: {fileID: 0}
 --- !u!198 &198463738644937260
 ParticleSystem:
   m_ObjectHideFlags: 1
