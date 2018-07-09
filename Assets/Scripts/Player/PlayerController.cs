@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
     {
         get
         {
-            return cursor;
+            return arrow;
         }
     }
 
@@ -112,7 +112,8 @@ public class PlayerController : MonoBehaviour {
 
     LayerMask projectileLayer;
 
-    [SerializeField] GameObject cursor;
+    [SerializeField] GameObject arrow;
+    [SerializeField] GameObject hitbox;
     [SerializeField] ParticleSystem footprints;
     ParticleSystem.MainModule footprintsMainModule;
     ParticleSystem.ShapeModule footprintsShapeModule;
@@ -395,13 +396,21 @@ public class PlayerController : MonoBehaviour {
             aimDirection.y = targetAim.normalized.y;
         }
         SetArrow();
+        SetHitbox();
     }
 
     // Set the arrow position and rotation
     void SetArrow()
     {
-        cursor.transform.position = transform.position + aimDirection.normalized;
-        cursor.transform.rotation = Quaternion.FromToRotation(cursor.transform.up, aimDirection) * cursor.transform.rotation;
+        arrow.transform.position = transform.position + aimDirection.normalized;
+        arrow.transform.rotation = Quaternion.FromToRotation(arrow.transform.up, aimDirection) * arrow.transform.rotation;
+    }
+
+    // Set the hitbox position and rotation
+    void SetHitbox()
+    {
+        hitbox.transform.position = transform.position + aimDirection.normalized;
+        hitbox.transform.rotation = Quaternion.FromToRotation(hitbox.transform.up, aimDirection) * hitbox.transform.rotation;
     }
 
     // Subtracts damage from the player health and knocks him back
