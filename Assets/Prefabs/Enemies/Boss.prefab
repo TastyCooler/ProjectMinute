@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1645413632767480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.51, y: 1.42, z: 0}
+  m_LocalPosition: {x: -37.292915, y: -0.87427425, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -145,6 +145,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bfd28806b692394c9e9f15bca4a6c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attack: 5
+  knockbackDuration: 1
+  knockbackStrength: 1
+  health: 10
+  speed: 1
+  powerupsToDrop: []
+  dropChance: 0.1
+  sightReach: 1
+  patrolRadius: 1
+  patrollingSpeedMultiplier: 0.3
+  sightReachMultiplier: 0.5
+  attackAreaTolerance: 3
+  highscoreValue: 1000
+  expToGive: 3
+  attackCooldown: 1
+  attackDuration: 0.4
+  attackDistance: 1
 --- !u!114 &114886235233950804
 MonoBehaviour:
   m_ObjectHideFlags: 1

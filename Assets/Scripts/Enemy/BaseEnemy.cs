@@ -80,13 +80,13 @@ public class BaseEnemy : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (toPlayer.magnitude < sightReach)
-        {
-            Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (toPlayer.magnitude < sightReach)
+    //    {
+    //        Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
+    //    }
+    //}
 
     protected virtual void Patrolling()
     {
@@ -237,9 +237,12 @@ public class BaseEnemy : MonoBehaviour {
         }
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
-        DropPowerup();
+        if(powerupsToDrop.Length > 0)
+        {
+            DropPowerup();
+        }
         GameManager.Instance.Highscore += highscoreValue;
         player.GainExp(expToGive);
         Destroy(gameObject);

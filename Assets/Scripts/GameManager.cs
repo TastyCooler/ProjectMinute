@@ -35,19 +35,6 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
-    public bool IsBossSpawned
-    {
-        get
-        {
-            return isBossSpawned;
-        }
-        set
-        {
-            isBossSpawned = value;
-            GameObject.FindGameObjectWithTag("Boss").GetComponent<BossController>().OnBossDefeated += SettleHighscore;
-        }
-    }
-
     #region Fields
 
     public event System.Action<int> OnTimerChanged;
@@ -176,7 +163,8 @@ public class GameManager : Singleton<GameManager> {
 
     void SummonBoss()
     {
-        Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
+        GameObject newBoss = Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
+        newBoss.GetComponent<BossController>().OnBossDefeated += OnBossDefeated;
     }
 
     void DecreaseTimer()
@@ -232,9 +220,11 @@ public class GameManager : Singleton<GameManager> {
         return laserReturned;
     }
 
-    void SettleHighscore()
+    void OnBossDefeated()
     {
         finalHighscore = highscore + highscoreAddition;
+        print("defeated");
+        // TODO make win screen appear
     }
 
     // Looks for any connected controller and updates the counter for every connected controller

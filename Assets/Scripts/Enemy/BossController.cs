@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossController : MonoBehaviour {
+public class BossController : BaseEnemy {
 
     public event System.Action OnBossDefeated;
 
@@ -14,9 +14,15 @@ public class BossController : MonoBehaviour {
         }
     }
 
-    private void Awake()
+    protected override void Die()
     {
-        GameManager.Instance.IsBossSpawned = true;
+        if(OnBossDefeated != null)
+        {
+            OnBossDefeated();
+        }
+        GameManager.Instance.Highscore += highscoreValue;
+        player.GainExp(expToGive);
+        Destroy(gameObject);
     }
 
 }
