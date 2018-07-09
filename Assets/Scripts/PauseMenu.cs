@@ -26,12 +26,14 @@ public class PauseMenu : MonoBehaviour {
     }
 
     Animator anim;
+    Animator camAnim;
 
     bool isShown = false;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        camAnim = Camera.main.GetComponent<Animator>();
     }
 
     public void OnQuitButton()
@@ -47,11 +49,13 @@ public class PauseMenu : MonoBehaviour {
     void Show()
     {
         anim.SetTrigger("Show");
+        camAnim.SetTrigger("Pause");
     }
 
     void Hide()
     {
         anim.SetTrigger("Hide");
+        camAnim.SetTrigger("Play");
     }
 
 }
