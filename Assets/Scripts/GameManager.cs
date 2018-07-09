@@ -191,6 +191,7 @@ public class GameManager : Singleton<GameManager> {
     void OnPlayerDied()
     {
         pauseMenu.IsShown = true;
+        pauseMenu.IsGameOver = true;
         Time.timeScale = 0f;
     }
 

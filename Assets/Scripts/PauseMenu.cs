@@ -25,8 +25,23 @@ public class PauseMenu : MonoBehaviour {
         }
     }
 
+    public bool IsGameOver
+    {
+        get
+        {
+            return isGameOver;
+        }
+        set
+        {
+            anim.SetBool("GameOver", value);
+            isGameOver = value;
+        }
+    }
+
     Animator anim;
     Animator camAnim;
+
+    bool isGameOver = false;
 
     bool isShown = false;
 
