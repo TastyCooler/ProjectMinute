@@ -17,9 +17,9 @@ TagManager:
   - Player
   - Obstacles
   - Instakill
-  - Projectile
+  - EnemyProjectile
   - Enemy
-  - 
+  - PlayerProjectile
   - 
   - 
   - 

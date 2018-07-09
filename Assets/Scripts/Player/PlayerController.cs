@@ -110,6 +110,8 @@ public class PlayerController : MonoBehaviour {
 
     Camera cam;
 
+    LayerMask projectileLayer;
+
     [SerializeField] GameObject cursor;
     [SerializeField] ParticleSystem footprints;
     ParticleSystem.MainModule footprintsMainModule;
@@ -158,6 +160,9 @@ public class PlayerController : MonoBehaviour {
         dashEmission = dash.emission;
 
         rend = GetComponent<SpriteRenderer>();
+
+        int layer = LayerMask.NameToLayer("PlayerProjectiles");
+        projectileLayer = 1 << layer;
     }
 
     private void Start()
