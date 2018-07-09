@@ -50,7 +50,7 @@ public class GameManager : Singleton<GameManager> {
 
     public event System.Action<int> OnTimerChanged;
 
-    int maxStack = 50;
+    [SerializeField] int maxStack = 50;
 
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject arrowParent;

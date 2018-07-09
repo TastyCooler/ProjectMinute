@@ -285,8 +285,16 @@ public class PlayerController : MonoBehaviour {
             {
                 playerState = State.freeToMove;
             }
+            StartCoroutine(FlashSprite(0.1f));
         }
         transform.position += velocity * Time.deltaTime;
+    }
+
+    IEnumerator FlashSprite(float offtime)
+    {
+        rend.enabled = false;
+        yield return new WaitForSeconds(offtime);
+        rend.enabled = true;
     }
 
     private void CalculateOrderInLayer()
@@ -394,18 +402,22 @@ public class PlayerController : MonoBehaviour {
     // Subtracts damage from the player health and knocks him back
     public void TakeDamage(int damage, Vector3 knockback, float time, float duration)
     {
-        health -= damage;
-        if(health <= 0)
+        // Player only takes damage, if he isnt already knocked back
+        if(playerState != State.knockedBack)
         {
-            Die();
-        }
-        knockbackDir = knockback;
-        knockBackStarted = time;
-        knockBackDuration = duration;
-        playerState = State.knockedBack;
-        if(OnHealthChanged != null)
-        {
-            OnHealthChanged(maxHealth, health);
+            health -= damage;
+            if (health <= 0)
+            {
+                Die();
+            }
+            knockbackDir = knockback;
+            knockBackStarted = time;
+            knockBackDuration = duration;
+            playerState = State.knockedBack;
+            if (OnHealthChanged != null)
+            {
+                OnHealthChanged(maxHealth, health);
+            }
         }
     }
 
