@@ -63,6 +63,8 @@ public class PlayerController : MonoBehaviour {
 
     public event System.Action<int> OnLevelChanged;
 
+    public event System.Action OnPlayerDied;
+
     [Header("Stats"), SerializeField] float speed = 1f;
 
     // Player Slots for item and skill
@@ -438,6 +440,10 @@ public class PlayerController : MonoBehaviour {
     void Die()
     {
         //TODO make the player die and open gameover menu
+        if(OnPlayerDied != null)
+        {
+            OnPlayerDied();
+        }
     }
 
     // Collects Items or Skills if player walks over them if nothing is equipped before

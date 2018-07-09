@@ -48,6 +48,8 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+    #region Fields
+
     public event System.Action<int> OnTimerChanged;
 
     [SerializeField] int maxStack = 50;
@@ -72,9 +74,7 @@ public class GameManager : Singleton<GameManager> {
 
     [SerializeField] GameObject boss;
 
-    #region Fields
-
-    [SerializeField] Canvas pauseMenu;
+    [SerializeField] PauseMenu pauseMenu;
 
     bool isControllerInput = false;
     int controllerCount = 0;
@@ -91,6 +91,7 @@ public class GameManager : Singleton<GameManager> {
 
     public void Awake()
     {
+        Time.timeScale = 1f;
         for (int i = 0; i < maxStack; i++)
         {
             GameObject newArrow = Instantiate(arrow, transform.position, transform.rotation);
@@ -111,6 +112,7 @@ public class GameManager : Singleton<GameManager> {
         }
         timer = preparationTime;
         player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerController>().OnPlayerDied += OnPlayerDied;
     }
 
     private void Start()
@@ -145,7 +147,7 @@ public class GameManager : Singleton<GameManager> {
         }
         if(Input.GetButtonDown("Cancel"))
         {
-            pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
+            pauseMenu.IsShown = !pauseMenu.IsShown;
         }
         GetControllerCount();
         if(controllerCount > 0 && !isControllerInput)
@@ -184,6 +186,12 @@ public class GameManager : Singleton<GameManager> {
         {
             OnTimerChanged(timer);
         }
+    }
+
+    void OnPlayerDied()
+    {
+        pauseMenu.IsShown = true;
+        Time.timeScale = 0f;
     }
 
     void IncreaseTimer()

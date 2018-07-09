@@ -5,7 +5,36 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
-	public void OnQuitButton()
+    public bool IsShown
+    {
+        get
+        {
+            return isShown;
+        }
+        set
+        {
+            if(value)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+            isShown = value;
+        }
+    }
+
+    Animator anim;
+
+    bool isShown = false;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+
+    public void OnQuitButton()
     {
         Application.Quit();
     }
@@ -13,6 +42,16 @@ public class PauseMenu : MonoBehaviour {
     public void OnRestartButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void Show()
+    {
+        anim.SetTrigger("Show");
+    }
+
+    void Hide()
+    {
+        anim.SetTrigger("Hide");
     }
 
 }
