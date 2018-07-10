@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour {
     Vector3 velocity;
 
     [SerializeField] AudioSource swooshSound;
+    [SerializeField] AudioSource footstepSound;
 
     Animator anim;
 
@@ -402,9 +403,14 @@ public class PlayerController : MonoBehaviour {
         }
         moveDirection.y = input.Vertical;
         anim.SetFloat("Velocity", moveDirection.magnitude);
-        if(moveDirection.magnitude < 0.1f)
+        footstepSound.volume = moveDirection.normalized.magnitude;
+        if(moveDirection.magnitude < 0.1f && playerState == State.freeToMove)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else if (moveDirection.magnitude < 0.1f && playerState == State.attacking)
+        {
+            transform.localScale = new Vector3(-aimDirection.normalized.x, 1f, 1f);
         }
         // Create the angle for the movement vector
         float moveAngle = Vector3.Angle(Vector3.up, lastValidMoveDir);
