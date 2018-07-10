@@ -9,15 +9,9 @@ public class Curves : MonoBehaviour {
     public Transform target;
     public bool isOn;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
     public void Reset()
     {
-        points = new Vector3[] { transform.localPosition, new Vector3(2f, 2f, 2f), new Vector3(3f, 3f, 3f) };
+        //points = new Vector3[] { transform.localPosition, new Vector3(2f, 2f, 2f), new Vector3(3f, 3f, 3f) };
     }
 
     public Vector3 GetPoint(float t)

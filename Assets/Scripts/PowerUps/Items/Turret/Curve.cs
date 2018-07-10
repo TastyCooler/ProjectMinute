@@ -5,7 +5,7 @@ using UnityEngine;
 public class Curve : MonoBehaviour {
 
     public Curves curve;
-
+    
     public bool on;
 
     public float duration;
@@ -15,6 +15,7 @@ public class Curve : MonoBehaviour {
     private void Update()
     {
         
+        
         if (on)
         {
             progress += Time.deltaTime / duration;
@@ -23,8 +24,7 @@ public class Curve : MonoBehaviour {
                 progress = 1f;
                 curve = null;
             }
-            if (curve)
-                transform.localPosition = curve.GetPoint(progress);
+                if (curve) transform.localPosition = curve.GetPoint(progress);
         }
     }
 }

@@ -53,7 +53,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curve: {fileID: 0}
-  on: 0
+  kurwa: {fileID: 1740893866151970, guid: bd6217f353522754ca996cd0f29d5d3c, type: 2}
+  on: 1
   duration: 5
 --- !u!212 &212267235491838082
 SpriteRenderer:

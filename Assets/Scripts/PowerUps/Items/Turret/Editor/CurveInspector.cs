@@ -17,7 +17,7 @@ public class CurveInspector : Editor {
     {
         player = FindObjectOfType<PlayerController>().GetComponent<PlayerController>();
         curve = target as Curves;
-
+        curve.transform.position = player.transform.position;
         if (curve.isOn)
         {
 
