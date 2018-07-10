@@ -5,6 +5,11 @@ using UnityEngine;
 public class Turret : MonoBehaviour {
 
     PlayerController player;
+    public BezierSpline spline;
+
+    public float duration;
+
+    private float progress;
 
     [SerializeField] int timer; // The Shootrate
     const int initialtimer = 30; // Used to reset timer
@@ -44,8 +49,9 @@ public class Turret : MonoBehaviour {
     }
     void Shoot()
     {
-     
-        if(timer <= 0  && toEnemy.magnitude < sightreach)
+        
+
+        if (timer <= 0  && toEnemy.magnitude < sightreach)
         {
             ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
             arrowToShoot.Owner = player.gameObject;
