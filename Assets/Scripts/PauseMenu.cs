@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour {
+public class PauseMenu : BaseMenu {
 
     public bool IsShown
     {
@@ -45,6 +45,8 @@ public class PauseMenu : MonoBehaviour {
 
     bool isShown = false;
 
+    [SerializeField] AnimationClip quitClip;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -53,11 +55,27 @@ public class PauseMenu : MonoBehaviour {
 
     public void OnQuitButton()
     {
+        buttonSound.Play();
+        anim.SetTrigger("Quit");
+        StartCoroutine(QuitAfterSeconds(quitClip.length));
+    }
+
+    IEnumerator QuitAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
         Application.Quit();
     }
 
     public void OnRestartButton()
     {
+        buttonSound.Play();
+        anim.SetTrigger("Quit");
+        StartCoroutine(LoadSceneAfterSeconds(quitClip.length));
+    }
+
+    IEnumerator LoadSceneAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

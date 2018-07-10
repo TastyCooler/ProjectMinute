@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitlescreenController : MonoBehaviour {
+public class TitlescreenController : BaseMenu {
 
     Animator anim;
     [SerializeField] Animator overlayAnim;
@@ -15,6 +15,7 @@ public class TitlescreenController : MonoBehaviour {
 
     public void OnQuitButton()
     {
+        buttonSound.Play();
         Application.Quit();
     }
 
@@ -25,6 +26,7 @@ public class TitlescreenController : MonoBehaviour {
 
     public void OnPlayButton()
     {
+        buttonSound.Play();
         Cursor.visible = false;
         anim.SetTrigger("Hide");
         overlayAnim.SetTrigger("FadeIn");
