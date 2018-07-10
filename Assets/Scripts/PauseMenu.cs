@@ -56,12 +56,13 @@ public class PauseMenu : BaseMenu {
     public void OnQuitButton()
     {
         buttonSound.Play();
-        anim.SetTrigger("Quit");
         StartCoroutine(QuitAfterSeconds(quitClip.length));
     }
 
     IEnumerator QuitAfterSeconds(float seconds)
     {
+        yield return new WaitForSeconds(0.1f);
+        anim.SetTrigger("Quit");
         yield return new WaitForSeconds(seconds);
         Application.Quit();
     }
@@ -69,12 +70,13 @@ public class PauseMenu : BaseMenu {
     public void OnRestartButton()
     {
         buttonSound.Play();
-        anim.SetTrigger("Quit");
         StartCoroutine(LoadSceneAfterSeconds(quitClip.length));
     }
 
     IEnumerator LoadSceneAfterSeconds(float seconds)
     {
+        yield return new WaitForSeconds(0.1f);
+        anim.SetTrigger("Quit");
         yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
