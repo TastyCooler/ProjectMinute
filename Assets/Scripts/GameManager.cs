@@ -78,6 +78,7 @@ public class GameManager : Singleton<GameManager> {
 
     public void Awake()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 1f;
         for (int i = 0; i < maxStack; i++)
         {
