@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class i_Shield : BaseItem {
 
-    [SerializeField] int usages = 5;
+    [SerializeField] int usages = 1;
     [SerializeField] GameObject Shield;
 
     public override void Use()
