@@ -1,12 +1,16 @@
 fileFormatVersion: 2
-guid: d10dadf797fb0ca4a93caefa9fdaba08
+guid: 70965360dc4ad8043ad2dab0f175edd3
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SPR_Flamme_0
-    21300002: SPR_Flamme_1
-    21300004: SPR_Flamme_2
-    21300006: SPR_Flamme_3
-    21300008: SPR_Flamme_4
+    21300000: SPR_FlammenKessel_0
+    21300002: SPR_FlammenKessel_1
+    21300004: SPR_FlammenKessel_2
+    21300006: SPR_FlammenKessel_3
+    21300008: SPR_FlammenKessel_4
+    21300010: SPR_FlammenKessel_5
+    21300012: SPR_FlammenKessel_6
+    21300014: SPR_FlammenKessel_7
+    21300016: SPR_FlammenKessel_8
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -63,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -74,7 +78,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -85,7 +89,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -96,7 +100,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: WebGL
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -109,101 +113,181 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SPR_Flamme_0
+      name: SPR_FlammenKessel_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 32
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e489b537f573a340a687c26af67d447
+      spriteID: a6b4277564ded56458fd202944f1a9b1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_1
+      name: SPR_FlammenKessel_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 32
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a05a36688d3cfd4f9967bed52ae8e76
+      spriteID: e093e5c23248a874ab7c7a6f4eeeb44d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_2
+      name: SPR_FlammenKessel_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
-        height: 32
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9aa63822e2fde04aabffb4267612fb8
+      spriteID: 131ebc356005d3c4281c6b809dd1356b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_3
+      name: SPR_FlammenKessel_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
-        height: 32
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 470cc5ff749b3ad4dba6eba9fc0871a9
+      spriteID: 4d074743ad58a0c43ae7c8c73c39b085
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_4
+      name: SPR_FlammenKessel_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.4970603, y: 0.47354493}
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a09a4ce6619ddfe44bf294e64a8b1bf7
+      spriteID: 4883d0d0e9ed90144b4423b31337d7bf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_FlammenKessel_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ce559bbbc212c04e93ec3cabc212423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_FlammenKessel_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d322d0aa5c96784888bd509b870f0bf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_FlammenKessel_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6807fd3d3f65ab24fbc969dbb96d7496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_FlammenKessel_8
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b6be1cc3e507aa489e0b3452dcb3c5c
       vertices: []
       indices: 
       edges: []
@@ -211,7 +295,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f79cd151936599c4cb19a806da04bdaf
+    spriteID: baf338ad51bb3f7409c098ef6329e073
     vertices: []
     indices: 
     edges: []

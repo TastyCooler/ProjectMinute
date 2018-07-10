@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: d10dadf797fb0ca4a93caefa9fdaba08
+guid: ed0c18d72253a3e4a8cb8bbbba04b9af
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SPR_Flamme_0
-    21300002: SPR_Flamme_1
-    21300004: SPR_Flamme_2
-    21300006: SPR_Flamme_3
-    21300008: SPR_Flamme_4
+    21300000: SPR_Fackelhalter_0
+    21300002: SPR_Fackelhalter_1
+    21300004: SPR_Fackelhalter_2
+    21300006: SPR_Fackelhalter_3
+    21300008: SPR_Fackelhalter_4
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -109,101 +109,101 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SPR_Flamme_0
+      name: SPR_Fackelhalter_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 32
+        height: 68
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e489b537f573a340a687c26af67d447
+      spriteID: 1342d6396719090408a6e76fb8a6cede
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_1
+      name: SPR_Fackelhalter_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 32
+        height: 68
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a05a36688d3cfd4f9967bed52ae8e76
+      spriteID: 789ac63dd9cac544d89d53977f29966b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_2
+      name: SPR_Fackelhalter_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 68
+      alignment: 9
+      pivot: {x: 0.5293944, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9aa63822e2fde04aabffb4267612fb8
+      spriteID: 6531f683aff8ada40b216bd9116c1fe5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_3
+      name: SPR_Fackelhalter_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
-        height: 32
+        height: 68
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 470cc5ff749b3ad4dba6eba9fc0871a9
+      spriteID: 3921f130a5e0b624a86d82820b3290ad
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_Flamme_4
+      name: SPR_Fackelhalter_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
-        height: 32
-      alignment: 9
-      pivot: {x: 0.4970603, y: 0.47354493}
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a09a4ce6619ddfe44bf294e64a8b1bf7
+      spriteID: 0d84039adbf8d184aa7d7cb29ff06e75
       vertices: []
       indices: 
       edges: []
@@ -211,7 +211,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f79cd151936599c4cb19a806da04bdaf
+    spriteID: 839f1c0ffbf55ac4e8ddf94b75ce0aaf
     vertices: []
     indices: 
     edges: []
