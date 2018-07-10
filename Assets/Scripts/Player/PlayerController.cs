@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour {
     public event System.Action OnPlayerDied;
 
     [Header("Stats"), SerializeField] float speed = 1f;
+    [SerializeField] float speedWhenAttacking = 1f;
 
     // Player Slots for item and skill
     BaseSkill playerSkill;
@@ -88,10 +89,10 @@ public class PlayerController : MonoBehaviour {
     int attack;
     float attackMultiplier = 1f;
     float attackStartedTime;
-    [SerializeField] float attackDuration = 0.5f;
-    [SerializeField] float attackTwoDuration = 0.5f;
+
+    [SerializeField] AnimationClip[] attackAnimations;
+    
     [Range(1, 5), SerializeField] float attackTwoDamageMultiplier = 1.5f;
-    [SerializeField] float attackThreeDuration = 0.5f;
     [Range(1, 10), SerializeField] float attackThreeDamageMultiplier = 2f;
     [SerializeField] float attackCooldown = 1f;
     [SerializeField] float knockbackStrength = 1f;
@@ -214,7 +215,7 @@ public class PlayerController : MonoBehaviour {
             {
                 playerSkill.Use();
             }
-            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
+            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length + 0.1f + attackCooldown && !EventSystem.current.IsPointerOverGameObject())
             {
                 keepAttacking = false;
                 playerState = State.attacking;
@@ -226,16 +227,16 @@ public class PlayerController : MonoBehaviour {
         else if (playerState == State.attacking)
         {
             GetInput();
-            velocity = moveDirection * speed;
+            velocity = moveDirection * speedWhenAttacking;
             if (input.Attack)
             {
                 keepAttacking = true;
             }
-            if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length + 0.2f && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
-            else if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && keepAttacking)
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length + 0.2f && keepAttacking)
             {
                 keepAttacking = false;
                 playerState = State.attackingTwo;
@@ -247,16 +248,16 @@ public class PlayerController : MonoBehaviour {
         else if (playerState == State.attackingTwo)
         {
             GetInput();
-            velocity = moveDirection * speed;
+            velocity = moveDirection * speedWhenAttacking;
             if (input.Attack)
             {
                 keepAttacking = true;
             }
-            if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length + 0.1f && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
-            else if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && keepAttacking)
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length + 0.1f && keepAttacking)
             {
                 playerState = State.attackingThree;
                 attackMultiplier = attackThreeDamageMultiplier;
@@ -266,9 +267,9 @@ public class PlayerController : MonoBehaviour {
         }
         else if (playerState == State.attackingThree)
         {
-            GetInput();
-            velocity = moveDirection * speed;
-            if (Time.realtimeSinceStartup > attackStartedTime + attackThreeDuration)
+            //GetInput();
+            //velocity = moveDirection * speed;
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length + 0.1f)
             {
                 playerState = State.freeToMove;
             }
@@ -363,6 +364,11 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
+        anim.SetFloat("Velocity", moveDirection.magnitude);
+        if(moveDirection.magnitude < 0.1f)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
         // Create the angle for the movement vector
         float moveAngle = Vector3.Angle(Vector3.up, lastValidMoveDir);
         if (moveDirection.x < 0f)
@@ -404,7 +410,8 @@ public class PlayerController : MonoBehaviour {
     // Set the arrow position and rotation
     void SetArrow()
     {
-        arrow.transform.position = transform.position + aimDirection.normalized;
+        arrow.transform.position = (transform.position + aimDirection.normalized);
+        arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y - 0.5f);
         arrow.transform.rotation = Quaternion.FromToRotation(arrow.transform.up, aimDirection) * arrow.transform.rotation;
     }
 
@@ -412,6 +419,7 @@ public class PlayerController : MonoBehaviour {
     void SetHitbox()
     {
         hitbox.transform.position = transform.position + aimDirection.normalized;
+        hitbox.transform.position = new Vector3(hitbox.transform.position.x, hitbox.transform.position.y - 0.5f);
         hitbox.transform.rotation = Quaternion.FromToRotation(hitbox.transform.up, aimDirection) * hitbox.transform.rotation;
     }
 

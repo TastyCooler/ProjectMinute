@@ -5,7 +5,7 @@ using UnityEngine;
 public class TitlescreenController : MonoBehaviour {
 
     Animator anim;
-
+    [SerializeField] Animator overlayAnim;
     public event System.Action OnGameStarted;
 
     private void Awake()
@@ -20,7 +20,9 @@ public class TitlescreenController : MonoBehaviour {
 
     public void OnPlayButton()
     {
+        Cursor.visible = false;
         anim.SetTrigger("Hide");
+        overlayAnim.SetTrigger("FadeIn");
         if(OnGameStarted != null)
         {
             OnGameStarted();

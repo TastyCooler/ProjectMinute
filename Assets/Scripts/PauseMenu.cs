@@ -65,12 +65,14 @@ public class PauseMenu : MonoBehaviour {
     {
         anim.SetTrigger("Show");
         camAnim.SetTrigger("Pause");
+        Cursor.visible = true;
     }
 
     void Hide()
     {
         anim.SetTrigger("Hide");
         camAnim.SetTrigger("Play");
+        Cursor.visible = false;
     }
 
 }

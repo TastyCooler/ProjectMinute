@@ -9,7 +9,9 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField] float camDelay = 1;
     [SerializeField] float titleCamDelay = 3f;
- 
+
+    [SerializeField] float camGain = 0.05f;
+
     [SerializeField] Transform[] cameraPathForTitle;
     int targetTransform = 0;
     bool isCameraInTitleMode = true;
@@ -33,7 +35,7 @@ public class CameraController : MonoBehaviour {
         {
             if(titleCamDelay > camDelay)
             {
-                titleCamDelay -= 0.05f;
+                titleCamDelay -= camGain;
             }
             else if(titleCamDelay != camDelay)
             {

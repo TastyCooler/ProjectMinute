@@ -160,10 +160,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00824815, y: -0.42}
+  m_Offset: {x: -0.033526897, y: -0.9108553}
   m_SpriteTilingProperty:
-    border: {x: 0.85999995, y: 0, z: 0.62, w: 0.94}
-    pivot: {x: 0.4828356, y: 0.2722851}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 0.6533333, y: 0.72}
     adaptiveTilingThreshold: 0.5
@@ -171,7 +171,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64964426, y: 0.55}
+  m_Size: {x: 0.74637175, y: 0.42481518}
   m_EdgeRadius: 0
 --- !u!61 &61424201628298850
 BoxCollider2D:
@@ -185,10 +185,10 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.095078975, y: 0.100877166}
+  m_Offset: {x: -0.25456214, y: -0.33980572}
   m_SpriteTilingProperty:
-    border: {x: 0.85999995, y: 0, z: 0.62, w: 0.94}
-    pivot: {x: 0.4828356, y: 0.2722851}
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 0.6533333, y: 0.72}
     adaptiveTilingThreshold: 0.5
@@ -196,7 +196,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8392984, y: 1.5915365}
+  m_Size: {x: 1.3657243, y: 1.6163764}
   m_EdgeRadius: 0
 --- !u!61 &61453227622886628
 BoxCollider2D:
@@ -264,12 +264,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  speedWhenAttacking: 1
   baseAttack: 3
   attackGainPerLevel: 3
-  attackDuration: 0.2
-  attackTwoDuration: 0.6
+  attackAnimations:
+  - {fileID: 7400000, guid: 843b9f8242dc96549946aa86dfd389fb, type: 2}
+  - {fileID: 7400000, guid: baaf2413548320e49af3de2995fc879b, type: 2}
+  - {fileID: 7400000, guid: 5f7d1c324fc77e6419b96ec9a26d8c49, type: 2}
   attackTwoDamageMultiplier: 1.5
-  attackThreeDuration: 0.7
   attackThreeDamageMultiplier: 2
   attackCooldown: 0.3
   knockbackStrength: 1
@@ -374,9 +376,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c104c480b144264d9e526cd7e6f291b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7912442e79059f744a06eedb61445661, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.6533333, y: 0.72}
