@@ -200,6 +200,9 @@ public class PlayerController : MonoBehaviour {
 
         if (playerState == State.freeToMove)
         {
+            anim.ResetTrigger("Attack");
+            anim.ResetTrigger("AttackTwo");
+            anim.ResetTrigger("AttackThree");
             footprintsEmissionModule.rateOverDistance = 1f;
             if (dash)
             {
@@ -267,10 +270,8 @@ public class PlayerController : MonoBehaviour {
         }
         else if (playerState == State.attackingThree)
         {
-            GetInput();
-            //velocity = moveDirection * speed;
             velocity = moveDirection * 0f;
-            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length + 0.1f)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length)
             {
                 playerState = State.freeToMove;
             }
