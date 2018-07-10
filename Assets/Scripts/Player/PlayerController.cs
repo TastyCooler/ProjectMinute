@@ -82,6 +82,8 @@ public class PlayerController : MonoBehaviour {
 
     Vector3 velocity;
 
+    [SerializeField] AudioSource swooshSound;
+
     Animator anim;
 
     int level;
@@ -345,6 +347,14 @@ public class PlayerController : MonoBehaviour {
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + aimDirection);
+    }
+
+    public void PlayAttackSound()
+    {
+        if (swooshSound)
+        {
+            swooshSound.PlayOneShot(swooshSound.clip);
+        }
     }
 
     public void GainExp(int expGain)
