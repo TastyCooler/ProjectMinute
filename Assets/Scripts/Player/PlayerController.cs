@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour {
             {
                 playerSkill.Use();
             }
-            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length + 0.1f + attackCooldown && !EventSystem.current.IsPointerOverGameObject())
+            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length+ attackCooldown && !EventSystem.current.IsPointerOverGameObject())
             {
                 keepAttacking = false;
                 playerState = State.attacking;
@@ -232,11 +232,11 @@ public class PlayerController : MonoBehaviour {
             {
                 keepAttacking = true;
             }
-            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length + 0.2f && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
-            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length + 0.2f && keepAttacking)
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && keepAttacking)
             {
                 keepAttacking = false;
                 playerState = State.attackingTwo;
@@ -253,11 +253,11 @@ public class PlayerController : MonoBehaviour {
             {
                 keepAttacking = true;
             }
-            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length + 0.1f && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
-            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length + 0.1f && keepAttacking)
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length && keepAttacking)
             {
                 playerState = State.attackingThree;
                 attackMultiplier = attackThreeDamageMultiplier;
@@ -267,8 +267,9 @@ public class PlayerController : MonoBehaviour {
         }
         else if (playerState == State.attackingThree)
         {
-            //GetInput();
+            GetInput();
             //velocity = moveDirection * speed;
+            velocity = moveDirection * 0f;
             if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length + 0.1f)
             {
                 playerState = State.freeToMove;

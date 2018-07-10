@@ -18,6 +18,11 @@ public class TitlescreenController : MonoBehaviour {
         Application.Quit();
     }
 
+    public void DisableTItlescreen()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void OnPlayButton()
     {
         Cursor.visible = false;
