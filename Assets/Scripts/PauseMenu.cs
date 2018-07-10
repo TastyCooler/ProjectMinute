@@ -34,6 +34,10 @@ public class PauseMenu : BaseMenu {
         set
         {
             anim.SetBool("GameOver", value);
+            if(value && gameOverSound)
+            {
+                gameOverSound.Play();
+            }
             isGameOver = value;
         }
     }
@@ -45,6 +49,8 @@ public class PauseMenu : BaseMenu {
 
     bool isShown = false;
 
+    [SerializeField] AudioSource gameOverSound;
+
     [SerializeField] AnimationClip quitClip;
 
     private void Awake()
@@ -55,6 +61,7 @@ public class PauseMenu : BaseMenu {
 
     public void OnQuitButton()
     {
+        Time.timeScale = 1f;
         buttonSound.Play();
         StartCoroutine(QuitAfterSeconds(quitClip.length));
     }
@@ -69,6 +76,8 @@ public class PauseMenu : BaseMenu {
 
     public void OnRestartButton()
     {
+        Time.timeScale = 1f;
+        IsGameOver = false;
         buttonSound.Play();
         StartCoroutine(LoadSceneAfterSeconds(quitClip.length));
     }

@@ -341,6 +341,7 @@ MonoBehaviour:
   knockbackStrength: 1
   baseHealth: 5
   healthGainPerLevel: 3
+  titlescreen: {fileID: 0}
   dashForce: 40
   arrow: {fileID: 1137881042855716}
   hitbox: {fileID: 1362738751501462}

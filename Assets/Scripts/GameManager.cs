@@ -72,6 +72,8 @@ public class GameManager : Singleton<GameManager> {
 
     bool isBossSpawned = false;
 
+    bool isAlreadyDead = false;
+
     #endregion
 
     #region Unity Messages
@@ -131,7 +133,7 @@ public class GameManager : Singleton<GameManager> {
                 Camera.main.GetComponent<PostProcessingBehaviour>().profile = bossPost;
             }
             InvokeRepeating("IncreaseTimer", 1f, 1f);
-            SummonBoss();
+            StartCoroutine(SummonBoss());
         }
         if(Input.GetButtonDown("Cancel"))
         {
@@ -162,8 +164,11 @@ public class GameManager : Singleton<GameManager> {
 
     #region Helper Methods
 
-    void SummonBoss()
+    IEnumerator SummonBoss()
     {
+        //TODO flash up
+        yield return new WaitForSeconds(0.2f);
+        // TODO set crater sprite and delete all collider in way
         GameObject newBoss = Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
         newBoss.GetComponent<BossController>().OnBossDefeated += OnBossDefeated;
     }
@@ -179,9 +184,13 @@ public class GameManager : Singleton<GameManager> {
 
     void OnPlayerDied()
     {
-        pauseMenu.IsShown = true;
-        pauseMenu.IsGameOver = true;
-        Time.timeScale = 0f;
+        if(!isAlreadyDead)
+        {
+            pauseMenu.IsShown = true;
+            pauseMenu.IsGameOver = true;
+            Time.timeScale = 0f;
+            isAlreadyDead = true;
+        }
     }
 
     void IncreaseTimer()

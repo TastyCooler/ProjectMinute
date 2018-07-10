@@ -111,6 +111,10 @@ public class PlayerController : MonoBehaviour {
     float knockBackDuration;
     Vector3 knockbackDir;
 
+    [SerializeField] TitlescreenController titlescreen;
+
+    bool isStopped = true;
+
     [SerializeField] float dashForce = 1f;
 
     PlayerInput input;
@@ -155,6 +159,8 @@ public class PlayerController : MonoBehaviour {
         cam = Camera.main;
         anim = GetComponent<Animator>();
 
+        titlescreen.OnGameStarted += OnGameStarted;
+
         attack = baseAttack;
         health = baseHealth;
         maxHealth = baseHealth;
@@ -173,6 +179,7 @@ public class PlayerController : MonoBehaviour {
         projectileLayer = 1 << layer;
 
         camShake = Camera.main.GetComponent<CameraShake>();
+
     }
 
     private void Start()
@@ -193,6 +200,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+        if(isStopped) { return; }
         CalculateOrderInLayer();
 
         //unparent the particle system and it does work
@@ -305,6 +313,17 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(FlashSprite(0.1f));
         }
         transform.position += velocity * Time.deltaTime;
+    }
+
+    void OnGameStarted()
+    {
+        StartCoroutine(ActivatePlayer());
+    }
+
+    IEnumerator ActivatePlayer()
+    {
+        yield return new WaitForSeconds(2f);
+        isStopped = false;
     }
 
     IEnumerator FlashSprite(float offtime)
@@ -457,6 +476,7 @@ public class PlayerController : MonoBehaviour {
 
     void Die()
     {
+        camShake.shakeDuration = 0f;
         //TODO make the player die and open gameover menu
         if(OnPlayerDied != null)
         {

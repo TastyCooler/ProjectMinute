@@ -334,6 +334,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
         type: 2}
+      propertyPath: titlescreen
+      value: 
+      objectReference: {fileID: 1430485793}
+    - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+        type: 2}
       propertyPath: footprints
       value: 
       objectReference: {fileID: 1859123312}
