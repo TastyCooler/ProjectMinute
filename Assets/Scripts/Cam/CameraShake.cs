@@ -19,6 +19,8 @@ public class CameraShake : MonoBehaviour
 
     Vector3 originalPos;
 
+    //Animator camAnim;
+
     #endregion
 
     void Awake()
@@ -28,6 +30,7 @@ public class CameraShake : MonoBehaviour
         {
             camTransform = GetComponent(typeof(Transform)) as Transform;
         }
+        //camAnim = GetComponentInChildren<Animator>();
     }
 
     // Get the original position at the time, the camera started shaking
@@ -35,6 +38,11 @@ public class CameraShake : MonoBehaviour
     {
         // Get the original position of the camera
         originalPos = camTransform.localPosition;
+    }
+
+    public void TurnOffAnimator()
+    {
+        //camAnim.enabled = false;
     }
 
     void Update()

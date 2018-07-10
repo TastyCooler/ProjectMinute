@@ -12,7 +12,12 @@ public class BaseEnemy : MonoBehaviour {
 
     protected Vector3 toPlayer;
     protected Vector3 playerLastSpottedAt;
-    
+
+    CameraShake camShake;
+
+    [SerializeField] float camShakeAmountWhenDamaged = 1f;
+    [SerializeField] float camShakeDurationWhenDamaged = 1f;
+
     protected Vector3 targetPos;
 
     [SerializeField] protected GameObject[] powerupsToDrop;
@@ -67,6 +72,7 @@ public class BaseEnemy : MonoBehaviour {
         LayerMask obsLayer = 1 << obstacleLayer;
         hitLayer = hitLayer | obsLayer;
         anim = GetComponent<Animator>();
+        camShake = Camera.main.GetComponent<CameraShake>();
     }
 
     protected virtual void Update()
@@ -231,9 +237,12 @@ public class BaseEnemy : MonoBehaviour {
     {
         // TODO apply knockback
         health -= damage;
-        if(health <= 0)
+        camShake.shakeAmount = camShakeAmountWhenDamaged;
+        camShake.shakeDuration = camShakeDurationWhenDamaged;
+        if (health <= 0)
         {
             Die();
+            camShakeDurationWhenDamaged += camShakeDurationWhenDamaged;
         }
     }
 

@@ -68,6 +68,10 @@ public class PlayerController : MonoBehaviour {
     [Header("Stats"), SerializeField] float speed = 1f;
     [SerializeField] float speedWhenAttacking = 1f;
 
+    CameraShake camShake;
+    [SerializeField] float camShakeAmountWhenDamaged = 1f;
+    [SerializeField] float camShakeDurationWhenDamaged = 1f;
+
     // Player Slots for item and skill
     BaseSkill playerSkill;
     BaseItem playerItem;
@@ -167,6 +171,8 @@ public class PlayerController : MonoBehaviour {
 
         int layer = LayerMask.NameToLayer("PlayerProjectiles");
         projectileLayer = 1 << layer;
+
+        camShake = Camera.main.GetComponent<CameraShake>();
     }
 
     private void Start()
@@ -431,6 +437,8 @@ public class PlayerController : MonoBehaviour {
         // Player only takes damage, if he isnt already knocked back
         if(playerState != State.knockedBack)
         {
+            camShake.shakeAmount = camShakeAmountWhenDamaged;
+            camShake.shakeDuration = camShakeDurationWhenDamaged;
             health -= damage;
             if (health <= 0)
             {

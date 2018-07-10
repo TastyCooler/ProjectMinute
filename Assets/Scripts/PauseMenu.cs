@@ -39,7 +39,7 @@ public class PauseMenu : MonoBehaviour {
     }
 
     Animator anim;
-    Animator camAnim;
+    //Animator camAnim;
 
     bool isGameOver = false;
 
@@ -48,7 +48,7 @@ public class PauseMenu : MonoBehaviour {
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        camAnim = Camera.main.GetComponent<Animator>();
+        //camAnim = Camera.main.GetComponent<Animator>();
     }
 
     public void OnQuitButton()
@@ -64,14 +64,16 @@ public class PauseMenu : MonoBehaviour {
     void Show()
     {
         anim.SetTrigger("Show");
-        camAnim.SetTrigger("Pause");
+        //camAnim.enabled = true;
+        //camAnim.SetTrigger("Pause");
         Cursor.visible = true;
     }
 
     void Hide()
     {
         anim.SetTrigger("Hide");
-        camAnim.SetTrigger("Play");
+        //camAnim.enabled = true;
+        //camAnim.SetTrigger("Play");
         Cursor.visible = false;
     }
 

@@ -265,6 +265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   speedWhenAttacking: 1
+  camShakeAmountWhenDamaged: 0.4
+  camShakeDurationWhenDamaged: 0.2
   baseAttack: 3
   attackGainPerLevel: 3
   attackAnimations:
