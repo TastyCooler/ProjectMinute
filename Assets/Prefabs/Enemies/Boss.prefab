@@ -148,7 +148,7 @@ MonoBehaviour:
   attack: 5
   knockbackDuration: 1
   knockbackStrength: 1
-  health: 10
+  health: 150
   speed: 1
   camShakeAmountWhenDamaged: 0.5
   camShakeDurationWhenDamaged: 0.3
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yOffset: 1.5
-  by: 0
+  isChild: 0
 --- !u!212 &212456403095501118
 SpriteRenderer:
   m_ObjectHideFlags: 1
