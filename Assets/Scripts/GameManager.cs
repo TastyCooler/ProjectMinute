@@ -74,6 +74,8 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] Vector2 destructionSizeOnBossSpawn;
 
+    [SerializeField] GameObject impactCrater;
+
     [SerializeField] Animator overlayAnim;
 
     bool isControllerInput = false;
@@ -217,12 +219,16 @@ public class GameManager : Singleton<GameManager>
         flashUpParticle.transform.position = new Vector3(player.transform.position.x + 6, player.transform.position.y);
         flashUpParticle.Play();
         yield return new WaitForSeconds(1.5f);
+        if(impactCrater)
+        {
+            Instantiate(impactCrater, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
+        }
         camShake.shakeAmount = camShakeAmountBossSpawn;
         camShake.shakeDuration = camShakeDurationBossSpawn;
         Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, destructionSizeOnBossSpawn, 0f);
         foreach (Collider2D coll in colls)
         {
-            if (coll.gameObject.tag != "Player" && coll.gameObject.tag != "GameManager")
+            if (coll.gameObject.tag != "Player" && coll.gameObject.tag != "GameManager" && coll.gameObject.tag != "Crater")
             {
                 Destroy(coll.gameObject);
             }

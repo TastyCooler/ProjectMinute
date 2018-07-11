@@ -335,6 +335,8 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   flashUpParticle: {fileID: 198192420170508280}
   destructionSizeOnBossSpawn: {x: 100, y: 100}
+  impactCrater: {fileID: 1142104224804932, guid: bd438de0d5f621b4cb19546ad0a39a35,
+    type: 2}
   overlayAnim: {fileID: 0}
   camShakeDurationBossSpawn: 1.5
   camShakeAmountBossSpawn: 3

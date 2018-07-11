@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Boss
   - GameManager
+  - Crater
   layers:
   - Default
   - TransparentFX
