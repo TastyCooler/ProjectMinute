@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12357551689e5e9488b2f1ff8d4c1515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxStack: 50
   arrow: {fileID: 1447066411944162, guid: 0bb889d60beaf3c469a702a4d5f33320, type: 2}
   arrowParent: {fileID: 0}
   laser: {fileID: 1627037805189694, guid: e706cb73702410e4ca455d8915aa8dd9, type: 2}
@@ -568,8 +569,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.8
-      minScalar: 0.5
+      scalar: 0.5
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5789,7 +5790,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 100
+      scalar: 50
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5860,7 +5861,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 100
+      scalar: 50
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9491,7 +9492,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -9547,7 +9548,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 54c16ef9f4e711a4cbf693bf79a4a81e, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0

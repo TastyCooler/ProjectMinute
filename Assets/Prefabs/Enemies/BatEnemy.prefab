@@ -81,7 +81,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.2, y: 3.2}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   health: 10
   speed: 4
   camShakeAmountWhenDamaged: 0.3
-  camShakeDurationWhenDamaged: 0.1
+  camShakeDurationWhenDamaged: 0.2
   powerupsToDrop: []
   dropChance: 0.1
   sightReach: 10

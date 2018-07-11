@@ -149,7 +149,7 @@ MonoBehaviour:
   health: 10
   speed: 3
   camShakeAmountWhenDamaged: 0.3
-  camShakeDurationWhenDamaged: 0.1
+  camShakeDurationWhenDamaged: 0.2
   powerupsToDrop:
   - {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
   dropChance: 0.1

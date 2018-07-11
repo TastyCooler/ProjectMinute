@@ -317,6 +317,8 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(FlashSprite(0.1f));
         }
         transform.position += velocity * Time.deltaTime;
+        // Apply drag
+        velocity = velocity * (1 - Time.deltaTime * 0.1f);
     }
 
     void OnGameStarted()

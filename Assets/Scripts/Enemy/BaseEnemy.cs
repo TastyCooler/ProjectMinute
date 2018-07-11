@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour {
+public class BaseEnemy : MonoBehaviour
+{
 
     [Header("Stats"), SerializeField] protected int attack = 1;
     [SerializeField] protected float knockbackDuration = 1f;
@@ -12,7 +13,12 @@ public class BaseEnemy : MonoBehaviour {
 
     protected Vector3 toPlayer;
     protected Vector3 playerLastSpottedAt;
-    
+
+    CameraShake camShake;
+
+    [SerializeField] float camShakeAmountWhenDamaged = 1f;
+    [SerializeField] float camShakeDurationWhenDamaged = 1f;
+
     protected Vector3 targetPos;
 
     [SerializeField] protected GameObject[] powerupsToDrop;
@@ -71,6 +77,7 @@ public class BaseEnemy : MonoBehaviour {
         LayerMask obsLayer = 1 << obstacleLayer;
         hitLayer = hitLayer | obsLayer;
         anim = GetComponent<Animator>();
+        camShake = Camera.main.GetComponent<CameraShake>();
     }
 
     protected virtual void Update()
@@ -84,18 +91,18 @@ public class BaseEnemy : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (toPlayer.magnitude < sightReach)
-        {
-            Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (toPlayer.magnitude < sightReach)
+    //    {
+    //        Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
+    //    }
+    //}
 
     protected virtual void GetKnockedBack()
     {
         transform.position += knockBack * Time.deltaTime;
-        if(Time.realtimeSinceStartup > knockBackStarted + knockBackDuration)
+        if (Time.realtimeSinceStartup > knockBackStarted + knockBackDuration)
         {
             enemyState = State.patrolling;
         }
@@ -112,7 +119,7 @@ public class BaseEnemy : MonoBehaviour {
             hit = Physics2D.Raycast(transform.position, toPlayer.normalized, sightReach + 10f, hitLayer);
             if (hit.collider != null)
             {
-                if  (hit.collider.gameObject.tag == "Player")
+                if (hit.collider.gameObject.tag == "Player")
                 {
                     enemyState = State.playerSpotted;
                     timeWhenLastAttacked = Time.realtimeSinceStartup;
@@ -150,7 +157,12 @@ public class BaseEnemy : MonoBehaviour {
             enemyState = State.searchingForPlayer;
         }
 
-        if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown)
+        if (toPlayer.magnitude < attackDistance && !meleeAttacking)
+        {
+            MeleeAttack();
+        }
+
+        if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown)
         {
             meleeAttacking = false;
         }
@@ -159,6 +171,13 @@ public class BaseEnemy : MonoBehaviour {
         {
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
         }
+    }
+
+    protected virtual void MeleeAttack()
+    {
+        meleeAttacking = true;
+        timeWhenLastAttacked = Time.realtimeSinceStartup;
+        anim.SetTrigger("Attack");
     }
 
     protected virtual void KeepDistance()
@@ -228,13 +247,16 @@ public class BaseEnemy : MonoBehaviour {
         }
     }
 
-	public void TakeDamage(int damage, Vector3 knockback, float knockBackDur)
+    public void TakeDamage(int damage, Vector3 knockback, float knockBackDur)
     {
         // TODO apply knockback
         health -= damage;
-        if(health <= 0)
+        camShake.shakeAmount = camShakeAmountWhenDamaged;
+        camShake.shakeDuration = camShakeDurationWhenDamaged;
+        if (health <= 0)
         {
             Die();
+            camShakeDurationWhenDamaged += camShakeDurationWhenDamaged;
         }
         this.knockBack = knockback;
         knockbackDuration = knockBackDur;
@@ -244,7 +266,10 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void Die()
     {
-        DropPowerup();
+        if (powerupsToDrop.Length > 0)
+        {
+            DropPowerup();
+        }
         GameManager.Instance.Highscore += highscoreValue;
         player.GainExp(expToGive);
         Destroy(gameObject);
@@ -252,7 +277,7 @@ public class BaseEnemy : MonoBehaviour {
 
     protected void DropPowerup()
     {
-        if(Random.value <= dropChance)
+        if (Random.value <= dropChance)
         {
             Instantiate(powerupsToDrop[Random.Range(0, powerupsToDrop.Length - 1)], transform.position, transform.rotation);
         }

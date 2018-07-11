@@ -6,6 +6,10 @@ public class BossController : BaseEnemy {
 
     public event System.Action OnBossDefeated;
 
+    bool isDead = false;
+
+    [SerializeField] BoxCollider2D coll;
+
     private void OnDestroy()
     {
         if(OnBossDefeated != null)
@@ -14,15 +18,26 @@ public class BossController : BaseEnemy {
         }
     }
 
+    protected override void Update()
+    {
+        if(isDead) { return; }
+        base.Update();
+    }
+
     protected override void Die()
     {
+        if(anim)
+        {
+            anim.SetTrigger("Death");
+        }
         if(OnBossDefeated != null)
         {
             OnBossDefeated();
         }
         GameManager.Instance.Highscore += highscoreValue;
         player.GainExp(expToGive);
-        Destroy(gameObject);
+        isDead = true;
+        coll.enabled = false;
     }
 
 }
