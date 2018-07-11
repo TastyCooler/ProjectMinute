@@ -80,7 +80,10 @@ public class PauseMenu : BaseMenu {
 
     void ShowWinScreen(int highscore)
     {
-        highscoreText.text = highscore.ToString();
+        if(highscoreText)
+        {
+            highscoreText.text = highscore.ToString();
+        }
         Cursor.visible = true;
         StartCoroutine(WinScreenAfterSeconds(2f));
     }

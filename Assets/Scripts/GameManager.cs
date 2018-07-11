@@ -92,6 +92,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] float camShakeDurationBossSpawn = 1f;
     [SerializeField] float camShakeAmountBossSpawn = 0.5f;
 
+    bool isStarted = false; // Stores if the counter is started or not
+
     #endregion
 
     #region Unity Messages
@@ -142,15 +144,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            InvokeRepeating("DecreaseTimer", 0f, 1.03f); // Yes this causes the game to run longer than one minute. I'm a ninja
-            isPreparing = true;
-            if (preparationMusic)
-            {
-                preparationMusic.Play();
-            }
-        }
         if (timer <= 0 && isPreparing)
         {
             isPreparing = false;
@@ -187,6 +180,20 @@ public class GameManager : Singleton<GameManager>
         //Debug.LogFormat("arrowStack {0}, laserStack {1}", arrowStack.Count, laserStack.Count);
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(!isStarted)
+        {
+            InvokeRepeating("DecreaseTimer", 0f, 1.03f); // Yes this causes the game to run longer than one minute. I'm a ninja
+            isPreparing = true;
+            if (preparationMusic)
+            {
+                preparationMusic.Play();
+            }
+            isStarted = true;
+        }
+    }
+
     #endregion
 
     #region Helper Methods
@@ -215,7 +222,7 @@ public class GameManager : Singleton<GameManager>
         Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, destructionSizeOnBossSpawn, 0f);
         foreach (Collider2D coll in colls)
         {
-            if (coll.gameObject != player.gameObject)
+            if (coll.gameObject.tag != "Player" && coll.gameObject.tag != "GameManager")
             {
                 Destroy(coll.gameObject);
             }
@@ -284,7 +291,10 @@ public class GameManager : Singleton<GameManager>
 
     void OnBossDefeated()
     {
-        overlayAnim.SetTrigger("FadeOut");
+        if(overlayAnim)
+        {
+            overlayAnim.SetTrigger("FadeOut");
+        }
         finalHighscore = highscore + highscoreAddition;
         if(OnWinScreen != null)
         {

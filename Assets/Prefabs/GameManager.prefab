@@ -56,9 +56,10 @@ GameObject:
   - component: {fileID: 114857256471455524}
   - component: {fileID: 82498201472774718}
   - component: {fileID: 82730957400655582}
+  - component: {fileID: 58842453417718414}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +105,21 @@ Transform:
   m_Father: {fileID: 4535832026673124}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!58 &58842453417718414
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1665879448638244}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.060136795, y: 0}
+  serializedVersion: 2
+  m_Radius: 4.2285786
 --- !u!82 &82498201472774718
 AudioSource:
   m_ObjectHideFlags: 1
@@ -318,7 +334,7 @@ MonoBehaviour:
   boss: {fileID: 1645413632767480, guid: 6e9d1feea7c11d24ab7496cbce669465, type: 2}
   pauseMenu: {fileID: 0}
   flashUpParticle: {fileID: 198192420170508280}
-  destructionSizeOnBossSpawn: {x: 10, y: 10}
+  destructionSizeOnBossSpawn: {x: 100, y: 100}
   overlayAnim: {fileID: 0}
   camShakeDurationBossSpawn: 1.5
   camShakeAmountBossSpawn: 3
@@ -5791,7 +5807,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 50
+      scalar: 25
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5862,7 +5878,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 50
+      scalar: 25
       minScalar: 1
       maxCurve:
         serializedVersion: 2
