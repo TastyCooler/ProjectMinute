@@ -518,12 +518,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  speedWhenAttacking: 1
+  speedWhenAttacking: 5
   camShakeAmountWhenDamaged: 0.4
   camShakeDurationWhenDamaged: 0.2
   swooshSound: {fileID: 82313763134260456}
   footstepSound: {fileID: 82312320296434878}
-  baseAttack: 3
+  baseAttack: 1
   attackGainPerLevel: 3
   attackAnimations:
   - {fileID: 7400000, guid: 843b9f8242dc96549946aa86dfd389fb, type: 2}
@@ -532,7 +532,7 @@ MonoBehaviour:
   attackTwoDamageMultiplier: 1.5
   attackThreeDamageMultiplier: 2
   attackCooldown: 0.3
-  knockbackStrength: 1
+  knockbackStrength: 100
   baseHealth: 5
   healthGainPerLevel: 3
   titlescreen: {fileID: 0}
@@ -556,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitSlash: {fileID: 198300446128992616}
+  knockbackDuration: 1
 --- !u!198 &198021749707553720
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -804,7 +805,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.1
       minScalar: 0.1
       maxCurve:
         serializedVersion: 2
@@ -1494,7 +1495,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 5
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1509,8 +1510,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.4551593
-          value: 0.9742565
+          time: 0.45091954
+          value: 0.8224711
           inSlope: 1
           outSlope: 1
           tangentMode: 0
@@ -5401,7 +5402,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.05
+      scalar: 0.03
       minScalar: 0.01
       maxCurve:
         serializedVersion: 2
@@ -9853,7 +9854,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_RenderAlignment: 0
-  m_Pivot: {x: 0, y: 0, z: 0}
+  m_Pivot: {x: 0, y: -17, z: 0}
   m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_VertexStreams: 00010304

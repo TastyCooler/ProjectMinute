@@ -20,6 +20,10 @@ public class RangedEnemy_Bat : BaseEnemy {
         {
             SearchForPlayer();
         }
+        else if(enemyState == State.knockedBack)
+        {
+            GetKnockedBack();
+        }
     }
 
     void Attack()

@@ -347,6 +347,26 @@ Prefab:
       propertyPath: dash
       value: 
       objectReference: {fileID: 954519656}
+    - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+        type: 2}
+      propertyPath: speedWhenAttacking
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 198021749707553720, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+        type: 2}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 198021749707553720, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+        type: 2}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.03875936
+      objectReference: {fileID: 0}
+    - target: {fileID: 198021749707553720, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
+        type: 2}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.03875936
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cd34d21b8510e94f9b145d768e8e8c8, type: 2}
   m_IsPrefabParent: 0
@@ -1809,6 +1829,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114933501763153022, guid: 458cebd9f6bc9074697d4100c78d8064,
+        type: 2}
+      propertyPath: health
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 458cebd9f6bc9074697d4100c78d8064, type: 2}
   m_IsPrefabParent: 0
@@ -2279,6 +2304,24 @@ GameObject:
   m_PrefabParentObject: {fileID: 1205422149416040, guid: 458cebd9f6bc9074697d4100c78d8064,
     type: 2}
   m_PrefabInternal: {fileID: 1592488899}
+--- !u!95 &2000058314
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2000058313}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ae5f59db3a7d2a146bbe8846a90c126a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &2000058317
 SpriteRenderer:
   m_ObjectHideFlags: 0

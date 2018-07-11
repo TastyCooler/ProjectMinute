@@ -29,6 +29,10 @@ public class RangedEnemy : BaseEnemy {
         {
             SearchForPlayer();
         }
+        else if(enemyState == State.knockedBack)
+        {
+            GetKnockedBack();
+        }
     }
 
     void Attack()

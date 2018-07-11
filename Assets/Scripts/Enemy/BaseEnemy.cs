@@ -43,6 +43,10 @@ public class BaseEnemy : MonoBehaviour {
     protected bool rangeAttacking;
     [SerializeField] protected float attackDistance = 1f;
 
+    Vector3 knockBack;
+    float knockBackStarted;
+    float knockBackDuration;
+
     protected Animator anim;
     private float newTargetPosTimer = 0;
 
@@ -93,6 +97,15 @@ public class BaseEnemy : MonoBehaviour {
     //        Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
     //    }
     //}
+
+    protected virtual void GetKnockedBack()
+    {
+        transform.position += knockBack * Time.deltaTime;
+        if(Time.realtimeSinceStartup > knockBackStarted + knockBackDuration)
+        {
+            enemyState = State.patrolling;
+        }
+    }
 
     protected virtual void Patrolling()
     {
@@ -233,7 +246,7 @@ public class BaseEnemy : MonoBehaviour {
         }
     }
 
-	public void TakeDamage(int damage, Vector3 knockback)
+	public void TakeDamage(int damage, Vector3 knockback, float knockBackDur)
     {
         // TODO apply knockback
         health -= damage;
@@ -244,6 +257,10 @@ public class BaseEnemy : MonoBehaviour {
             Die();
             camShakeDurationWhenDamaged += camShakeDurationWhenDamaged;
         }
+        this.knockBack = knockback;
+        knockbackDuration = knockBackDur;
+        knockBackStarted = Time.realtimeSinceStartup;
+        enemyState = State.knockedBack;
     }
 
     protected virtual void Die()

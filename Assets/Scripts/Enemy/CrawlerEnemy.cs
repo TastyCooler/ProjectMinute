@@ -19,6 +19,10 @@ public class CrawlerEnemy : BaseEnemy {
         {
             SearchForPlayer();
         }
+        else if(enemyState == State.knockedBack)
+        {
+            GetKnockedBack();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
