@@ -1851,6 +1851,7 @@ Transform:
   - {fileID: 904417370}
   - {fileID: 939369718}
   - {fileID: 1670978719}
+  - {fileID: 944189929}
   - {fileID: 389823909}
   - {fileID: 1997825181}
   - {fileID: 1951625881}
@@ -1867,7 +1868,6 @@ Transform:
   - {fileID: 848791012}
   - {fileID: 2090032864}
   - {fileID: 1207164769}
-  - {fileID: 944189929}
   - {fileID: 1469514597}
   - {fileID: 77621185}
   - {fileID: 379001543}
@@ -1910,8 +1910,8 @@ Transform:
   - {fileID: 349901053}
   - {fileID: 399236546}
   - {fileID: 1880274067}
-  - {fileID: 1503998977}
   - {fileID: 1570672802}
+  - {fileID: 1503998977}
   - {fileID: 2012350873}
   - {fileID: 829627812}
   - {fileID: 2092892163}
@@ -3886,7 +3886,7 @@ Transform:
   - {fileID: 1334418664}
   - {fileID: 1632644683}
   m_Father: {fileID: 465392196}
-  m_RootOrder: 32
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &954519656 stripped
 ParticleSystem:
@@ -5642,11 +5642,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4804356347392610, guid: facbd7c766164f04b90b27d942941b74, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 16.78
       objectReference: {fileID: 0}
     - target: {fileID: 4804356347392610, guid: facbd7c766164f04b90b27d942941b74, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.9
+      value: 11.05
       objectReference: {fileID: 0}
     - target: {fileID: 4804356347392610, guid: facbd7c766164f04b90b27d942941b74, type: 2}
       propertyPath: m_LocalPosition.z
