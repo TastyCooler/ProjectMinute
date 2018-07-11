@@ -35,11 +35,22 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
-    #region Fields
+    public bool IsBossSpawned
+    {
+        get
+        {
+            return isBossSpawned;
+        }
+        set
+        {
+            isBossSpawned = value;
+            GameObject.FindGameObjectWithTag("Boss").GetComponent<BossController>().OnBossDefeated += SettleHighscore;
+        }
+    }
 
     public event System.Action<int> OnTimerChanged;
 
-    [SerializeField] int maxStack = 50;
+    int maxStack = 50;
 
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject arrowParent;
@@ -48,6 +59,10 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] GameObject laser;
     [SerializeField] GameObject laserParent;
     Stack<GameObject> laserStack = new Stack<GameObject>();
+
+    [SerializeField] GameObject hook;
+    [SerializeField] GameObject hookParent;
+    Stack<GameObject> hookStack = new Stack<GameObject>();
 
     GameObject player;
 
@@ -61,7 +76,9 @@ public class GameManager : Singleton<GameManager> {
 
     [SerializeField] GameObject boss;
 
-    [SerializeField] PauseMenu pauseMenu;
+    #region Fields
+
+    [SerializeField] Canvas pauseMenu;
 
     [SerializeField] ParticleSystem flashUpParticle;
 
@@ -76,6 +93,7 @@ public class GameManager : Singleton<GameManager> {
 
     bool isBossSpawned = false;
 
+<<<<<<< HEAD
     bool isAlreadyDead = false;
 
     CameraShake camShake;
@@ -83,14 +101,14 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] float camShakeDurationBossSpawn = 1f;
     [SerializeField] float camShakeAmountBossSpawn = 0.5f;
 
+=======
+>>>>>>> d9bbf2bb029c6942d274a25f509e8726f26f42f6
     #endregion
 
     #region Unity Messages
 
     public void Awake()
     {
-        Cursor.lockState = CursorLockMode.Confined;
-        Time.timeScale = 1f;
         for (int i = 0; i < maxStack; i++)
         {
             GameObject newArrow = Instantiate(arrow, transform.position, transform.rotation);
@@ -108,11 +126,23 @@ public class GameManager : Singleton<GameManager> {
             }
             newLaser.SetActive(false);
             laserStack.Push(newLaser);
+
+            GameObject newHook = Instantiate(hook, transform.position, transform.rotation);
+            if (hookParent)
+            {
+                newHook.transform.parent = hookParent.transform;
+            }
+            newHook.SetActive(false);
+            hookStack.Push(newHook);
         }
+
         timer = preparationTime;
         player = GameObject.FindGameObjectWithTag("Player");
+<<<<<<< HEAD
         player.GetComponent<PlayerController>().OnPlayerDied += OnPlayerDied;
         camShake = Camera.main.GetComponent<CameraShake>();
+=======
+>>>>>>> d9bbf2bb029c6942d274a25f509e8726f26f42f6
     }
 
     private void Start()
@@ -143,11 +173,11 @@ public class GameManager : Singleton<GameManager> {
                 Camera.main.GetComponent<PostProcessingBehaviour>().profile = bossPost;
             }
             InvokeRepeating("IncreaseTimer", 1f, 1f);
-            StartCoroutine(SummonBoss());
+            SummonBoss();
         }
         if(Input.GetButtonDown("Cancel"))
         {
-            pauseMenu.IsShown = !pauseMenu.IsShown;
+            pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
         }
         GetControllerCount();
         if(controllerCount > 0 && !isControllerInput)
@@ -174,8 +204,9 @@ public class GameManager : Singleton<GameManager> {
 
     #region Helper Methods
 
-    IEnumerator SummonBoss()
+    void SummonBoss()
     {
+<<<<<<< HEAD
         flashUpParticle.transform.position = new Vector3(player.transform.position.x + 6, player.transform.position.y);
         flashUpParticle.Play();
         yield return new WaitForSeconds(1.5f);
@@ -191,6 +222,9 @@ public class GameManager : Singleton<GameManager> {
         }
         GameObject newBoss = Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
         newBoss.GetComponent<BossController>().OnBossDefeated += OnBossDefeated;
+=======
+        Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
+>>>>>>> d9bbf2bb029c6942d274a25f509e8726f26f42f6
     }
 
     void DecreaseTimer()
@@ -199,17 +233,6 @@ public class GameManager : Singleton<GameManager> {
         if(OnTimerChanged != null)
         {
             OnTimerChanged(timer);
-        }
-    }
-
-    void OnPlayerDied()
-    {
-        if(!isAlreadyDead)
-        {
-            pauseMenu.IsShown = true;
-            pauseMenu.IsGameOver = true;
-            Time.timeScale = 0f;
-            isAlreadyDead = true;
         }
     }
 
@@ -250,7 +273,21 @@ public class GameManager : Singleton<GameManager> {
         return laserReturned;
     }
 
-    void OnBossDefeated()
+    public void PushHook(GameObject newObject)
+    {
+        newObject.SetActive(false);
+        hookStack.Push(newObject);
+    }
+
+    public GameObject GetHook(Vector3 pos)
+    {
+        GameObject hookReturned = hookStack.Pop();
+        hookReturned.transform.position = pos;
+        hookReturned.SetActive(true);
+        return hookReturned;
+    }
+
+    void SettleHighscore()
     {
         finalHighscore = highscore + highscoreAddition;
         // TODO make win screen appear

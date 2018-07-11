@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile_Bat : MonoBehaviour {
+public class HookController : MonoBehaviour {
 
     #region Properties
 
@@ -60,9 +60,13 @@ public class Projectile_Bat : MonoBehaviour {
     BaseEnemy baseEnemy;
 
     [SerializeField] float speed = 10f;
-    [SerializeField] float despawnDelay;
+    [SerializeField] float hookStrengthMultiplayer;
+    [SerializeField] float hookDuration;
+    float despawnDelay;
+    float despawnDelayMultiplayer = 1.5f;
 
-    int damage;
+
+    int damage = 0;
     float knockbackStrength;
     float knockbackDuration;
 
@@ -80,11 +84,11 @@ public class Projectile_Bat : MonoBehaviour {
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        //despawnDelay = baseEnemy.Hit.distance / speed;
+        despawnDelay = baseEnemy.Hit.distance / speed * despawnDelayMultiplayer;
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            GameManager.Instance.PushLaser(gameObject);
+            GameManager.Instance.PushHook(gameObject);
         }
     }
 
@@ -93,13 +97,13 @@ public class Projectile_Bat : MonoBehaviour {
         if (collision.tag == "Player" && collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
-            GameManager.Instance.PushLaser(gameObject);
+            collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrengthMultiplayer), Time.realtimeSinceStartup, despawnDelay / despawnDelayMultiplayer + hookDuration);
+            GameManager.Instance.PushHook(gameObject);
         }
         else if (collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            GameManager.Instance.PushLaser(gameObject);
+            GameManager.Instance.PushHook(gameObject);
         }
     }
 }

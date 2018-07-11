@@ -305,11 +305,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12357551689e5e9488b2f1ff8d4c1515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStack: 50
   arrow: {fileID: 1447066411944162, guid: 0bb889d60beaf3c469a702a4d5f33320, type: 2}
   arrowParent: {fileID: 0}
   laser: {fileID: 1627037805189694, guid: e706cb73702410e4ca455d8915aa8dd9, type: 2}
   laserParent: {fileID: 0}
+  hook: {fileID: 1577658134831170, guid: c766d9b87ad02704e8c70fbde055a7db, type: 2}
+  hookParent: {fileID: 0}
   bossPost: {fileID: 11400000, guid: d8fc6f47a591a204198f548415cac6b2, type: 2}
   preparationTime: 5
   preparationMusic: {fileID: 82498201472774718}
