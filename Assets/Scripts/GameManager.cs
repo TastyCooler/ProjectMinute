@@ -72,6 +72,8 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] Vector2 destructionSizeOnBossSpawn;
 
+    [SerializeField] Animator overlayAnim;
+
     bool isControllerInput = false;
     int controllerCount = 0;
 
@@ -233,9 +235,10 @@ public class GameManager : Singleton<GameManager>
     {
         if (!isAlreadyDead)
         {
+            overlayAnim.SetTrigger("FadeOut");
             pauseMenu.IsShown = true;
             pauseMenu.IsGameOver = true;
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             isAlreadyDead = true;
         }
     }

@@ -506,11 +506,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4939164630439270, guid: 95ccd28561e6baa4eafa3822cdb2ec77, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.0617485
+      value: -6.53
       objectReference: {fileID: 0}
     - target: {fileID: 4939164630439270, guid: 95ccd28561e6baa4eafa3822cdb2ec77, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -14.318684
+      value: 15.32
       objectReference: {fileID: 0}
     - target: {fileID: 4939164630439270, guid: 95ccd28561e6baa4eafa3822cdb2ec77, type: 2}
       propertyPath: m_LocalPosition.z
@@ -667,11 +667,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4940623226527530, guid: 92f47c5e58053374aa9d7882f5781a1a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 10.70199
+      value: -6.25
       objectReference: {fileID: 0}
     - target: {fileID: 4940623226527530, guid: 92f47c5e58053374aa9d7882f5781a1a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -14.486071
+      value: 8.49
       objectReference: {fileID: 0}
     - target: {fileID: 4940623226527530, guid: 92f47c5e58053374aa9d7882f5781a1a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -893,6 +893,11 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 225675201509044792, guid: 71aa79b28395ec6409289707e1db3eb6,
+        type: 2}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71aa79b28395ec6409289707e1db3eb6, type: 2}
   m_IsPrefabParent: 0
@@ -1081,6 +1086,11 @@ Prefab:
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1755350102}
+    - target: {fileID: 114857256471455524, guid: 8abaa5cd5b0dcc24ea74bc228b30dacb,
+        type: 2}
+      propertyPath: overlayAnim
+      value: 
+      objectReference: {fileID: 51868298}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8abaa5cd5b0dcc24ea74bc228b30dacb, type: 2}
   m_IsPrefabParent: 0
@@ -1818,11 +1828,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4480620348386404, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.694836
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 4480620348386404, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.593992
+      value: 17.72
       objectReference: {fileID: 0}
     - target: {fileID: 4480620348386404, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2514,32 +2524,6 @@ Prefab:
     - target: {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
       propertyPath: m_Name
       value: DashPowerUp (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 212523729664929214, guid: 734e999dc84f5bf4ab616ee5c686da5a,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 6e862051939193045977d93cafbbe272,
-        type: 3}
-    - target: {fileID: 212523729664929214, guid: 734e999dc84f5bf4ab616ee5c686da5a,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 212523729664929214, guid: 734e999dc84f5bf4ab616ee5c686da5a,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 212523729664929214, guid: 734e999dc84f5bf4ab616ee5c686da5a,
-        type: 2}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}

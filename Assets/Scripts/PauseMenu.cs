@@ -61,7 +61,7 @@ public class PauseMenu : BaseMenu {
 
     public void OnQuitButton()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         buttonSound.Play();
         StartCoroutine(QuitAfterSeconds(quitClip.length));
     }
@@ -76,7 +76,7 @@ public class PauseMenu : BaseMenu {
 
     public void OnRestartButton()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         IsGameOver = false;
         buttonSound.Play();
         StartCoroutine(LoadSceneAfterSeconds(quitClip.length));

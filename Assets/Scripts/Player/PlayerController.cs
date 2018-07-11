@@ -503,7 +503,8 @@ public class PlayerController : MonoBehaviour {
     void Die()
     {
         camShake.shakeDuration = 0f;
-        //TODO make the player die and open gameover menu
+        isStopped = true;
+        footstepSound.Stop();
         if(OnPlayerDied != null)
         {
             OnPlayerDied();
