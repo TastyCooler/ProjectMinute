@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (OnExpChanged != null)
         {
-            OnExpChanged(expToNextLevel, exp);
+            OnExpChanged(exp, expToNextLevel);
         }
         if (OnHealthChanged != null)
         {
@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour {
         exp += expGain;
         if(OnExpChanged != null)
         {
-            OnExpChanged(expToNextLevel, exp);
+            OnExpChanged(exp, expToNextLevel);
         }
     }
 
@@ -378,7 +378,7 @@ public class PlayerController : MonoBehaviour {
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
         if(OnExpChanged != null)
         {
-            OnExpChanged(expToNextLevel, exp);
+            OnExpChanged(exp, expToNextLevel);
         }
         if(OnHealthChanged != null)
         {
