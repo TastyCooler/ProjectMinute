@@ -63,6 +63,10 @@ public class GameManager : Singleton<GameManager> {
 
     [SerializeField] PauseMenu pauseMenu;
 
+    [SerializeField] ParticleSystem flashUpParticle;
+
+    [SerializeField] Vector2 destructionSizeOnBossSpawn;
+
     bool isControllerInput = false;
     int controllerCount = 0;
 
@@ -73,6 +77,11 @@ public class GameManager : Singleton<GameManager> {
     bool isBossSpawned = false;
 
     bool isAlreadyDead = false;
+
+    CameraShake camShake;
+
+    [SerializeField] float camShakeDurationBossSpawn = 1f;
+    [SerializeField] float camShakeAmountBossSpawn = 0.5f;
 
     #endregion
 
@@ -103,6 +112,7 @@ public class GameManager : Singleton<GameManager> {
         timer = preparationTime;
         player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerController>().OnPlayerDied += OnPlayerDied;
+        camShake = Camera.main.GetComponent<CameraShake>();
     }
 
     private void Start()
@@ -166,9 +176,19 @@ public class GameManager : Singleton<GameManager> {
 
     IEnumerator SummonBoss()
     {
-        //TODO flash up
-        yield return new WaitForSeconds(0.2f);
-        // TODO set crater sprite and delete all collider in way
+        flashUpParticle.transform.position = new Vector3(player.transform.position.x + 6, player.transform.position.y);
+        flashUpParticle.Play();
+        yield return new WaitForSeconds(1.5f);
+        camShake.shakeAmount = camShakeAmountBossSpawn;
+        camShake.shakeDuration = camShakeDurationBossSpawn;
+        Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, destructionSizeOnBossSpawn, 0f);
+        foreach (Collider2D coll in colls)
+        {
+            if (coll.gameObject != player.gameObject)
+            {
+                Destroy(coll.gameObject);
+            }
+        }
         GameObject newBoss = Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
         newBoss.GetComponent<BossController>().OnBossDefeated += OnBossDefeated;
     }
