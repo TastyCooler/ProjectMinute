@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class LayerDepth : MonoBehaviour {
 
+    public int SortingOrder
+    {
+        get
+        {
+            return rend.sortingOrder;
+        }
+    }
+
     public float yOffset;
-    public float by; // This is not used?!
     float layer;
     SpriteRenderer rend;
     Vector3 centerBottom;
+
+    [SerializeField] bool isChild;
 
     // Use this for initialization
     void Start () {
@@ -22,6 +31,13 @@ public class LayerDepth : MonoBehaviour {
 
         layer = centerBottom.y + yOffset;
 
-        rend.sortingOrder = -(int)(layer * 10);
+        if(!isChild)
+        {
+            rend.sortingOrder = -(int)(layer * 10);
+        }
+        else if(isChild)
+        {
+            rend.sortingOrder = transform.parent.GetComponent<LayerDepth>().SortingOrder + 1;
+        }
     }
 }

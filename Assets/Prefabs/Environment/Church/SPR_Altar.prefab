@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4072441673919522}
   - component: {fileID: 212823049066043996}
+  - component: {fileID: 114064211560187548}
   m_Layer: 0
   m_Name: SPR_Buch_Deku
   m_TagString: Untagged
@@ -55,6 +56,7 @@ GameObject:
   - component: {fileID: 4204729929268112}
   - component: {fileID: 212714810430920000}
   - component: {fileID: 95849575484146892}
+  - component: {fileID: 114853027013448328}
   m_Layer: 0
   m_Name: SPR_Kerze_0
   m_TagString: Untagged
@@ -71,6 +73,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4653358841759590}
   - component: {fileID: 212004954400490904}
+  - component: {fileID: 114524481301532628}
   m_Layer: 0
   m_Name: SPR_Dolch_Deku
   m_TagString: Untagged
@@ -88,6 +91,7 @@ GameObject:
   - component: {fileID: 4955531101600476}
   - component: {fileID: 212805853632209758}
   - component: {fileID: 95345872365496288}
+  - component: {fileID: 114323545323902060}
   m_Layer: 0
   m_Name: SPR_Kerze_0 (1)
   m_TagString: Untagged
@@ -105,6 +109,7 @@ GameObject:
   - component: {fileID: 4371593446771334}
   - component: {fileID: 212567371623792452}
   - component: {fileID: 95620355008478650}
+  - component: {fileID: 114255216417892378}
   m_Layer: 0
   m_Name: SPR_Kerze_0 (2)
   m_TagString: Untagged
@@ -274,6 +279,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114064211560187548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1008483813083290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db246b20e3b56545bc74f3765531875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yOffset: 0.5
+  by: 0
+  isChild: 1
 --- !u!114 &114165638651546506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -287,6 +306,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yOffset: 0.5
   by: 0
+  isChild: 0
+--- !u!114 &114255216417892378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1868336800749370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db246b20e3b56545bc74f3765531875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yOffset: 0.5
+  by: 0
+  isChild: 1
+--- !u!114 &114323545323902060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1722292782301728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db246b20e3b56545bc74f3765531875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yOffset: 0.5
+  by: 0
+  isChild: 1
+--- !u!114 &114524481301532628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1521330259449366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db246b20e3b56545bc74f3765531875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yOffset: 0.5
+  by: 0
+  isChild: 1
+--- !u!114 &114853027013448328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215872984019066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db246b20e3b56545bc74f3765531875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yOffset: 0.5
+  by: 0
+  isChild: 1
 --- !u!212 &212004954400490904
 SpriteRenderer:
   m_ObjectHideFlags: 1

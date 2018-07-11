@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 212560294761011702}
   - component: {fileID: 114585724469568194}
   - component: {fileID: 61120136581549170}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SPR_Wall3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1601298892262456}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 11.745912, y: 68.65018, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yOffset: 0
-  by: 0
+  isChild: 0
 --- !u!212 &212367750111381288
 SpriteRenderer:
   m_ObjectHideFlags: 1
