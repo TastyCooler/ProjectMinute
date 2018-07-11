@@ -40,6 +40,8 @@ public class GameManager : Singleton<GameManager>
 
     public event System.Action<int> OnTimerChanged;
 
+    public event System.Action<int> OnWinScreen;
+
     [SerializeField] int maxStack = 50;
 
     [SerializeField] GameObject arrow;
@@ -282,8 +284,12 @@ public class GameManager : Singleton<GameManager>
 
     void OnBossDefeated()
     {
+        overlayAnim.SetTrigger("FadeOut");
         finalHighscore = highscore + highscoreAddition;
-        // TODO make win screen appear
+        if(OnWinScreen != null)
+        {
+            OnWinScreen(finalHighscore);
+        }
     }
 
     // Looks for any connected controller and updates the counter for every connected controller
