@@ -60,7 +60,11 @@ public class HookController : MonoBehaviour {
     BaseEnemy baseEnemy;
 
     [SerializeField] float speed = 10f;
-    [SerializeField] float despawnDelay;
+    [SerializeField] float hookStrengthMultiplayer;
+    [SerializeField] float hookDuration;
+    float despawnDelay;
+    float despawnDelayMultiplayer = 1.5f;
+
 
     int damage = 0;
     float knockbackStrength;
@@ -80,7 +84,7 @@ public class HookController : MonoBehaviour {
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        despawnDelay = baseEnemy.Hit.distance / speed * 1.5f;
+        despawnDelay = baseEnemy.Hit.distance / speed * despawnDelayMultiplayer;
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
@@ -93,7 +97,7 @@ public class HookController : MonoBehaviour {
         if (collision.tag == "Player" && collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength), Time.realtimeSinceStartup, baseEnemy.Hit.distance / 5 * (knockbackDuration * 2));
+            collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrengthMultiplayer), Time.realtimeSinceStartup, despawnDelay / despawnDelayMultiplayer + hookDuration);
             GameManager.Instance.PushHook(gameObject);
         }
         else if (collision.gameObject != owner)

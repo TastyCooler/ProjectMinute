@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1567776585290824}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.0053535, y: -7.272968, z: 0}
+  m_LocalPosition: {x: -10.63, y: -18.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 1
   knockbackDuration: 1
-  knockbackStrength: 1
+  knockbackStrength: 800
   health: 1
   speed: 5
   powerupsToDrop: []
@@ -161,3 +161,4 @@ MonoBehaviour:
   attackDuration: 0.4
   attackDistance: 1
   hookCooldown: 1
+  hookDistance: 10

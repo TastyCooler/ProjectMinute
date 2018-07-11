@@ -3,16 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CaptainHookEnemy : BaseEnemy {
-    
-    float savedSpeed;
-    bool hooking = false;
-    [SerializeField] float hookCooldown;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        savedSpeed = speed;
-    }
+    [SerializeField] float hookCooldown;
 
     protected override void Update()
     {
@@ -47,35 +39,23 @@ public class CaptainHookEnemy : BaseEnemy {
             meleeAttacking = true;
             timeWhenLastAttacked = Time.realtimeSinceStartup;
             anim.SetTrigger("Attack");
-            speed = savedSpeed;
         }
 
-        if (toPlayer.magnitude > attackDistance && toPlayer.magnitude < sightReach && !hooking)
+        if (toPlayer.magnitude < sightReach && toPlayer.magnitude > attackDistance)
         {
-            timeWhenLastAttacked = Time.realtimeSinceStartup;
-            meleeAttacking = false;
-            hooking = true;
-            speed = 0;
-        }
+            if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown + hookCooldown)
+            {
+                meleeAttacking = true;
+                // TODO: Play animation here!
+                timeWhenLastAttacked = Time.realtimeSinceStartup;
 
-        if (hooking && !meleeAttacking && Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown + hookCooldown)
-        {
-            timeWhenLastAttacked = Time.realtimeSinceStartup;
-
-            HookController hookToShoot = GameManager.Instance.GetHook(transform.position).GetComponent<HookController>();
-            hookToShoot.Damage = attack;
-            hookToShoot.KnockbackDuration = knockbackDuration;
-            hookToShoot.KnockbackStrength = knockbackStrength;
-            hookToShoot.Owner = gameObject;
-            hookToShoot.transform.up = toPlayer;
-
-            hooking = false;
-            meleeAttacking = true;
-        }
-
-        if (toPlayer.magnitude > sightReach)
-        {
-            speed = savedSpeed;
+                HookController hookToShoot = GameManager.Instance.GetHook(transform.position).GetComponent<HookController>();
+                hookToShoot.Damage = attack;
+                hookToShoot.KnockbackDuration = knockbackDuration;
+                hookToShoot.KnockbackStrength = knockbackStrength;
+                hookToShoot.Owner = gameObject;
+                hookToShoot.transform.up = toPlayer;
+            }
         }
     }
 }
