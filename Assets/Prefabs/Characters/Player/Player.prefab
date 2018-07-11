@@ -122,13 +122,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1395789068319930}
-  m_LocalRotation: {x: 0.9428939, y: 0.3330932, z: -0, w: 0}
-  m_LocalPosition: {x: -2.79, y: 3.33, z: 0}
+  m_LocalRotation: {x: 0.9455186, y: -0.32556805, z: 0, w: 0}
+  m_LocalPosition: {x: 2.04, y: 2.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4698776400361022}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: -38.912994}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 38}
 --- !u!4 &4495398635640680
 Transform:
   m_ObjectHideFlags: 1
@@ -165,7 +165,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1755797997306770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.2724138, y: -6.428335, z: 0}
+  m_LocalPosition: {x: 1.45, y: -2.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4381752079726930}
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  speedWhenAttacking: 5
+  speedWhenAttacking: 10
   camShakeAmountWhenDamaged: 0.4
   camShakeDurationWhenDamaged: 0.2
   swooshSound: {fileID: 82313763134260456}
@@ -689,7 +689,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 65
+      scalar: 80
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -743,7 +743,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.5283019, g: 0.13705947, b: 0.13705947, a: 1}
+      maxColor: {r: 0.6320754, g: 0.03875936, b: 0.03875936, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6031,7 +6031,7 @@ ParticleSystem:
     m_BurstCount: 1
     m_Bursts:
     - serializedVersion: 2
-      time: 0.2
+      time: 0.1
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -9850,11 +9850,11 @@ ParticleSystemRenderer:
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 30
+  m_LengthScale: 10
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_RenderAlignment: 0
-  m_Pivot: {x: 0, y: -17, z: 0}
+  m_Pivot: {x: 0, y: -27.23, z: 0}
   m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_VertexStreams: 00010304

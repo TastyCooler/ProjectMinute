@@ -452,26 +452,6 @@ Prefab:
       propertyPath: dash
       value: 
       objectReference: {fileID: 954519656}
-    - target: {fileID: 114635075784266918, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
-        type: 2}
-      propertyPath: speedWhenAttacking
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 198021749707553720, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
-        type: 2}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.6320754
-      objectReference: {fileID: 0}
-    - target: {fileID: 198021749707553720, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
-        type: 2}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.03875936
-      objectReference: {fileID: 0}
-    - target: {fileID: 198021749707553720, guid: 3cd34d21b8510e94f9b145d768e8e8c8,
-        type: 2}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.03875936
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3cd34d21b8510e94f9b145d768e8e8c8, type: 2}
   m_IsPrefabParent: 0
@@ -2032,11 +2012,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4429870512547280, guid: 940ccff5de0bad147a416ca4c03c7079, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 10.095492
+      value: 10.19
       objectReference: {fileID: 0}
     - target: {fileID: 4429870512547280, guid: 940ccff5de0bad147a416ca4c03c7079, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 7.3559284
+      value: 6.17
       objectReference: {fileID: 0}
     - target: {fileID: 4429870512547280, guid: 940ccff5de0bad147a416ca4c03c7079, type: 2}
       propertyPath: m_LocalPosition.z
