@@ -1779,11 +1779,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4435615016256286, guid: 458cebd9f6bc9074697d4100c78d8064, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.22
+      value: -6.31
       objectReference: {fileID: 0}
     - target: {fileID: 4435615016256286, guid: 458cebd9f6bc9074697d4100c78d8064, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 23.97
+      value: 6.12
       objectReference: {fileID: 0}
     - target: {fileID: 4435615016256286, guid: 458cebd9f6bc9074697d4100c78d8064, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2274,6 +2274,56 @@ Transform:
   m_PrefabParentObject: {fileID: 4148353616781752, guid: f52023095fe016341ba5f8d1faba7d6c,
     type: 2}
   m_PrefabInternal: {fileID: 73592689}
+--- !u!1 &2000058313 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1205422149416040, guid: 458cebd9f6bc9074697d4100c78d8064,
+    type: 2}
+  m_PrefabInternal: {fileID: 1592488899}
+--- !u!212 &2000058317
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2000058313}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 1f2df7457472c7d40be8818699a9bc64, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
 --- !u!1001 &2014086972
 Prefab:
   m_ObjectHideFlags: 0

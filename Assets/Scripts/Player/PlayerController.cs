@@ -287,6 +287,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (playerState == State.attackingThree)
         {
+            GetInput();
             velocity = moveDirection * 0f;
             if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length)
             {
@@ -410,7 +411,14 @@ public class PlayerController : MonoBehaviour {
         }
         else if (moveDirection.magnitude < 0.1f && playerState == State.attacking)
         {
-            transform.localScale = new Vector3(-aimDirection.normalized.x, 1f, 1f);
+            if(aimDirection.x < 0f)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+            else
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
         }
         // Create the angle for the movement vector
         float moveAngle = Vector3.Angle(Vector3.up, lastValidMoveDir);
