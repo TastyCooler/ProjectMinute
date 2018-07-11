@@ -12,12 +12,7 @@ public class BaseEnemy : MonoBehaviour {
 
     protected Vector3 toPlayer;
     protected Vector3 playerLastSpottedAt;
-
-    CameraShake camShake;
-
-    [SerializeField] float camShakeAmountWhenDamaged = 1f;
-    [SerializeField] float camShakeDurationWhenDamaged = 1f;
-
+    
     protected Vector3 targetPos;
 
     [SerializeField] protected GameObject[] powerupsToDrop;
@@ -76,7 +71,6 @@ public class BaseEnemy : MonoBehaviour {
         LayerMask obsLayer = 1 << obstacleLayer;
         hitLayer = hitLayer | obsLayer;
         anim = GetComponent<Animator>();
-        camShake = Camera.main.GetComponent<CameraShake>();
     }
 
     protected virtual void Update()
@@ -90,13 +84,13 @@ public class BaseEnemy : MonoBehaviour {
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    if (toPlayer.magnitude < sightReach)
-    //    {
-    //        Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
-    //    }
-    //}
+    private void OnDrawGizmos()
+    {
+        if (toPlayer.magnitude < sightReach)
+        {
+            Debug.DrawRay(transform.position, toPlayer.normalized * toPlayer.magnitude);
+        }
+    }
 
     protected virtual void GetKnockedBack()
     {
@@ -156,11 +150,6 @@ public class BaseEnemy : MonoBehaviour {
             enemyState = State.searchingForPlayer;
         }
 
-        if(toPlayer.magnitude < attackDistance && !meleeAttacking)
-        {
-            MeleeAttack();
-        }
-
         if(Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown)
         {
             meleeAttacking = false;
@@ -170,13 +159,6 @@ public class BaseEnemy : MonoBehaviour {
         {
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
         }
-    }
-
-    protected virtual void MeleeAttack()
-    {
-        meleeAttacking = true;
-        timeWhenLastAttacked = Time.realtimeSinceStartup;
-        anim.SetTrigger("Attack");
     }
 
     protected virtual void KeepDistance()
@@ -203,7 +185,7 @@ public class BaseEnemy : MonoBehaviour {
             rangeAttacking = true;
         }
 
-            if (toPlayer.magnitude > sightReach)
+        if (toPlayer.magnitude > sightReach)
         {
             enemyState = State.searchingForPlayer;
             playerLastSpottedAt = player.transform.position;
@@ -250,12 +232,9 @@ public class BaseEnemy : MonoBehaviour {
     {
         // TODO apply knockback
         health -= damage;
-        camShake.shakeAmount = camShakeAmountWhenDamaged;
-        camShake.shakeDuration = camShakeDurationWhenDamaged;
-        if (health <= 0)
+        if(health <= 0)
         {
             Die();
-            camShakeDurationWhenDamaged += camShakeDurationWhenDamaged;
         }
         this.knockBack = knockback;
         knockbackDuration = knockBackDur;
@@ -265,10 +244,7 @@ public class BaseEnemy : MonoBehaviour {
 
     protected virtual void Die()
     {
-        if(powerupsToDrop.Length > 0)
-        {
-            DropPowerup();
-        }
+        DropPowerup();
         GameManager.Instance.Highscore += highscoreValue;
         player.GainExp(expToGive);
         Destroy(gameObject);
