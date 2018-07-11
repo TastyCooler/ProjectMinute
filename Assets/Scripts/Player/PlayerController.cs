@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
     {
         get
         {
-            return cursor;
+            return arrow;
         }
     }
 
@@ -63,7 +63,14 @@ public class PlayerController : MonoBehaviour {
 
     public event System.Action<int> OnLevelChanged;
 
+    public event System.Action OnPlayerDied;
+
     [Header("Stats"), SerializeField] float speed = 1f;
+    [SerializeField] float speedWhenAttacking = 1f;
+
+    CameraShake camShake;
+    [SerializeField] float camShakeAmountWhenDamaged = 1f;
+    [SerializeField] float camShakeDurationWhenDamaged = 1f;
 
     // Player Slots for item and skill
     BaseSkill playerSkill;
@@ -74,6 +81,9 @@ public class PlayerController : MonoBehaviour {
     Vector3 aimDirection;
 
     Vector3 velocity;
+
+    [SerializeField] AudioSource swooshSound;
+    [SerializeField] AudioSource footstepSound;
 
     Animator anim;
 
@@ -86,10 +96,10 @@ public class PlayerController : MonoBehaviour {
     int attack;
     float attackMultiplier = 1f;
     float attackStartedTime;
-    [SerializeField] float attackDuration = 0.5f;
-    [SerializeField] float attackTwoDuration = 0.5f;
+
+    [SerializeField] AnimationClip[] attackAnimations;
+    
     [Range(1, 5), SerializeField] float attackTwoDamageMultiplier = 1.5f;
-    [SerializeField] float attackThreeDuration = 0.5f;
     [Range(1, 10), SerializeField] float attackThreeDamageMultiplier = 2f;
     [SerializeField] float attackCooldown = 1f;
     [SerializeField] float knockbackStrength = 1f;
@@ -104,13 +114,20 @@ public class PlayerController : MonoBehaviour {
     float knockBackDuration;
     Vector3 knockbackDir;
 
+    [SerializeField] TitlescreenController titlescreen;
+
+    bool isStopped = true;
+
     [SerializeField] float dashForce = 1f;
 
     PlayerInput input;
 
     Camera cam;
 
-    [SerializeField] GameObject cursor;
+    LayerMask projectileLayer;
+
+    [SerializeField] GameObject arrow;
+    [SerializeField] GameObject hitbox;
     [SerializeField] ParticleSystem footprints;
     ParticleSystem.MainModule footprintsMainModule;
     ParticleSystem.ShapeModule footprintsShapeModule;
@@ -145,6 +162,8 @@ public class PlayerController : MonoBehaviour {
         cam = Camera.main;
         anim = GetComponent<Animator>();
 
+        titlescreen.OnGameStarted += OnGameStarted;
+
         attack = baseAttack;
         health = baseHealth;
         maxHealth = baseHealth;
@@ -158,6 +177,12 @@ public class PlayerController : MonoBehaviour {
         dashEmission = dash.emission;
 
         rend = GetComponent<SpriteRenderer>();
+
+        int layer = LayerMask.NameToLayer("PlayerProjectiles");
+        projectileLayer = 1 << layer;
+
+        camShake = Camera.main.GetComponent<CameraShake>();
+
     }
 
     private void Start()
@@ -168,7 +193,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (OnHealthChanged != null)
         {
-            OnHealthChanged(maxHealth, health);
+            OnHealthChanged(health, maxHealth);
         }
         if (OnLevelChanged != null)
         {
@@ -178,6 +203,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+        if(isStopped) { return; }
         CalculateOrderInLayer();
 
         //unparent the particle system and it does work
@@ -191,6 +217,9 @@ public class PlayerController : MonoBehaviour {
 
         if (playerState == State.freeToMove)
         {
+            anim.ResetTrigger("Attack");
+            anim.ResetTrigger("AttackTwo");
+            anim.ResetTrigger("AttackThree");
             footprintsEmissionModule.rateOverDistance = 1f;
             if (dash)
             {
@@ -206,7 +235,7 @@ public class PlayerController : MonoBehaviour {
             {
                 playerSkill.Use();
             }
-            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackDuration + attackCooldown)
+            if (input.Attack && Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length+ attackCooldown && !EventSystem.current.IsPointerOverGameObject())
             {
                 keepAttacking = false;
                 playerState = State.attacking;
@@ -218,16 +247,16 @@ public class PlayerController : MonoBehaviour {
         else if (playerState == State.attacking)
         {
             GetInput();
-            velocity = moveDirection * speed;
+            velocity = moveDirection * speedWhenAttacking;
             if (input.Attack)
             {
                 keepAttacking = true;
             }
-            if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
-            else if (Time.realtimeSinceStartup > attackStartedTime + attackDuration && keepAttacking)
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && keepAttacking)
             {
                 keepAttacking = false;
                 playerState = State.attackingTwo;
@@ -239,16 +268,16 @@ public class PlayerController : MonoBehaviour {
         else if (playerState == State.attackingTwo)
         {
             GetInput();
-            velocity = moveDirection * speed;
+            velocity = moveDirection * speedWhenAttacking;
             if (input.Attack)
             {
                 keepAttacking = true;
             }
-            if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && !keepAttacking)
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length && !keepAttacking)
             {
                 playerState = State.freeToMove;
             }
-            else if (Time.realtimeSinceStartup > attackStartedTime + attackTwoDuration && keepAttacking)
+            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[1].length && keepAttacking)
             {
                 playerState = State.attackingThree;
                 attackMultiplier = attackThreeDamageMultiplier;
@@ -258,9 +287,8 @@ public class PlayerController : MonoBehaviour {
         }
         else if (playerState == State.attackingThree)
         {
-            GetInput();
-            velocity = moveDirection * speed;
-            if (Time.realtimeSinceStartup > attackStartedTime + attackThreeDuration)
+            velocity = moveDirection * 0f;
+            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length)
             {
                 playerState = State.freeToMove;
             }
@@ -285,8 +313,27 @@ public class PlayerController : MonoBehaviour {
             {
                 playerState = State.freeToMove;
             }
+            StartCoroutine(FlashSprite(0.1f));
         }
         transform.position += velocity * Time.deltaTime;
+    }
+
+    void OnGameStarted()
+    {
+        StartCoroutine(ActivatePlayer());
+    }
+
+    IEnumerator ActivatePlayer()
+    {
+        yield return new WaitForSeconds(2f);
+        isStopped = false;
+    }
+
+    IEnumerator FlashSprite(float offtime)
+    {
+        rend.enabled = false;
+        yield return new WaitForSeconds(offtime);
+        rend.enabled = true;
     }
 
     private void CalculateOrderInLayer()
@@ -301,6 +348,14 @@ public class PlayerController : MonoBehaviour {
     private void OnDrawGizmos()
     {
         Debug.DrawLine(transform.position, transform.position + aimDirection);
+    }
+
+    public void PlayAttackSound()
+    {
+        if (swooshSound)
+        {
+            swooshSound.PlayOneShot(swooshSound.clip);
+        }
     }
 
     public void GainExp(int expGain)
@@ -326,7 +381,7 @@ public class PlayerController : MonoBehaviour {
         }
         if(OnHealthChanged != null)
         {
-            OnHealthChanged(maxHealth, health);
+            OnHealthChanged(health, maxHealth);
         }
         if(OnLevelChanged != null)
         {
@@ -347,6 +402,16 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         moveDirection.y = input.Vertical;
+        anim.SetFloat("Velocity", moveDirection.magnitude);
+        footstepSound.volume = moveDirection.normalized.magnitude;
+        if(moveDirection.magnitude < 0.1f && playerState == State.freeToMove)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else if (moveDirection.magnitude < 0.1f && playerState == State.attacking)
+        {
+            transform.localScale = new Vector3(-aimDirection.normalized.x, 1f, 1f);
+        }
         // Create the angle for the movement vector
         float moveAngle = Vector3.Angle(Vector3.up, lastValidMoveDir);
         if (moveDirection.x < 0f)
@@ -382,36 +447,57 @@ public class PlayerController : MonoBehaviour {
             aimDirection.y = targetAim.normalized.y;
         }
         SetArrow();
+        SetHitbox();
     }
 
     // Set the arrow position and rotation
     void SetArrow()
     {
-        cursor.transform.position = transform.position + aimDirection.normalized;
-        cursor.transform.rotation = Quaternion.FromToRotation(cursor.transform.up, aimDirection) * cursor.transform.rotation;
+        arrow.transform.position = (transform.position + aimDirection.normalized);
+        arrow.transform.position = new Vector3(arrow.transform.position.x, arrow.transform.position.y - 0.5f);
+        arrow.transform.rotation = Quaternion.FromToRotation(arrow.transform.up, aimDirection) * arrow.transform.rotation;
+    }
+
+    // Set the hitbox position and rotation
+    void SetHitbox()
+    {
+        hitbox.transform.position = transform.position + aimDirection.normalized;
+        hitbox.transform.position = new Vector3(hitbox.transform.position.x, hitbox.transform.position.y - 0.5f);
+        hitbox.transform.rotation = Quaternion.FromToRotation(hitbox.transform.up, aimDirection) * hitbox.transform.rotation;
     }
 
     // Subtracts damage from the player health and knocks him back
     public void TakeDamage(int damage, Vector3 knockback, float time, float duration)
     {
-        health -= damage;
-        if(health <= 0)
+        // Player only takes damage, if he isnt already knocked back
+        if(playerState != State.knockedBack)
         {
-            Die();
-        }
-        knockbackDir = knockback;
-        knockBackStarted = time;
-        knockBackDuration = duration;
-        playerState = State.knockedBack;
-        if(OnHealthChanged != null)
-        {
-            OnHealthChanged(maxHealth, health);
+            camShake.shakeAmount = camShakeAmountWhenDamaged;
+            camShake.shakeDuration = camShakeDurationWhenDamaged;
+            health -= damage;
+            if (health <= 0)
+            {
+                Die();
+            }
+            knockbackDir = knockback;
+            knockBackStarted = time;
+            knockBackDuration = duration;
+            playerState = State.knockedBack;
+            if (OnHealthChanged != null)
+            {
+                OnHealthChanged(health, maxHealth);
+            }
         }
     }
 
     void Die()
     {
+        camShake.shakeDuration = 0f;
         //TODO make the player die and open gameover menu
+        if(OnPlayerDied != null)
+        {
+            OnPlayerDied();
+        }
     }
 
     // Collects Items or Skills if player walks over them if nothing is equipped before

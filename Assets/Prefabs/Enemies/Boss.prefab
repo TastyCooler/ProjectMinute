@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114037278155684768}
   - component: {fileID: 50885386014019938}
   - component: {fileID: 114886235233950804}
+  - component: {fileID: 95316362842768496}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -39,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1645413632767480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.51, y: 1.42, z: 0}
+  m_LocalPosition: {x: 8.853709, y: -4.5745816, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,18 +78,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.27876556, y: 1.8352056}
+  m_Offset: {x: -0.078532696, y: 2.6882253}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 20.44, y: 20.44}
+    newSize: {x: 20.44, y: 20.44}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4960482, y: 1.4495888}
+  m_Size: {x: 1.9537382, y: 1.9336166}
   m_EdgeRadius: 0
 --- !u!61 &61627184777633142
 BoxCollider2D:
@@ -102,19 +103,37 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1858437, y: -0.7666049}
+  m_Offset: {x: -0.25734806, y: -0.95826864}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 20.44, y: 20.44}
+    newSize: {x: 20.44, y: 20.44}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.168641, y: 3.58679}
+  m_Size: {x: 5.0989285, y: 5.011362}
   m_EdgeRadius: 0
+--- !u!95 &95316362842768496
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1645413632767480}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f6ea3dd4c2a9b30468e6e2009e41859a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114037278155684768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,6 +145,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bfd28806b692394c9e9f15bca4a6c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attack: 5
+  knockbackDuration: 1
+  knockbackStrength: 1
+  health: 10
+  speed: 1
+  camShakeAmountWhenDamaged: 1
+  camShakeDurationWhenDamaged: 1
+  powerupsToDrop: []
+  dropChance: 0.1
+  sightReach: 1
+  patrolRadius: 1
+  patrollingSpeedMultiplier: 0.3
+  sightReachMultiplier: 0.5
+  attackAreaTolerance: 3
+  highscoreValue: 1000
+  expToGive: 3
+  attackCooldown: 1
+  attackDuration: 0.4
+  attackDistance: 1
 --- !u!114 &114886235233950804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -174,12 +212,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2902ca8601d1cad41a05b0f685193120, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4225468f9ab8544ba9deb7c4716adf6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.28, y: 1.28}
+  m_Size: {x: 20.44, y: 20.44}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

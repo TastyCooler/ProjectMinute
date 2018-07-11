@@ -35,8 +35,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1205422149416040}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.152703, y: 1.3106849, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.22, y: 23.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -103,6 +103,8 @@ MonoBehaviour:
   knockbackStrength: 3000
   health: 1
   speed: 4
+  camShakeAmountWhenDamaged: 0.3
+  camShakeDurationWhenDamaged: 0.1
   powerupsToDrop: []
   dropChance: 0.1
   sightReach: 10
