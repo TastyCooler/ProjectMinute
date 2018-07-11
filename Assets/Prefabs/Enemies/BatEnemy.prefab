@@ -139,8 +139,9 @@ MonoBehaviour:
   speed: 4
   camShakeAmountWhenDamaged: 0.3
   camShakeDurationWhenDamaged: 0.2
-  powerupsToDrop: []
-  dropChance: 0.1
+  powerupsToDrop:
+  - {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
+  dropChance: 0.5
   sightReach: 10
   patrolRadius: 5
   patrollingSpeedMultiplier: 0.3
@@ -148,7 +149,7 @@ MonoBehaviour:
   attackAreaTolerance: 0.3
   highscoreValue: 0
   expToGive: 3
-  attackCooldown: 5
+  attackCooldown: 2
   attackDuration: 0.4
   attackDistance: 1
 --- !u!212 &212418516759818218

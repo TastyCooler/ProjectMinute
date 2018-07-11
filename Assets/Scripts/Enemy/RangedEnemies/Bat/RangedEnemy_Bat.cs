@@ -32,6 +32,7 @@ public class RangedEnemy_Bat : BaseEnemy {
         {
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
             {
+                anim.SetTrigger("Attack");
                 timeWhenLastAttacked = Time.realtimeSinceStartup;
 
                 Projectile_Bat laserToShoot = GameManager.Instance.GetLaser(transform.position).GetComponent<Projectile_Bat>();

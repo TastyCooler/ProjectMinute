@@ -32,6 +32,7 @@ public class RangedEnemy : BaseEnemy {
         {
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
             {
+                anim.SetTrigger("Attack");
                 timeWhenLastAttacked = Time.realtimeSinceStartup;
 
                 ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();

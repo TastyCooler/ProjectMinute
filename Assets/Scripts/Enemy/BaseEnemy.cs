@@ -51,6 +51,8 @@ public class BaseEnemy : MonoBehaviour
     protected Animator anim;
     private float newTargetPosTimer = 0;
 
+    SpriteRenderer rend;
+
     public RaycastHit2D Hit
     {
         get { return hit; }
@@ -78,11 +80,20 @@ public class BaseEnemy : MonoBehaviour
         hitLayer = hitLayer | obsLayer;
         anim = GetComponent<Animator>();
         camShake = Camera.main.GetComponent<CameraShake>();
+        rend = GetComponent<SpriteRenderer>();
     }
 
     protected virtual void Update()
     {
         toPlayer = player.transform.position - transform.position;
+        if(toPlayer.x < 0)
+        {
+            rend.flipX = false;
+        }
+        else
+        {
+            rend.flipX = true;
+        }
         toPlayer.z = 0f;
 
         if (newTargetPosTimer <= 100)
@@ -128,11 +139,13 @@ public class BaseEnemy : MonoBehaviour
         }
         if (!HelperMethods.V3Equal(transform.position, targetPos, 0.1f))
         {
+            anim.SetFloat("Velocity", 0.5f);
             transform.position += (targetPos - transform.position).normalized * (speed * patrollingSpeedMultiplier) * Time.deltaTime;
         }
         else
         {
             DefineNewTargetPos();
+            anim.SetFloat("Velocity", 0f);
         }
 
         if (newTargetPosTimer >= 100)
@@ -169,7 +182,12 @@ public class BaseEnemy : MonoBehaviour
 
         if (!meleeAttacking)
         {
+            anim.SetFloat("Velocity", 0.5f);
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
+        }
+        else
+        {
+            anim.SetFloat("Velocity", 0f);
         }
     }
 
@@ -185,6 +203,7 @@ public class BaseEnemy : MonoBehaviour
         // Go away from player
         if (toPlayer.magnitude < sightReach * sightReachMultiplier && !rangeAttacking)
         {
+            anim.SetFloat("Velocity", 0.5f);
             transform.position += -toPlayer.normalized * speed * Time.deltaTime;
             timeWhenLastAttacked = Time.realtimeSinceStartup;
             rangeAttacking = false;
@@ -193,6 +212,7 @@ public class BaseEnemy : MonoBehaviour
         // Go near to player
         if (toPlayer.magnitude > sightReach * (sightReachMultiplier + attackAreaTolerance) && toPlayer.magnitude < sightReach && !rangeAttacking)
         {
+            anim.SetFloat("Velocity", 0.5f);
             transform.position += toPlayer.normalized * speed * Time.deltaTime;
             timeWhenLastAttacked = Time.realtimeSinceStartup;
             rangeAttacking = false;
@@ -202,6 +222,7 @@ public class BaseEnemy : MonoBehaviour
         if (toPlayer.magnitude > sightReach * sightReachMultiplier && toPlayer.magnitude < sightReach * (sightReachMultiplier + attackAreaTolerance))
         {
             rangeAttacking = true;
+            anim.SetFloat("Velocity", 0f);
         }
 
         if (toPlayer.magnitude > sightReach)
@@ -233,7 +254,7 @@ public class BaseEnemy : MonoBehaviour
             }
         }
         newTargetPosTimer -= 2;
-        //Debug.Log(newTargetPosTimer);
+        anim.SetFloat("Velocity", 0.5f);
         transform.position += (playerLastSpottedAt - transform.position).normalized * speed * Time.deltaTime;
         if (HelperMethods.V3Equal(transform.position, playerLastSpottedAt, 0.1f))
         {

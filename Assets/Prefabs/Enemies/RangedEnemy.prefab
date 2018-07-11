@@ -28,7 +28,7 @@ GameObject:
   m_Layer: 12
   m_Name: RangedEnemy
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -128,7 +128,7 @@ MonoBehaviour:
   camShakeDurationWhenDamaged: 0.2
   powerupsToDrop:
   - {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
-  dropChance: 0.1
+  dropChance: 0.5
   sightReach: 10
   patrolRadius: 5
   patrollingSpeedMultiplier: 0.3
