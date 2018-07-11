@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile_Bat : MonoBehaviour {
+public class HookController : MonoBehaviour {
 
     #region Properties
 
@@ -62,7 +62,7 @@ public class Projectile_Bat : MonoBehaviour {
     [SerializeField] float speed = 10f;
     [SerializeField] float despawnDelay;
 
-    int damage;
+    int damage = 0;
     float knockbackStrength;
     float knockbackDuration;
 
@@ -80,11 +80,11 @@ public class Projectile_Bat : MonoBehaviour {
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        //despawnDelay = baseEnemy.Hit.distance / speed;
+        despawnDelay = baseEnemy.Hit.distance / speed * 1.5f;
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            GameManager.Instance.PushLaser(gameObject);
+            GameManager.Instance.PushHook(gameObject);
         }
     }
 
@@ -93,13 +93,13 @@ public class Projectile_Bat : MonoBehaviour {
         if (collision.tag == "Player" && collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
-            GameManager.Instance.PushLaser(gameObject);
+            collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength), Time.realtimeSinceStartup, baseEnemy.Hit.distance / 5 * (knockbackDuration * 2));
+            GameManager.Instance.PushHook(gameObject);
         }
         else if (collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            GameManager.Instance.PushLaser(gameObject);
+            GameManager.Instance.PushHook(gameObject);
         }
     }
 }
