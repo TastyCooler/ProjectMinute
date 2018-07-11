@@ -182,7 +182,7 @@ public class GameManager : Singleton<GameManager>
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(!isStarted)
+        if(!isStarted && collision.gameObject.tag == "Player")
         {
             InvokeRepeating("DecreaseTimer", 0f, 1.03f); // Yes this causes the game to run longer than one minute. I'm a ninja
             isPreparing = true;
