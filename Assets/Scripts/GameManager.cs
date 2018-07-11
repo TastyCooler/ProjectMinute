@@ -233,7 +233,6 @@ public class GameManager : Singleton<GameManager> {
     void OnBossDefeated()
     {
         finalHighscore = highscore + highscoreAddition;
-        print("defeated");
         // TODO make win screen appear
     }
 
