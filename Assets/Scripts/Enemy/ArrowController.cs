@@ -145,12 +145,11 @@ public class ArrowController : MonoBehaviour {
 
     IEnumerator PushBackAfter(float seconds)
     {
-        // I know, hard coded stuff isn´t the nicest way x).
+        yield return new WaitForSeconds(seconds);
         if (gameObject.layer != 11)
         {
-            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoting from Player.
+            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
         }
-        yield return new WaitForSeconds(seconds);
         GameManager.Instance.PushArrow(gameObject);
     }
 }

@@ -12,7 +12,7 @@ public class i_Shield : BaseItem {
         if (usageTimes <= usages)
         {
             usages--;
-            Debug.Log("Shield used");
+            //Debug.Log("Shield used");
             ActivateShield();
         }
     }

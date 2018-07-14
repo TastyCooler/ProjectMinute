@@ -12,13 +12,20 @@ public class i_instakill : BaseItem {
     [SerializeField] int usages = 1;
     float waitTime = 0.000001f;
 
+    [SerializeField] ParticleSystem shine;
+    ParticleSystem.EmissionModule shineEmission;
+
     public override void Use()
     {
         
         if(usageTimes <= usages)
         {
+            shine.transform.position = player.transform.position;
+            shineEmission = shine.emission;
+            shine.Play();
+            //shine.Stop();
             usages--;
-            Debug.Log("Instakill used");
+           // Debug.Log("Instakill used");
             IncreaseTheRadius();
         }
         
@@ -29,7 +36,7 @@ public class i_instakill : BaseItem {
        circColl = GetComponent<CircleCollider2D>();
         if(circColl.radius <= radiusMax)
         {
-            Debug.Log("Rise() started");
+           // Debug.Log("Rise() started");
             StartCoroutine(Rise());
         }
       
