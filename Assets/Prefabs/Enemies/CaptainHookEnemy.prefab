@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1567776585290824}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.455392, y: -11.901002, z: 0}
+  m_LocalPosition: {x: -24.226442, y: -10.242421, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da46a8da4284a27479cfeb970a601f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack: 1
+  attack: 2
   knockbackDuration: 0.4
   knockbackStrength: 800
   health: 1
@@ -162,8 +162,8 @@ MonoBehaviour:
   expToGive: 3
   attackCooldown: 1
   attackDuration: 0.4
-  attackDistance: 1
-  hookCooldown: 2
+  attackDistance: 1.8
+  hookCooldown: 3
 --- !u!212 &212365334665249558
 SpriteRenderer:
   m_ObjectHideFlags: 1
