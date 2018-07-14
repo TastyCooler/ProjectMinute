@@ -14,10 +14,25 @@ public class CrawlerEnemy : BaseEnemy {
         else if (enemyState == State.playerSpotted)
         {
             PursuitPlayer();
+            Attack();
         }
         else if (enemyState == State.searchingForPlayer)
         {
             SearchForPlayer();
+        }
+        else if(enemyState == State.knockedBack)
+        {
+            GetKnockedBack();
+        }
+    }
+
+    void Attack()
+    {
+        if (toPlayer.magnitude < attackDistance && !meleeAttacking)
+        {
+            meleeAttacking = true;
+            timeWhenLastAttacked = Time.realtimeSinceStartup;
+            anim.SetTrigger("Attack");
         }
     }
 

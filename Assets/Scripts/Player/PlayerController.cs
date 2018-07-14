@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (OnExpChanged != null)
         {
-            OnExpChanged(expToNextLevel, exp);
+            OnExpChanged(exp, expToNextLevel);
         }
         if (OnHealthChanged != null)
         {
@@ -287,6 +287,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (playerState == State.attackingThree)
         {
+            GetInput();
             velocity = moveDirection * 0f;
             if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length)
             {
@@ -316,6 +317,8 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(FlashSprite(0.1f));
         }
         transform.position += velocity * Time.deltaTime;
+        // Apply drag
+        velocity = velocity * (1 - Time.deltaTime * 0.1f);
     }
 
     void OnGameStarted()
@@ -363,7 +366,7 @@ public class PlayerController : MonoBehaviour {
         exp += expGain;
         if(OnExpChanged != null)
         {
-            OnExpChanged(expToNextLevel, exp);
+            OnExpChanged(exp, expToNextLevel);
         }
     }
 
@@ -377,7 +380,7 @@ public class PlayerController : MonoBehaviour {
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
         if(OnExpChanged != null)
         {
-            OnExpChanged(expToNextLevel, exp);
+            OnExpChanged(exp, expToNextLevel);
         }
         if(OnHealthChanged != null)
         {
@@ -410,7 +413,14 @@ public class PlayerController : MonoBehaviour {
         }
         else if (moveDirection.magnitude < 0.1f && playerState == State.attacking)
         {
-            transform.localScale = new Vector3(-aimDirection.normalized.x, 1f, 1f);
+            if(aimDirection.x < 0f)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+            else
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
         }
         // Create the angle for the movement vector
         float moveAngle = Vector3.Angle(Vector3.up, lastValidMoveDir);
@@ -493,7 +503,8 @@ public class PlayerController : MonoBehaviour {
     void Die()
     {
         camShake.shakeDuration = 0f;
-        //TODO make the player die and open gameover menu
+        isStopped = true;
+        footstepSound.Stop();
         if(OnPlayerDied != null)
         {
             OnPlayerDied();

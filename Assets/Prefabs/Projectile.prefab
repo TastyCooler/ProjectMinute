@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198304208461187560}
   - component: {fileID: 199167700780912564}
   m_Layer: 11
-  m_Name: Particle System
+  m_Name: LaserTrail
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1627037805189694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.88932014, y: 9.043287, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4019584118094122}
@@ -85,18 +85,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.022571564, y: -0.045143366}
+  m_Offset: {x: -0.004597664, y: 0.013579369}
   m_SpriteTilingProperty:
-    border: {x: 0.01, y: 0, z: 0.01, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.62, y: 0.8}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.98, y: 1.08}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7091408, y: 0.7865691}
+  m_Size: {x: 0.48626423, y: 0.4534359}
   m_EdgeRadius: 0
 --- !u!114 &114310644495552316
 MonoBehaviour:
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ac1522a8e27f946ab0bd8f36d4a5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  speed: 25
   despawnDelay: 6
 --- !u!198 &198304208461187560
 ParticleSystem:
@@ -295,7 +295,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 2
+      minMaxState: 0
       minColor: {r: 0.93333334, g: 0, b: 0, a: 1}
       maxColor: {r: 0.9339623, g: 0.9339623, b: 0.9339623, a: 1}
       maxGradient:
@@ -358,9 +358,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.05
-      minScalar: 1
+      minMaxState: 3
+      scalar: 0.5
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -411,7 +411,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -464,7 +464,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -734,7 +734,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 5
     enabled: 1
-    type: 10
+    type: 12
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -935,7 +935,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4658,7 +4658,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 54c16ef9f4e711a4cbf693bf79a4a81e, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4733,8 +4733,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 379c2e72379375445b0b103097e7aae2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 83b47933feda116419ca272858b36084, type: 3}
+  m_Color: {r: 0.4516697, g: 0.31198823, b: 0.5377358, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

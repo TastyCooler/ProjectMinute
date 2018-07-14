@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class RangedEnemy : BaseEnemy {
 
-    LayerMask projectileLayer;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        int layer = LayerMask.NameToLayer("EnemyProjectile");
-        projectileLayer = layer;
-    }
-
     protected override void Update()
     {
         base.Update();
@@ -29,6 +20,10 @@ public class RangedEnemy : BaseEnemy {
         {
             SearchForPlayer();
         }
+        else if(enemyState == State.knockedBack)
+        {
+            GetKnockedBack();
+        }
     }
 
     void Attack()
@@ -37,6 +32,7 @@ public class RangedEnemy : BaseEnemy {
         {
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackCooldown)
             {
+                anim.SetTrigger("Attack");
                 timeWhenLastAttacked = Time.realtimeSinceStartup;
 
                 ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
@@ -45,7 +41,6 @@ public class RangedEnemy : BaseEnemy {
                 arrowToShoot.KnockbackStrength = knockbackStrength;
                 arrowToShoot.Owner = gameObject;
                 arrowToShoot.transform.up = toPlayer;
-                arrowToShoot.gameObject.layer = projectileLayer;
 
                 rangeAttacking = false;
             }

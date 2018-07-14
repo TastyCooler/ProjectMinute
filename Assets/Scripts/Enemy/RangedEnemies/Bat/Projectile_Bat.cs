@@ -80,7 +80,7 @@ public class Projectile_Bat : MonoBehaviour {
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        //despawnDelay = baseEnemy.Hit.distance / 10;
+        //despawnDelay = baseEnemy.Hit.distance / speed;
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {

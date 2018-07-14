@@ -6,7 +6,8 @@ using UnityEngine.PostProcessing;
 /// <summary>
 /// The GameManager script, which controls several aspects of the game unaffected by loading scenes etc.
 /// </summary>
-public class GameManager : Singleton<GameManager> {
+public class GameManager : Singleton<GameManager>
+{
 
     public bool IsControllerInput
     {
@@ -39,6 +40,8 @@ public class GameManager : Singleton<GameManager> {
 
     public event System.Action<int> OnTimerChanged;
 
+    public event System.Action<int> OnWinScreen;
+
     [SerializeField] int maxStack = 50;
 
     [SerializeField] GameObject arrow;
@@ -48,6 +51,10 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] GameObject laser;
     [SerializeField] GameObject laserParent;
     Stack<GameObject> laserStack = new Stack<GameObject>();
+
+    [SerializeField] GameObject hook;
+    [SerializeField] GameObject hookParent;
+    Stack<GameObject> hookStack = new Stack<GameObject>();
 
     GameObject player;
 
@@ -63,6 +70,14 @@ public class GameManager : Singleton<GameManager> {
 
     [SerializeField] PauseMenu pauseMenu;
 
+    [SerializeField] ParticleSystem flashUpParticle;
+
+    [SerializeField] Vector2 destructionSizeOnBossSpawn;
+
+    [SerializeField] GameObject impactCrater;
+
+    [SerializeField] Animator overlayAnim;
+
     bool isControllerInput = false;
     int controllerCount = 0;
 
@@ -73,6 +88,13 @@ public class GameManager : Singleton<GameManager> {
     bool isBossSpawned = false;
 
     bool isAlreadyDead = false;
+
+    CameraShake camShake;
+
+    [SerializeField] float camShakeDurationBossSpawn = 1f;
+    [SerializeField] float camShakeAmountBossSpawn = 0.5f;
+
+    bool isStarted = false; // Stores if the counter is started or not
 
     #endregion
 
@@ -99,15 +121,24 @@ public class GameManager : Singleton<GameManager> {
             }
             newLaser.SetActive(false);
             laserStack.Push(newLaser);
+
+            GameObject newHook = Instantiate(hook, transform.position, transform.rotation);
+            if (hookParent)
+            {
+                newHook.transform.parent = hookParent.transform;
+            }
+            newHook.SetActive(false);
+            hookStack.Push(newHook);
         }
         timer = preparationTime;
         player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerController>().OnPlayerDied += OnPlayerDied;
+        camShake = Camera.main.GetComponent<CameraShake>();
     }
 
     private void Start()
     {
-        if(OnTimerChanged != null)
+        if (OnTimerChanged != null)
         {
             OnTimerChanged(preparationTime);
         }
@@ -115,40 +146,31 @@ public class GameManager : Singleton<GameManager> {
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            InvokeRepeating("DecreaseTimer", 0f, 1.03f); // Yes this causes the game to run longer than one minute. I'm a ninja
-            isPreparing = true;
-            if(preparationMusic)
-            {
-                preparationMusic.Play();
-            }
-        }
-        if(timer <= 0 && isPreparing)
+        if (timer <= 0 && isPreparing)
         {
             isPreparing = false;
             CancelInvoke();
-            if(bossPost)
+            if (bossPost)
             {
                 Camera.main.GetComponent<PostProcessingBehaviour>().profile = bossPost;
             }
             InvokeRepeating("IncreaseTimer", 1f, 1f);
             StartCoroutine(SummonBoss());
         }
-        if(Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel"))
         {
             pauseMenu.IsShown = !pauseMenu.IsShown;
         }
         GetControllerCount();
-        if(controllerCount > 0 && !isControllerInput)
+        if (controllerCount > 0 && !isControllerInput)
         {
             isControllerInput = true;
         }
-        else if(controllerCount < 1 && isControllerInput)
+        else if (controllerCount < 1 && isControllerInput)
         {
             isControllerInput = false;
         }
-        if(highscoreAddition > 0)
+        if (highscoreAddition > 0)
         {
             highscoreAddition -= (int)(Time.deltaTime * 100f);
         }
@@ -160,15 +182,57 @@ public class GameManager : Singleton<GameManager> {
         //Debug.LogFormat("arrowStack {0}, laserStack {1}", arrowStack.Count, laserStack.Count);
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(!isStarted && collision.gameObject.tag == "Player")
+        {
+            InvokeRepeating("DecreaseTimer", 0f, 1.03f); // Yes this causes the game to run longer than one minute. I'm a ninja
+            isPreparing = true;
+            if (preparationMusic)
+            {
+                preparationMusic.Play();
+            }
+            isStarted = true;
+        }
+    }
+
     #endregion
 
     #region Helper Methods
 
+    public void PushHook(GameObject newObject)
+    {
+        newObject.SetActive(false);
+        hookStack.Push(newObject);
+    }
+
+    public GameObject GetHook(Vector3 pos)
+    {
+        GameObject hookReturned = hookStack.Pop();
+        hookReturned.transform.position = pos;
+        hookReturned.SetActive(true);
+        return hookReturned;
+    }
+
     IEnumerator SummonBoss()
     {
-        //TODO flash up
-        yield return new WaitForSeconds(0.2f);
-        // TODO set crater sprite and delete all collider in way
+        flashUpParticle.transform.position = new Vector3(player.transform.position.x + 6, player.transform.position.y);
+        flashUpParticle.Play();
+        yield return new WaitForSeconds(1.5f);
+        if(impactCrater)
+        {
+            Instantiate(impactCrater, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
+        }
+        camShake.shakeAmount = camShakeAmountBossSpawn;
+        camShake.shakeDuration = camShakeDurationBossSpawn;
+        Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, destructionSizeOnBossSpawn, 0f);
+        foreach (Collider2D coll in colls)
+        {
+            if (coll.gameObject.tag != "Player" && coll.gameObject.tag != "GameManager" && coll.gameObject.tag != "Crater")
+            {
+                Destroy(coll.gameObject);
+            }
+        }
         GameObject newBoss = Instantiate(boss, new Vector3(player.transform.position.x + 6, player.transform.position.y), transform.rotation);
         newBoss.GetComponent<BossController>().OnBossDefeated += OnBossDefeated;
     }
@@ -176,7 +240,7 @@ public class GameManager : Singleton<GameManager> {
     void DecreaseTimer()
     {
         timer--;
-        if(OnTimerChanged != null)
+        if (OnTimerChanged != null)
         {
             OnTimerChanged(timer);
         }
@@ -184,11 +248,12 @@ public class GameManager : Singleton<GameManager> {
 
     void OnPlayerDied()
     {
-        if(!isAlreadyDead)
+        if (!isAlreadyDead)
         {
+            overlayAnim.SetTrigger("FadeOut");
             pauseMenu.IsShown = true;
             pauseMenu.IsGameOver = true;
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             isAlreadyDead = true;
         }
     }
@@ -196,7 +261,7 @@ public class GameManager : Singleton<GameManager> {
     void IncreaseTimer()
     {
         timer++;
-        if(OnTimerChanged != null)
+        if (OnTimerChanged != null)
         {
             OnTimerChanged(timer);
         }
@@ -232,9 +297,15 @@ public class GameManager : Singleton<GameManager> {
 
     void OnBossDefeated()
     {
+        if(overlayAnim)
+        {
+            overlayAnim.SetTrigger("FadeOut");
+        }
         finalHighscore = highscore + highscoreAddition;
-        print("defeated");
-        // TODO make win screen appear
+        if(OnWinScreen != null)
+        {
+            OnWinScreen(finalHighscore);
+        }
     }
 
     // Looks for any connected controller and updates the counter for every connected controller

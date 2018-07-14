@@ -9,6 +9,7 @@ public class s_Earthquake : BaseSkill {
     CircleCollider2D circColl;
     [SerializeField] float riseSpeed;
     [SerializeField] float radiusMax;
+    [SerializeField] float knockbackDuration = 1f;
     float radiusOrigin;
 
     LayerMask enemyLayer;
@@ -73,9 +74,10 @@ public class s_Earthquake : BaseSkill {
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //TODO: STUN AND DAMAGE ENEMIES
+
         if(collision.gameObject.layer == enemyLayer)
         {
-            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage(player.Attack / 2, collision.gameObject.transform.position - player.transform.position);
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage(player.Attack / 2, collision.gameObject.transform.position - player.transform.position, knockbackDuration);
         }
         if (collision.gameObject.tag == "Player")
         {

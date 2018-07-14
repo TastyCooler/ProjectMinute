@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1645413632767480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.853709, y: -4.5745816, z: 0}
+  m_LocalPosition: {x: -30.144773, y: 17.960857, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,18 +78,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.078532696, y: 2.6882253}
+  m_Offset: {x: 0.21667802, y: 2.3575892}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.44, y: 20.44}
+    oldSize: {x: 12.775, y: 12.775}
     newSize: {x: 20.44, y: 20.44}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9537382, y: 1.9336166}
+  m_Size: {x: 1.5994856, y: 1.555748}
   m_EdgeRadius: 0
 --- !u!61 &61627184777633142
 BoxCollider2D:
@@ -103,18 +103,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.25734806, y: -0.95826864}
+  m_Offset: {x: 0.3566903, y: -0.8519926}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.44, y: 20.44}
+    oldSize: {x: 12.775, y: 12.775}
     newSize: {x: 20.44, y: 20.44}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.0989285, y: 5.011362}
+  m_Size: {x: 3.8708518, y: 4.4209394}
   m_EdgeRadius: 0
 --- !u!95 &95316362842768496
 Animator:
@@ -148,10 +148,10 @@ MonoBehaviour:
   attack: 5
   knockbackDuration: 1
   knockbackStrength: 1
-  health: 10
+  health: 150
   speed: 1
-  camShakeAmountWhenDamaged: 1
-  camShakeDurationWhenDamaged: 1
+  camShakeAmountWhenDamaged: 0.5
+  camShakeDurationWhenDamaged: 0.3
   powerupsToDrop: []
   dropChance: 0.1
   sightReach: 1
@@ -164,6 +164,7 @@ MonoBehaviour:
   attackCooldown: 1
   attackDuration: 0.4
   attackDistance: 1
+  coll: {fileID: 61627184777633142}
 --- !u!114 &114886235233950804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yOffset: 1.5
-  by: 0
+  isChild: 0
 --- !u!212 &212456403095501118
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : BaseMenu {
 
@@ -49,6 +50,8 @@ public class PauseMenu : BaseMenu {
 
     bool isShown = false;
 
+    [SerializeField] Text highscoreText;
+
     [SerializeField] AudioSource gameOverSound;
 
     [SerializeField] AnimationClip quitClip;
@@ -57,11 +60,12 @@ public class PauseMenu : BaseMenu {
     {
         anim = GetComponent<Animator>();
         //camAnim = Camera.main.GetComponent<Animator>();
+        GameManager.Instance.OnWinScreen += ShowWinScreen;
     }
 
     public void OnQuitButton()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         buttonSound.Play();
         StartCoroutine(QuitAfterSeconds(quitClip.length));
     }
@@ -74,9 +78,25 @@ public class PauseMenu : BaseMenu {
         Application.Quit();
     }
 
+    void ShowWinScreen(int highscore)
+    {
+        if(highscoreText)
+        {
+            highscoreText.text = highscore.ToString();
+        }
+        Cursor.visible = true;
+        StartCoroutine(WinScreenAfterSeconds(2f));
+    }
+
+    IEnumerator WinScreenAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        anim.SetTrigger("Win");
+    }
+
     public void OnRestartButton()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         IsGameOver = false;
         buttonSound.Play();
         StartCoroutine(LoadSceneAfterSeconds(quitClip.length));
