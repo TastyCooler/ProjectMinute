@@ -14,10 +14,10 @@ public class BaseEnemy : MonoBehaviour
     protected Vector3 toPlayer;
     protected Vector3 playerLastSpottedAt;
 
-    CameraShake camShake;
+    protected CameraShake camShake;
 
-    [SerializeField] float camShakeAmountWhenDamaged = 1f;
-    [SerializeField] float camShakeDurationWhenDamaged = 1f;
+    [SerializeField] protected float camShakeAmountWhenDamaged = 1f;
+    [SerializeField] protected float camShakeDurationWhenDamaged = 1f;
     [Range(0.01f, 1f), SerializeField] float freezeFrameDuration = 0.1f;
 
     protected Vector3 targetPos;
