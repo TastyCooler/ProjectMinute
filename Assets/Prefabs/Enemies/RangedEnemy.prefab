@@ -126,6 +126,7 @@ MonoBehaviour:
   speed: 4
   camShakeAmountWhenDamaged: 0.3
   camShakeDurationWhenDamaged: 0.2
+  freezeFrameDuration: 0.1
   powerupsToDrop:
   - {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
   dropChance: 0.5
@@ -151,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yOffset: 0
-  by: 0
+  isChild: 0
 --- !u!212 &212768175765954960
 SpriteRenderer:
   m_ObjectHideFlags: 1

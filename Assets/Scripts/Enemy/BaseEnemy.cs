@@ -18,6 +18,7 @@ public class BaseEnemy : MonoBehaviour
 
     [SerializeField] float camShakeAmountWhenDamaged = 1f;
     [SerializeField] float camShakeDurationWhenDamaged = 1f;
+    [Range(0.01f, 1f), SerializeField] float freezeFrameDuration = 0.1f;
 
     protected Vector3 targetPos;
 
@@ -274,6 +275,7 @@ public class BaseEnemy : MonoBehaviour
         health -= damage;
         camShake.shakeAmount = camShakeAmountWhenDamaged;
         camShake.shakeDuration = camShakeDurationWhenDamaged;
+        FreezeFrames(freezeFrameDuration);
         if (health <= 0)
         {
             Die();
@@ -283,6 +285,17 @@ public class BaseEnemy : MonoBehaviour
         knockbackDuration = knockBackDur;
         knockBackStarted = Time.realtimeSinceStartup;
         enemyState = State.knockedBack;
+    }
+
+    void FreezeFrames(float seconds)
+    {
+        Time.timeScale = 0f;
+        float freezeEndTime = Time.realtimeSinceStartup + seconds;
+        while (Time.realtimeSinceStartup < freezeEndTime)
+        {
+            // Do nothing
+        }
+        Time.timeScale = 1f;
     }
 
     protected virtual void Die()

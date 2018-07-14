@@ -82,7 +82,7 @@ public class PauseMenu : BaseMenu {
     {
         if(highscoreText)
         {
-            highscoreText.text = highscore.ToString();
+            highscoreText.text = "Score: " + highscore;
         }
         Cursor.visible = true;
         StartCoroutine(WinScreenAfterSeconds(2f));
