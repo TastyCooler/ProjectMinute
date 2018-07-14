@@ -21,4 +21,6 @@ public interface IInput
     bool UseSkill { get; }
 
     bool SwitchPowerup { get; }
+
+    bool SummonBoss { get; }
 }

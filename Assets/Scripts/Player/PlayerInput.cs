@@ -66,6 +66,17 @@ public class PlayerInput : MonoBehaviour, IInput {
         }
     }
 
+    public bool SummonBoss
+    {
+        get{
+            if(Input.GetAxis("SummonBossRight") == 1 && Input.GetAxis("SummonBossLeft") == 1 || Input.GetKey(KeyCode.Y) && Input.GetKey(KeyCode.C))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
     #endregion
 
 }

@@ -36,6 +36,14 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public bool IsStarted
+    {
+        get
+        {
+            return isStarted;
+        }
+    }
+
     #region Fields
 
     public event System.Action<int> OnTimerChanged;
@@ -133,6 +141,7 @@ public class GameManager : Singleton<GameManager>
         timer = preparationTime;
         player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerController>().OnPlayerDied += OnPlayerDied;
+        player.GetComponent<PlayerController>().OnSummonBossEarly += CallBossEarly;
         camShake = Camera.main.GetComponent<CameraShake>();
     }
 
@@ -148,14 +157,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (timer <= 0 && isPreparing)
         {
-            isPreparing = false;
-            CancelInvoke();
-            if (bossPost)
-            {
-                Camera.main.GetComponent<PostProcessingBehaviour>().profile = bossPost;
-            }
-            InvokeRepeating("IncreaseTimer", 1f, 1f);
-            StartCoroutine(SummonBoss());
+            CallBoss();
         }
         if (Input.GetButtonDown("Cancel"))
         {
@@ -180,6 +182,27 @@ public class GameManager : Singleton<GameManager>
         }
 
         //Debug.LogFormat("arrowStack {0}, laserStack {1}", arrowStack.Count, laserStack.Count);
+    }
+
+    private void CallBoss()
+    {
+        isPreparing = false;
+        CancelInvoke();
+        if (bossPost)
+        {
+            Camera.main.GetComponent<PostProcessingBehaviour>().profile = bossPost;
+        }
+        InvokeRepeating("IncreaseTimer", 1f, 1f);
+        StartCoroutine(SummonBoss());
+    }
+
+    void CallBossEarly()
+    {
+        timer = 0;
+        if (OnTimerChanged != null)
+        {
+            OnTimerChanged(timer);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
