@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
-  hookStrengthMultiplayer: 6
+  hookStrengthMultiplayer: 10
   hookDuration: 0.01
 --- !u!212 &212082545632052948
 SpriteRenderer:
