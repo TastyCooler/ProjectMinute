@@ -165,6 +165,7 @@ MonoBehaviour:
   despawnDelay: 3
   swooshParticle: {fileID: 198705203703719914}
   impactParticle: {fileID: 198082303722184056}
+  playerArrowDamageMultiplayer: 0.5
 --- !u!198 &198082303722184056
 ParticleSystem:
   m_ObjectHideFlags: 1
