@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b01f3d6a062226045a7918b4fa3a8a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {x: 0, y: 0, z: 0}
+  movement: {x: 0, y: 1, z: 0}
   period: 2
   usageTimes: 1
   usages: 20

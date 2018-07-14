@@ -74,6 +74,11 @@ public class HookController : MonoBehaviour {
 
     float timeWhenShot;
 
+    public float DespawnDelay
+    {
+        get { return despawnDelay; }
+    }
+
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -89,6 +94,7 @@ public class HookController : MonoBehaviour {
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
             GameManager.Instance.PushHook(gameObject);
+            SetLayer(11);
         }
     }
 
@@ -98,12 +104,30 @@ public class HookController : MonoBehaviour {
         {
             // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrengthMultiplayer), Time.realtimeSinceStartup, despawnDelay / despawnDelayMultiplayer + hookDuration);
-            GameManager.Instance.PushHook(gameObject);
+            StartCoroutine(PushBackAfter(1f));
+            SetLayer(11);
         }
         else if (collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            GameManager.Instance.PushHook(gameObject);
+            StartCoroutine(PushBackAfter(1f));
+            SetLayer(11);
         }
+    }
+
+    IEnumerator PushBackAfter(float seconds)
+    {
+        // I know, hard coded stuff isn´t the nicest way x).
+        if (gameObject.layer != 11)
+        {
+            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
+        }
+        yield return new WaitForSeconds(seconds);
+        GameManager.Instance.PushArrow(gameObject);
+    }
+
+    private void SetLayer(int layerNumber)
+    {
+        gameObject.layer = layerNumber;
     }
 }

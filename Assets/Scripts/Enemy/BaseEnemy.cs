@@ -169,7 +169,7 @@ public class BaseEnemy : MonoBehaviour
             playerLastSpottedAt = player.transform.position;
             enemyState = State.searchingForPlayer;
         }
-
+        
         if (toPlayer.magnitude < attackDistance && !meleeAttacking)
         {
             MeleeAttack();
@@ -283,6 +283,8 @@ public class BaseEnemy : MonoBehaviour
         knockbackDuration = knockBackDur;
         knockBackStarted = Time.realtimeSinceStartup;
         enemyState = State.knockedBack;
+
+        Debug.Log("Have done some damage");
     }
 
     protected virtual void Die()
