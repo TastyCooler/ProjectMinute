@@ -113,14 +113,12 @@ public class ArrowController : MonoBehaviour {
             impactParticle.Play();
             SetTraits(false);
             StartCoroutine(PushBackAfter(1f));
-            gameObject.layer = 11;  // EnemyProjectile layernumber = 11
         }
         else if (collision.gameObject != owner)
         {
             impactParticle.Play();
             SetTraits(false);
             StartCoroutine(PushBackAfter(1f));
-            gameObject.layer = 11;  // EnemyProjectile layernumber = 11
         }
     }
 
@@ -141,12 +139,13 @@ public class ArrowController : MonoBehaviour {
 
     IEnumerator PushBackAfter(float seconds)
     {
+        yield return new WaitForSeconds(seconds);
+        // TODO make the layer switch to enemyProjectile in PushArrow()
         // I know, hard coded stuff isn´t the nicest way x).
         if (gameObject.layer != 11)
         {
             gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
         }
-        yield return new WaitForSeconds(seconds);
         GameManager.Instance.PushArrow(gameObject);
     }
 }

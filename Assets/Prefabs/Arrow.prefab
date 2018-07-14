@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114716239040588566}
   - component: {fileID: 212152518175129866}
   - component: {fileID: 61673810695537870}
+  - component: {fileID: 50506590808061506}
   m_Layer: 11
   m_Name: Arrow
   m_TagString: Untagged
@@ -104,6 +105,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50506590808061506
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447066411944162}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61673810695537870
 BoxCollider2D:
   m_ObjectHideFlags: 1
