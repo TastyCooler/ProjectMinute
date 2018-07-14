@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yOffset: 0
-  by: 0
+  isChild: 0
 --- !u!212 &212768175765954960
 SpriteRenderer:
   m_ObjectHideFlags: 1
