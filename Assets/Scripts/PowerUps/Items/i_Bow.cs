@@ -10,7 +10,6 @@ public class i_Bow : BaseItem {
         if(usageTimes <= usages)
         {
             usages--;
-            Debug.Log("Bow used");
             Shoot();
         }
     }
@@ -18,6 +17,7 @@ public class i_Bow : BaseItem {
     void Shoot()
     {
         ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
+        arrowToShoot.gameObject.layer = 13; // PlayerProjectile layernumber = 13
         arrowToShoot.Owner = player.gameObject;
         arrowToShoot.transform.up = player.AimDirection;
     }

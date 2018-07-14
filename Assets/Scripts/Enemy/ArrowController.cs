@@ -101,6 +101,7 @@ public class ArrowController : MonoBehaviour {
         if(Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
             GameManager.Instance.PushArrow(gameObject);
+            gameObject.layer = 11;  // EnemyProjectile layernumber = 11
         }
     }
 
@@ -108,18 +109,18 @@ public class ArrowController : MonoBehaviour {
     {
         if (collision.tag == "Player" && collision.gameObject != owner)
         {
-            // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
             impactParticle.Play();
             SetTraits(false);
             StartCoroutine(PushBackAfter(1f));
+            gameObject.layer = 11;  // EnemyProjectile layernumber = 11
         }
         else if (collision.gameObject != owner)
         {
-            // TODO Make particle system explode
             impactParticle.Play();
             SetTraits(false);
             StartCoroutine(PushBackAfter(1f));
+            gameObject.layer = 11;  // EnemyProjectile layernumber = 11
         }
     }
 
@@ -140,6 +141,11 @@ public class ArrowController : MonoBehaviour {
 
     IEnumerator PushBackAfter(float seconds)
     {
+        // I know, hard coded stuff isn´t the nicest way x).
+        if (gameObject.layer != 11)
+        {
+            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
+        }
         yield return new WaitForSeconds(seconds);
         GameManager.Instance.PushArrow(gameObject);
     }

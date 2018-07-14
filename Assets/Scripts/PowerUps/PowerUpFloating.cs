@@ -18,6 +18,7 @@ public class PowerUpFloating : MonoBehaviour {
                 equipped = value;
                 gameObject.transform.SetParent(player.transform,true);
                 gameObject.transform.position = player.transform.position;
+                colliderOfThisGameObject.enabled = false;
             }
             else
             {
@@ -26,6 +27,7 @@ public class PowerUpFloating : MonoBehaviour {
                 rend.enabled = true;
                 equipped = value;
                 gameObject.transform.SetParent(null,true);
+                colliderOfThisGameObject.enabled = true;
             }
         }
     }
@@ -41,12 +43,15 @@ public class PowerUpFloating : MonoBehaviour {
     protected Vector3 startPos;
 
     protected PlayerController player;
+
+    protected Collider2D colliderOfThisGameObject;
     
     protected virtual void Awake()
     {
         startPos = transform.position; // gets the starting position of the object
         rend = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        colliderOfThisGameObject = GetComponent<Collider2D>();
     }
     
     protected virtual void Update()
