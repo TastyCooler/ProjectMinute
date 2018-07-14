@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CaptainHookEnemy : BaseEnemy {
-    
+
     [SerializeField] float hookCooldown;
 
     protected override void Update()
@@ -34,6 +34,13 @@ public class CaptainHookEnemy : BaseEnemy {
 
     void Attack()
     {
+        if (toPlayer.magnitude < attackDistance && !meleeAttacking)
+        {
+            meleeAttacking = true;
+            timeWhenLastAttacked = Time.realtimeSinceStartup;
+            anim.SetTrigger("Attack");
+        }
+
         if (toPlayer.magnitude < sightReach && toPlayer.magnitude > attackDistance)
         {
             if (Time.realtimeSinceStartup > timeWhenLastAttacked + attackDuration + attackCooldown + hookCooldown)

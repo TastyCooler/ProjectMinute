@@ -100,7 +100,8 @@ public class ArrowController : MonoBehaviour {
         }
         if(Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            StartCoroutine(PushBackAfter(0));
+            GameManager.Instance.PushArrow(gameObject);
+            gameObject.layer = 11;  // EnemyProjectile layernumber = 11
         }
     }
 
@@ -112,17 +113,6 @@ public class ArrowController : MonoBehaviour {
             impactParticle.Play();
             SetTraits(false);
             StartCoroutine(PushBackAfter(1f));
-<<<<<<< HEAD
-=======
-        }
-        else if (collision.gameObject.GetComponent<BaseEnemy>() && collision.gameObject != owner)
-        {
-            Debug.Log("Do damage on enemy");
-            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage((int)(player.Attack * player.AttackMultiplier), (collision.gameObject.transform.position - transform.position).normalized * player.KnockbackStrength, knockbackDuration);
-            impactParticle.Play();
-            SetTraits(false);
-            StartCoroutine(PushBackAfter(1f));
->>>>>>> 2e6aa68122f1b2105c4454cdb3349889ef33dce8
         }
         else if (collision.gameObject != owner)
         {
@@ -154,7 +144,7 @@ public class ArrowController : MonoBehaviour {
         // I know, hard coded stuff isn´t the nicest way x).
         if (gameObject.layer != 11)
         {
-            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoting from Player.
+            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
         }
         GameManager.Instance.PushArrow(gameObject);
     }
