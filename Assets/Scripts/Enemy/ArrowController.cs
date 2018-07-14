@@ -115,7 +115,6 @@ public class ArrowController : MonoBehaviour {
         }
         else if (collision.gameObject.GetComponent<BaseEnemy>() && collision.gameObject != owner)
         {
-            Debug.Log("Do damage on enemy");
             collision.gameObject.GetComponent<BaseEnemy>().TakeDamage((int)(player.Attack * player.AttackMultiplier), (collision.gameObject.transform.position - transform.position).normalized * player.KnockbackStrength, knockbackDuration);
             impactParticle.Play();
             SetTraits(false);
