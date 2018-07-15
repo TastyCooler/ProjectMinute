@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class i_Bow : BaseItem {
     
-    [SerializeField] int usages = 20;
-    [SerializeField] float shootCooldown;   // How long the player cannot move and shoot cannot shoot shoot another arrow.
     [SerializeField, Range(0, 100)] float percentageToSlow; // Slow the player when hes shooting an arrow.
     float attackStartedTime;    // Save Time.realtimeSinceStartup in float var.
     float savePreviousSpeed;
@@ -14,9 +12,8 @@ public class i_Bow : BaseItem {
 
     public override void Use()
     {
-        if(usageTimes <= usages)
+        if (usageTimes > 0)
         {
-            usages--;
             Shoot();
         }
     }
@@ -27,6 +24,8 @@ public class i_Bow : BaseItem {
 
         if (!alreadyShootArrow)
         {
+            usageTimes--;
+
             player.GetInput();
             attackStartedTime = Time.realtimeSinceStartup;
             savePreviousSpeed = player.Speed;
@@ -46,7 +45,7 @@ public class i_Bow : BaseItem {
         if (startTimer)
         {
             alreadyShootArrow = true;
-            if (Time.realtimeSinceStartup > attackStartedTime + shootCooldown)
+            if (Time.realtimeSinceStartup > attackStartedTime + cooldown)
             {
                 player.Speed = savePreviousSpeed;
                 startTimer = false;

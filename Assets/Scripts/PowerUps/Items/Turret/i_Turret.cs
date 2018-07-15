@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class i_Turret : BaseItem {
-
-    [SerializeField] int usages = 1;
+    
     [SerializeField] GameObject turret;
+
     public override void Use()
     {
-        if (usageTimes <= usages)
+        if (usageTimes > 0)
         {
-            usages--;
             Spawn();
         }
     }
@@ -18,6 +17,8 @@ public class i_Turret : BaseItem {
 
     void Spawn()
     {
+        usageTimes--;
+
         // If it should be a portable tower Prototype =>
         // Vector3 offsetter = new Vector3(1f, 1f, 0);   
         // Vector3 offset = gameObject.transform.position - offsetter;
