@@ -39,8 +39,12 @@ public class i_instakill : BaseItem {
            // Debug.Log("Rise() started");
             StartCoroutine(Rise());
         }
-      
-        
+
+        // Have to be called at the end!
+        if (usageTimes == 0)
+        {
+            Destroy(gameObject);
+        }
     }
     /// <summary>
     /// This IEnumerator increases the CircleColliders Radius till it reaches radiusMax; After that the Item Destroys itself

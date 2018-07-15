@@ -18,5 +18,11 @@ public class i_Shield : BaseItem {
     {
         usageTimes--;
         GameObject shield = Instantiate(Shield, player.transform);
+
+        // Have to be called at the end!
+        if (usageTimes == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

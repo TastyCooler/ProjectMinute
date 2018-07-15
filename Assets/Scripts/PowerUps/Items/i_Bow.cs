@@ -25,7 +25,9 @@ public class i_Bow : BaseItem {
         if (!alreadyShootArrow)
         {
             usageTimes--;
-            
+
+            StartCoroutine(EndShootingArrow());
+
             attackStartedTime = Time.realtimeSinceStartup;
             savePreviousSpeed = player.Speed;
             player.Speed = player.Speed - (percentageToSlow * player.Speed / 100);
@@ -49,7 +51,20 @@ public class i_Bow : BaseItem {
                 player.Speed = savePreviousSpeed;
                 startTimer = false;
                 alreadyShootArrow = false;
+                
+                // Have to be called at the end!
+                if (usageTimes == 0)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
+    }
+
+    IEnumerator EndShootingArrow()
+    {
+        player.PlayerState = PlayerController.State.usingItemOrSkill;
+        yield return new WaitForSeconds(cooldown);
+        player.PlayerState = PlayerController.State.freeToMove;
     }
 }

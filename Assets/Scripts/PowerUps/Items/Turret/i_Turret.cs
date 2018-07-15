@@ -25,5 +25,11 @@ public class i_Turret : BaseItem {
 
         GameObject tower = Instantiate(turret, gameObject.transform);
         tower.transform.SetParent(null, true);
+
+        // Have to be called at the end!
+        if (usageTimes == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -15,14 +15,4 @@ public class BaseItem : PowerUpFloating {
     {
       
     }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (usageTimes == 0)
-        {
-            // TODO: destroy gameObject (unequip item automaticly)
-        }
-    }
 }

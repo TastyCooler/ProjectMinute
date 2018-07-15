@@ -19,35 +19,35 @@ public class Turret : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         timer = initialtimer;
-       
     }
 
     private void Update()
     {
         if(lifetime >= 0)
         {
-            //TODO: ADD DAMAGE TO ENEMIES
             //TODO: Make it destroyable?
             //TODO: Implement another shoot mechanic?
             Shoot();
         }
+
         if (lifetime <= 0)
         {
             Destroy(gameObject);
         }
-        
     }
+
     private void FixedUpdate()
     {
         enemypos = FindObjectOfType<BaseEnemy>().transform.position;
         toEnemy = enemypos - transform.position;
     }
+
     void Shoot()
     {
-     
         if(timer <= 0  && toEnemy.magnitude < sightreach)
         {
             ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
+            arrowToShoot.gameObject.layer = 13; // PlayerProjectile layernumber = 13 ----> make damage on enemies.
             arrowToShoot.Owner = player.gameObject;
             arrowToShoot.transform.up = toEnemy;
 
