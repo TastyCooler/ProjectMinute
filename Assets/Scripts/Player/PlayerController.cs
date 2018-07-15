@@ -409,7 +409,7 @@ public class PlayerController : MonoBehaviour {
         // TODO call delegate to update level ui number
     }
     
-    public void GetInput()
+    void GetInput()
     {
         moveDirection.x = input.Horizontal;
         if(moveDirection.x < 0f)

@@ -25,8 +25,7 @@ public class i_Bow : BaseItem {
         if (!alreadyShootArrow)
         {
             usageTimes--;
-
-            player.GetInput();
+            
             attackStartedTime = Time.realtimeSinceStartup;
             savePreviousSpeed = player.Speed;
             player.Speed = player.Speed - (percentageToSlow * player.Speed / 100);
