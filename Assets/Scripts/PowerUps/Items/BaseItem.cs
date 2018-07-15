@@ -8,6 +8,7 @@ using UnityEngine;
 public class BaseItem : PowerUpFloating {
 
     [SerializeField] protected int usageTimes = 1;
+    [SerializeField] protected float cooldown = 0.3f;
 
     // Activate the item and make use of its benefits
     public virtual void Use()
@@ -15,4 +16,13 @@ public class BaseItem : PowerUpFloating {
       
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if (usageTimes == 0)
+        {
+            // TODO: destroy gameObject (unequip item automaticly)
+        }
+    }
 }

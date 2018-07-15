@@ -9,7 +9,6 @@ public class i_instakill : BaseItem {
     CircleCollider2D circColl;
     [SerializeField] float riseSpeed;
     [SerializeField] float radiusMax;
-    [SerializeField] int usages = 1;
     float waitTime = 0.000001f;
 
     [SerializeField] ParticleSystem shine;
@@ -18,13 +17,12 @@ public class i_instakill : BaseItem {
     public override void Use()
     {
         
-        if(usageTimes <= usages)
+        if(usageTimes > 0)
         {
             shine.transform.position = player.transform.position;
             shineEmission = shine.emission;
             shine.Play();
             //shine.Stop();
-            usages--;
            // Debug.Log("Instakill used");
             IncreaseTheRadius();
         }
@@ -33,6 +31,8 @@ public class i_instakill : BaseItem {
 
     void IncreaseTheRadius()
     {
+        usageTimes--;
+
        circColl = GetComponent<CircleCollider2D>();
         if(circColl.radius <= radiusMax)
         {
