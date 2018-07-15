@@ -74,6 +74,7 @@ public class ArrowController : MonoBehaviour {
     [SerializeField] float playerArrowDamageMultiplayer;
 
     bool stop = false;
+    bool deflected = false;
 
     GameObject owner;
 
@@ -95,10 +96,17 @@ public class ArrowController : MonoBehaviour {
 
     private void Update()
     {
-        if(!stop)
+        if(!stop && !deflected)
         {
             transform.position += transform.up * speed * Time.deltaTime;
         }
+
+        if (!stop && deflected)
+        {
+            gameObject.layer = 13;
+            transform.position += transform.up * speed * Time.deltaTime;
+        }
+
         if(Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
             StartCoroutine(PushBackAfter(0));
@@ -115,6 +123,18 @@ public class ArrowController : MonoBehaviour {
             StartCoroutine(PushBackAfter(1f));
         }
         else if (collision.gameObject.GetComponent<BaseEnemy>() && collision.gameObject != owner)
+        {
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage((int)(player.Attack * playerArrowDamageMultiplayer), (collision.gameObject.transform.position - transform.position).normalized * player.KnockbackStrength, knockbackDuration);
+            impactParticle.Play();
+            SetTraits(false);
+            StartCoroutine(PushBackAfter(1f));
+        }
+        else if (collision.gameObject.GetComponent<PlayerAttackHitBoxController>())
+        {
+            deflected = true;
+            transform.up = player.AimDirection;
+        }
+        else if (collision.gameObject.GetComponent<BaseEnemy>() && deflected)
         {
             collision.gameObject.GetComponent<BaseEnemy>().TakeDamage((int)(player.Attack * playerArrowDamageMultiplayer), (collision.gameObject.transform.position - transform.position).normalized * player.KnockbackStrength, knockbackDuration);
             impactParticle.Play();
@@ -151,6 +171,7 @@ public class ArrowController : MonoBehaviour {
         {
             gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
         }
+        deflected = false;
         GameManager.Instance.PushArrow(gameObject);
     }
 }

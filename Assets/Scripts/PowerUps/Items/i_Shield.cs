@@ -6,7 +6,7 @@ public class i_Shield : BaseItem {
     
     [SerializeField] GameObject Shield;
 
-    public override void Use()
+    protected override void RunFunctionalityOfItem()
     {
         if (usageTimes > 0)
         {
@@ -16,13 +16,6 @@ public class i_Shield : BaseItem {
 
     void ActivateShield()
     {
-        usageTimes--;
         GameObject shield = Instantiate(Shield, player.transform);
-
-        // Have to be called at the end!
-        if (usageTimes == 0)
-        {
-            Destroy(gameObject);
-        }
     }
 }

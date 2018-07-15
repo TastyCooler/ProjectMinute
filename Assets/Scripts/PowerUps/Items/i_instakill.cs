@@ -14,10 +14,9 @@ public class i_instakill : BaseItem {
     [SerializeField] ParticleSystem shine;
     ParticleSystem.EmissionModule shineEmission;
 
-    public override void Use()
+    protected override void RunFunctionalityOfItem()
     {
-        
-        if(usageTimes > 0)
+        if (usageTimes > 0)
         {
             shine.transform.position = player.transform.position;
             shineEmission = shine.emission;
@@ -26,26 +25,18 @@ public class i_instakill : BaseItem {
            // Debug.Log("Instakill used");
             IncreaseTheRadius();
         }
-        
     }
 
     void IncreaseTheRadius()
     {
-        usageTimes--;
-
-       circColl = GetComponent<CircleCollider2D>();
-        if(circColl.radius <= radiusMax)
+        circColl = GetComponent<CircleCollider2D>();
+        if (circColl.radius <= radiusMax)
         {
-           // Debug.Log("Rise() started");
+            // Debug.Log("Rise() started");
             StartCoroutine(Rise());
         }
-
-        // Have to be called at the end!
-        if (usageTimes == 0)
-        {
-            Destroy(gameObject);
-        }
     }
+
     /// <summary>
     /// This IEnumerator increases the CircleColliders Radius till it reaches radiusMax; After that the Item Destroys itself
     /// </summary>
@@ -66,7 +57,6 @@ public class i_instakill : BaseItem {
             yield return new WaitForSeconds(waitTime);
 
         }
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -76,7 +66,5 @@ public class i_instakill : BaseItem {
         {
             Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
-        
     }
-
 }
