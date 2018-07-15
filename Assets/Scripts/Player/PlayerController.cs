@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour {
 
+    #region Properties
+
     public State PlayerState
     {
         get
@@ -58,6 +60,20 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public float Speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed = value;
+        }
+    }
+
+    #endregion
+    
     public event System.Action<int, int> OnHealthChanged;
     public event System.Action<int, int> OnExpChanged;
 
@@ -155,7 +171,7 @@ public class PlayerController : MonoBehaviour {
         knockedBack
     }
     State playerState = State.freeToMove;
-
+    
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
@@ -320,7 +336,7 @@ public class PlayerController : MonoBehaviour {
         // Apply drag
         velocity = velocity * (1 - Time.deltaTime * 0.1f);
     }
-
+    
     void OnGameStarted()
     {
         StartCoroutine(ActivatePlayer());
@@ -393,7 +409,7 @@ public class PlayerController : MonoBehaviour {
         // TODO call delegate to update level ui number
     }
     
-    void GetInput()
+    public void GetInput()
     {
         moveDirection.x = input.Horizontal;
         if(moveDirection.x < 0f)
