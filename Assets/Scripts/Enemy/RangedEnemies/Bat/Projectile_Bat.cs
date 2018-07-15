@@ -65,6 +65,7 @@ public class Projectile_Bat : MonoBehaviour {
     int damage;
     float knockbackStrength;
     float knockbackDuration;
+    [SerializeField] float playerLaserDamageMultiplayer;
 
     GameObject owner;
 
@@ -84,7 +85,7 @@ public class Projectile_Bat : MonoBehaviour {
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            GameManager.Instance.PushLaser(gameObject);
+            StartCoroutine(PushBackAfter(0));
         }
     }
 
@@ -94,12 +95,26 @@ public class Projectile_Bat : MonoBehaviour {
         {
             // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(damage, transform.up * knockbackStrength, Time.realtimeSinceStartup, knockbackDuration);
-            GameManager.Instance.PushLaser(gameObject);
+            StartCoroutine(PushBackAfter(1f));
+        }
+        else if (collision.gameObject.GetComponent<BaseEnemy>() && collision.gameObject != owner)
+        {
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage((int)(player.Attack * playerLaserDamageMultiplayer), (collision.gameObject.transform.position - transform.position).normalized * player.KnockbackStrength, knockbackDuration);
+            StartCoroutine(PushBackAfter(1f));
         }
         else if (collision.gameObject != owner)
         {
-            // TODO Make particle system explode
-            GameManager.Instance.PushLaser(gameObject);
+            StartCoroutine(PushBackAfter(1f));
         }
+    }
+
+    IEnumerator PushBackAfter(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (gameObject.layer != 11)
+        {
+            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
+        }
+        GameManager.Instance.PushLaser(gameObject);
     }
 }
