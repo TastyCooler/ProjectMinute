@@ -80,8 +80,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {x: 0, y: 1, z: 0}
   period: 2
-  usageTimes: 1
-  usages: 1
+  usageTimes: 2
+  casttime: 0.5
+  cooldown: 5
+  percentageToSlow: 50
   turret: {fileID: 1535178881672098, guid: 832230b2d5259b2438c5a289c366b9cb, type: 2}
 --- !u!212 &212340956753168388
 SpriteRenderer:

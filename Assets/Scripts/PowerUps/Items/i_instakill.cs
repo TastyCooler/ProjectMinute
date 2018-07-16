@@ -9,30 +9,25 @@ public class i_instakill : BaseItem {
     CircleCollider2D circColl;
     [SerializeField] float riseSpeed;
     [SerializeField] float radiusMax;
-    float waitTime = 0.000001f;
 
     [SerializeField] ParticleSystem shine;
     ParticleSystem.EmissionModule shineEmission;
 
     protected override void RunFunctionalityOfItem()
     {
-        if (usageTimes > 0)
-        {
-            shine.transform.position = player.transform.position;
-            shineEmission = shine.emission;
-            shine.Play();
-            //shine.Stop();
-           // Debug.Log("Instakill used");
-            IncreaseTheRadius();
-        }
+        shine.transform.position = player.transform.position;
+        shineEmission = shine.emission;
+        shine.Play();
+        //shine.Stop();
+        IncreaseTheRadius();
     }
 
     void IncreaseTheRadius()
     {
         circColl = GetComponent<CircleCollider2D>();
+        circColl.enabled = true;
         if (circColl.radius <= radiusMax)
         {
-            // Debug.Log("Rise() started");
             StartCoroutine(Rise());
         }
     }
@@ -43,19 +38,17 @@ public class i_instakill : BaseItem {
     /// <returns></returns>
     IEnumerator Rise()
     {
-        while(circColl.radius <= radiusMax)
+        while (circColl.radius <= radiusMax)
         {
-        circColl.radius += riseSpeed * Time.deltaTime;
-        Debug.Log(circColl.radius);
+            circColl.radius += riseSpeed * Time.deltaTime;
 
             if (circColl.radius >= radiusMax)
             {
-                Debug.Log("Rise() stopped");
+                player.PlayerState = PlayerController.State.freeToMove;
                 StopCoroutine(Rise());
                 Destroy(gameObject);
             }
-            yield return new WaitForSeconds(waitTime);
-
+            yield return new WaitForSeconds(cooldown);
         }
     }
 

@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1060557915857822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -7.4, z: 0}
+  m_LocalPosition: {x: -8.014248, y: -3.7127423, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,10 +97,12 @@ MonoBehaviour:
   movement: {x: 0, y: 1, z: 0}
   period: 2
   usageTimes: 1
+  casttime: 2
+  cooldown: 0
+  percentageToSlow: 100
   riseSpeed: 10
-  radiusMax: 12
-  usages: 1
-  shine: {fileID: 0}
+  radiusMax: 10
+  shine: {fileID: 198345298325259150, guid: 4c6ffc4a98cd2114b90169a7e9c47197, type: 2}
 --- !u!212 &212310754032080798
 SpriteRenderer:
   m_ObjectHideFlags: 1

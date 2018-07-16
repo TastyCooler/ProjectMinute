@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1303017741664536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.07, z: 0}
+  m_LocalPosition: {x: -9.348164, y: -3.2507465, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,7 +81,9 @@ MonoBehaviour:
   movement: {x: 0, y: 1, z: 0}
   period: 11.83
   usageTimes: 1
-  usages: 5
+  casttime: 0
+  cooldown: 0
+  percentageToSlow: 0
   Shield: {fileID: 1214811375155756, guid: 5be355ed7ed91e745997825e98e296c0, type: 2}
 --- !u!212 &212777569699423750
 SpriteRenderer:

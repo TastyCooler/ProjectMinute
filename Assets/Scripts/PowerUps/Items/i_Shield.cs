@@ -8,10 +8,8 @@ public class i_Shield : BaseItem {
 
     protected override void RunFunctionalityOfItem()
     {
-        if (usageTimes > 0)
-        {
-            ActivateShield();
-        }
+        base.RunFunctionalityOfItem();
+        ActivateShield();
     }
 
     void ActivateShield()

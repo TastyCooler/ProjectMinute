@@ -83,7 +83,7 @@ MonoBehaviour:
   usageTimes: 30
   casttime: 0.25
   cooldown: 0.25
-  percentageToSlow: 70
+  percentageToSlow: 50
 --- !u!212 &212255410407053360
 SpriteRenderer:
   m_ObjectHideFlags: 1
