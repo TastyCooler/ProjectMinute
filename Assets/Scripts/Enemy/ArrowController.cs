@@ -103,7 +103,7 @@ public class ArrowController : MonoBehaviour {
 
         if (!stop && deflected)
         {
-            gameObject.layer = 13;
+            gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
             transform.position += transform.up * speed * Time.deltaTime;
         }
 
@@ -129,7 +129,7 @@ public class ArrowController : MonoBehaviour {
             SetTraits(false);
             StartCoroutine(PushBackAfter(1f));
         }
-        else if (collision.gameObject.GetComponent<PlayerAttackHitBoxController>())
+        else if (collision.gameObject.GetComponent<PlayerAttackHitBoxController>() || collision.gameObject.layer == LayerMask.NameToLayer("Shield"))
         {
             deflected = true;
             transform.up = player.AimDirection;
@@ -167,9 +167,9 @@ public class ArrowController : MonoBehaviour {
     IEnumerator PushBackAfter(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        if (gameObject.layer != 11)
+        if (gameObject.layer != LayerMask.NameToLayer("EnemyProjectile"))
         {
-            gameObject.layer = 11; // EnemyProjectile layernumber = 11, this gonna reset layer to enemies projectile after shoot from Player.
+            gameObject.layer = LayerMask.NameToLayer("EnemyProjectile");
         }
         deflected = false;
         GameManager.Instance.PushArrow(gameObject);

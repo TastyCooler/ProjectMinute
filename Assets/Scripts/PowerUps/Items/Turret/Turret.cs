@@ -47,7 +47,7 @@ public class Turret : MonoBehaviour {
         if(timer <= 0  && toEnemy.magnitude < sightreach)
         {
             ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
-            arrowToShoot.gameObject.layer = 13; // PlayerProjectile layernumber = 13 ----> make damage on enemies.
+            arrowToShoot.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
             arrowToShoot.Owner = player.gameObject;
             arrowToShoot.transform.up = toEnemy;
 

@@ -13,7 +13,7 @@ public class s_Laser : BaseSkill {
     void Shoot()
     {
         Projectile_Bat laserToShoot = GameManager.Instance.GetLaser(transform.position).GetComponent<Projectile_Bat>();
-        laserToShoot.gameObject.layer = 13; // PlayerProjectile layernumber = 13.
+        laserToShoot.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
         laserToShoot.Owner = player.gameObject;
         laserToShoot.transform.up = player.AimDirection;
     }

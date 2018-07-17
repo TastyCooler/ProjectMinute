@@ -3,24 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shield : MonoBehaviour {
-
-    PlayerController player;
-    BaseEnemy enemy;
-    ArrowController arrows;
-    Projectile_Bat batArrows;
-    GameManager gM;
-    int shieldHealth = 10;
-
-    private void Awake()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        
-        
-    }
+    
+    [SerializeField] int shieldHealth = 5;
 
 	void Update () {
         ShieldLogic();
-        Debug.Log(shieldHealth);
 	}
 
     void ShieldLogic()
@@ -29,35 +16,17 @@ public class Shield : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("shield hit");
-
-        if (collision.gameObject.tag == "Player")
-        {
-            Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        }
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {   
-           shieldHealth--;
-        }
-        if (collision.gameObject.tag == "Projectile")
-        {
-            arrows = GameObject.FindGameObjectWithTag("Projectile").GetComponent<ArrowController>();
-            Destroy(arrows);
             shieldHealth--;
         }
-        if (collision.gameObject.tag == "Projectile")
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
-            // THOSE FKIN LASERS ARE TOO FAST
-            batArrows = GameObject.FindGameObjectWithTag("Projectile").GetComponent<Projectile_Bat>();
-            Destroy(batArrows);
             shieldHealth--;
         }
-
     }
-
 }
-
