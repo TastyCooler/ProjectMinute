@@ -29,8 +29,11 @@ public class Turret : MonoBehaviour {
 
     void Shoot()
     {
-        if (lifetime >= 0)
+        if (lifetime >= 0 && FindObjectOfType<BaseEnemy>())
         {
+            enemypos = FindObjectOfType<BaseEnemy>().transform.position;
+            toEnemy = enemypos - transform.position;
+
             //TODO: Make it destroyable?
             //TODO: Implement another shoot mechanic?
             if (timer <= 0 && toEnemy.magnitude < sightreach)
@@ -52,12 +55,6 @@ public class Turret : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        enemypos = FindObjectOfType<BaseEnemy>().transform.position;
-        toEnemy = enemypos - transform.position;
     }
 
     void DecreaseLifeTime()
