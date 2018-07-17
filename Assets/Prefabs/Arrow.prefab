@@ -161,8 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b2e987cbfa2a64dbd0de2bb2a6db5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  despawnDelay: 3
+  speed: 25
+  despawnDelay: 10
   swooshParticle: {fileID: 198705203703719914}
   impactParticle: {fileID: 198082303722184056}
   playerArrowDamageMultiplayer: 0.5

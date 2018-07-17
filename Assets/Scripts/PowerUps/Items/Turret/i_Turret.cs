@@ -6,19 +6,15 @@ public class i_Turret : BaseItem {
     
     [SerializeField] GameObject turret;
 
-    public override void Use()
+    protected override void RunFunctionalityOfItem()
     {
-        if (usageTimes > 0)
-        {
-            Spawn();
-        }
+        base.RunFunctionalityOfItem();
+        Spawn();
     }
 
 
     void Spawn()
     {
-        usageTimes--;
-
         // If it should be a portable tower Prototype =>
         // Vector3 offsetter = new Vector3(1f, 1f, 0);   
         // Vector3 offset = gameObject.transform.position - offsetter;

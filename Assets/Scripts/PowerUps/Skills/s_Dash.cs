@@ -15,7 +15,6 @@ public class s_Dash : BaseSkill {
             timeWhenDashStarted = Time.realtimeSinceStartup;
             StartCoroutine(EndDash(dashDuration));
         }
-
     }
 
     IEnumerator EndDash(float seconds)

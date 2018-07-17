@@ -6,17 +6,14 @@ public class i_Shield : BaseItem {
     
     [SerializeField] GameObject Shield;
 
-    public override void Use()
+    protected override void RunFunctionalityOfItem()
     {
-        if (usageTimes > 0)
-        {
-            ActivateShield();
-        }
+        base.RunFunctionalityOfItem();
+        ActivateShield();
     }
 
     void ActivateShield()
     {
-        usageTimes--;
         GameObject shield = Instantiate(Shield, player.transform);
     }
 }

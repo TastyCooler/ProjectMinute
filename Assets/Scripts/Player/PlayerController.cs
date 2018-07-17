@@ -168,7 +168,8 @@ public class PlayerController : MonoBehaviour {
         attacking,
         attackingTwo,
         attackingThree,
-        knockedBack
+        knockedBack,
+        usingItemOrSkill
     }
     State playerState = State.freeToMove;
     
@@ -262,23 +263,26 @@ public class PlayerController : MonoBehaviour {
         }
         else if (playerState == State.attacking)
         {
-            GetInput();
-            velocity = moveDirection * speedWhenAttacking;
-            if (input.Attack)
+            if (playerState != State.usingItemOrSkill)
             {
-                keepAttacking = true;
-            }
-            if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && !keepAttacking)
-            {
-                playerState = State.freeToMove;
-            }
-            else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && keepAttacking)
-            {
-                keepAttacking = false;
-                playerState = State.attackingTwo;
-                attackMultiplier = attackTwoDamageMultiplier;
-                anim.SetTrigger("AttackTwo");
-                attackStartedTime = Time.realtimeSinceStartup;
+                GetInput();
+                velocity = moveDirection * speedWhenAttacking;
+                if (input.Attack)
+                {
+                    keepAttacking = true;
+                }
+                if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && !keepAttacking)
+                {
+                    playerState = State.freeToMove;
+                }
+                else if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[0].length && keepAttacking)
+                {
+                    keepAttacking = false;
+                    playerState = State.attackingTwo;
+                    attackMultiplier = attackTwoDamageMultiplier;
+                    anim.SetTrigger("AttackTwo");
+                    attackStartedTime = Time.realtimeSinceStartup;
+                }
             }
         }
         else if (playerState == State.attackingTwo)
@@ -332,6 +336,16 @@ public class PlayerController : MonoBehaviour {
             }
             StartCoroutine(FlashSprite(0.1f));
         }
+        else if (playerState == State.usingItemOrSkill)
+        {
+            if (playerState != State.dashing)
+            {
+                footprintsEmissionModule.rateOverDistance = 1f;
+                GetInput();
+                velocity = moveDirection * speed;
+            }
+        }
+
         transform.position += velocity * Time.deltaTime;
         // Apply drag
         velocity = velocity * (1 - Time.deltaTime * 0.1f);

@@ -96,9 +96,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {x: 0, y: 1, z: 0}
   period: 2
+  casttime: 1
   cooldown: 0.3
+  percentageToSlow: 95
   riseSpeed: 10
   radiusMax: 12
+  knockbackDuration: 1
 --- !u!212 &212416377249469252
 SpriteRenderer:
   m_ObjectHideFlags: 1

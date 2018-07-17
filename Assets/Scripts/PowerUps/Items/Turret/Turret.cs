@@ -6,56 +6,58 @@ public class Turret : MonoBehaviour {
 
     PlayerController player;
 
-    [SerializeField] int timer; // The Shootrate
-    const int initialtimer = 30; // Used to reset timer
+    int timer; // shooting Timer
+    [SerializeField] int shootingRate = 30; // shooting rate
 
     [SerializeField] int lifetime = 100; // Towers lifetime, get decreased per shot
+    [SerializeField] float sightreach = 7f; // towers sight reach
 
-    [SerializeField] float sightreach = 7f; // towers sight reach 
     Vector3 enemypos;
     Vector3 toEnemy; // targets enemy
+
+    [SerializeField] int turretDamage;
 
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        timer = initialtimer;
-       
     }
 
     private void Update()
     {
-        if(lifetime >= 0)
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        if (lifetime >= 0)
         {
-            //TODO: ADD DAMAGE TO ENEMIES
             //TODO: Make it destroyable?
             //TODO: Implement another shoot mechanic?
-            Shoot();
+            if (timer <= 0 && toEnemy.magnitude < sightreach)
+            {
+                ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
+                arrowToShoot.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
+                arrowToShoot.Owner = player.gameObject;
+                arrowToShoot.transform.up = toEnemy;
+                arrowToShoot.Damage = turretDamage;
+
+                timer = shootingRate;
+                DecreaseLifeTime();
+            }
+
+            timer--;
         }
+
         if (lifetime <= 0)
         {
             Destroy(gameObject);
         }
-        
     }
+
     private void FixedUpdate()
     {
         enemypos = FindObjectOfType<BaseEnemy>().transform.position;
         toEnemy = enemypos - transform.position;
-    }
-    void Shoot()
-    {
-     
-        if(timer <= 0  && toEnemy.magnitude < sightreach)
-        {
-            ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
-            arrowToShoot.Owner = player.gameObject;
-            arrowToShoot.transform.up = toEnemy;
-
-            timer = initialtimer;
-            DecreaseLifeTime();
-        }
-
-        timer--;
     }
 
     void DecreaseLifeTime()

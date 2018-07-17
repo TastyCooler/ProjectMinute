@@ -9,60 +9,47 @@ public class i_instakill : BaseItem {
     CircleCollider2D circColl;
     [SerializeField] float riseSpeed;
     [SerializeField] float radiusMax;
-    float waitTime = 0.000001f;
 
     [SerializeField] ParticleSystem shine;
     ParticleSystem.EmissionModule shineEmission;
 
-    public override void Use()
+    protected override void RunFunctionalityOfItem()
     {
-        
-        if(usageTimes > 0)
-        {
-            shine.transform.position = player.transform.position;
-            shineEmission = shine.emission;
-            shine.Play();
-            //shine.Stop();
-           // Debug.Log("Instakill used");
-            IncreaseTheRadius();
-        }
-        
+        shine.transform.position = player.transform.position;
+        shineEmission = shine.emission;
+        shine.Play();
+        //shine.Stop();
+        IncreaseTheRadius();
     }
 
     void IncreaseTheRadius()
     {
-        usageTimes--;
-
-       circColl = GetComponent<CircleCollider2D>();
-        if(circColl.radius <= radiusMax)
+        circColl = GetComponent<CircleCollider2D>();
+        circColl.enabled = true;
+        if (circColl.radius <= radiusMax)
         {
-           // Debug.Log("Rise() started");
             StartCoroutine(Rise());
         }
-      
-        
     }
+
     /// <summary>
     /// This IEnumerator increases the CircleColliders Radius till it reaches radiusMax; After that the Item Destroys itself
     /// </summary>
     /// <returns></returns>
     IEnumerator Rise()
     {
-        while(circColl.radius <= radiusMax)
+        while (circColl.radius <= radiusMax)
         {
-        circColl.radius += riseSpeed * Time.deltaTime;
-        Debug.Log(circColl.radius);
+            circColl.radius += riseSpeed * Time.deltaTime;
 
             if (circColl.radius >= radiusMax)
             {
-                Debug.Log("Rise() stopped");
+                player.PlayerState = PlayerController.State.freeToMove;
                 StopCoroutine(Rise());
                 Destroy(gameObject);
             }
-            yield return new WaitForSeconds(waitTime);
-
+            yield return new WaitForSeconds(cooldown);
         }
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -72,7 +59,5 @@ public class i_instakill : BaseItem {
         {
             Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
-        
     }
-
 }

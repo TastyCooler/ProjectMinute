@@ -13,7 +13,6 @@ public class s_Earthquake : BaseSkill {
     float radiusOrigin;
 
     LayerMask enemyLayer;
-  
     
     float waitTime = 0.000001f;
 
@@ -24,12 +23,12 @@ public class s_Earthquake : BaseSkill {
         enemyLayer = 1 << layer;
     }
 
-    public override void Use()
+    protected override void RunFunctionalityOfItem()
     {
+        base.RunFunctionalityOfItem();
         Debug.Log("USED");
         //TODO: ADD COOLDOWN
-            IncreaseTheRadius();
-        
+        IncreaseTheRadius();
     }
 
     void IncreaseTheRadius()
@@ -37,15 +36,19 @@ public class s_Earthquake : BaseSkill {
         circColl = GetComponent<CircleCollider2D>();
         circColl.radius = radiusOrigin;
         circColl.enabled = true;
-
         
         if (circColl.radius <= radiusMax)
         {
             Debug.Log("Rise() started");
             StartCoroutine(Rise());
         }
-       
     }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     /// <summary>
     /// This IEnumerator increases the CircleColliders Radius till it reaches radiusMax; After that the Item Destroys itself
     /// </summary>
@@ -66,9 +69,7 @@ public class s_Earthquake : BaseSkill {
             }
             
             yield return new WaitForSeconds(waitTime);
-
         }
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -83,6 +84,5 @@ public class s_Earthquake : BaseSkill {
         {
             Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
-
     }
 }
