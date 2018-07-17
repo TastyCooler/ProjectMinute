@@ -81,6 +81,7 @@ MonoBehaviour:
   speed: 30
   hookStrengthMultiplayer: 10
   hookDuration: 0.01
+  despawnDelay: 10
 --- !u!212 &212082545632052948
 SpriteRenderer:
   m_ObjectHideFlags: 1

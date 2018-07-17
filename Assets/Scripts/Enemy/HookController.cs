@@ -62,7 +62,7 @@ public class HookController : MonoBehaviour {
     [SerializeField] float speed = 10f;
     [SerializeField] float hookStrengthMultiplayer;
     [SerializeField] float hookDuration;
-    float despawnDelay;
+    [SerializeField] float despawnDelay;
     float despawnDelayMultiplayer = 1.5f;
 
 
@@ -84,11 +84,20 @@ public class HookController : MonoBehaviour {
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        despawnDelay = baseEnemy.Hit.distance / speed * despawnDelayMultiplayer;
+
+        if (gameObject.layer == LayerMask.NameToLayer("PlayerProjectile"))
+        {
+            despawnDelay = 0.5f;
+        }
+
+        if (gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
+        {
+            despawnDelay = baseEnemy.Hit.distance / speed * despawnDelayMultiplayer;
+        }
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            GameManager.Instance.PushHook(gameObject);
+            StartCoroutine(PushBackAfter(0));
         }
     }
 
@@ -98,12 +107,27 @@ public class HookController : MonoBehaviour {
         {
             // TODO Make particle system explode
             collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrengthMultiplayer), Time.realtimeSinceStartup, despawnDelay / despawnDelayMultiplayer + hookDuration);
-            GameManager.Instance.PushHook(gameObject);
+            StartCoroutine(PushBackAfter(1f));
+        }
+        else if (collision.gameObject.GetComponent<BaseEnemy>() && collision.gameObject != owner)
+        {
+            Debug.Log("HookEnemy");
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrengthMultiplayer), despawnDelay / despawnDelayMultiplayer + hookDuration);
+            StartCoroutine(PushBackAfter(1f));
         }
         else if (collision.gameObject != owner)
         {
-            // TODO Make particle system explode
-            GameManager.Instance.PushHook(gameObject);
+            StartCoroutine(PushBackAfter(1f));
         }
+    }
+
+    IEnumerator PushBackAfter(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (gameObject.layer != LayerMask.NameToLayer("EnemyProjectile"))
+        {
+            gameObject.layer = LayerMask.NameToLayer("EnemyProjectile");
+        }
+        GameManager.Instance.PushHook(gameObject);
     }
 }

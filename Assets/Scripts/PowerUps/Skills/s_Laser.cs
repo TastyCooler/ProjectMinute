@@ -7,10 +7,10 @@ public class s_Laser : BaseSkill {
     protected override void RunFunctionalityOfItem()
     {
         base.RunFunctionalityOfItem();
-        Shoot();
+        ThrowHook();
     }
 
-    void Shoot()
+    void ThrowHook()
     {
         Projectile_Bat laserToShoot = GameManager.Instance.GetLaser(transform.position).GetComponent<Projectile_Bat>();
         laserToShoot.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
