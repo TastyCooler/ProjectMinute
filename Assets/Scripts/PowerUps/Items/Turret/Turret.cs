@@ -84,8 +84,6 @@ public class Turret : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-
-        Debug.LogFormat("EnemyList: {0}, EnemyToTransform: {1}", EnemyList.Count, EnemyToTransform.Count);
     }
 
     /// <summary>
