@@ -6,18 +6,6 @@ public class HookController : MonoBehaviour {
 
     #region Properties
 
-    public int Damage
-    {
-        get
-        {
-            return damage;
-        }
-        set
-        {
-            damage = value;
-        }
-    }
-
     public float KnockbackStrength
     {
         get
@@ -56,23 +44,29 @@ public class HookController : MonoBehaviour {
 
     #endregion
 
+    #region Private Fields
+
     protected PlayerController player;
     BaseEnemy baseEnemy;
 
     [SerializeField] float speed = 10f;
-    [SerializeField] float hookStrengthMultiplayer;
-    [SerializeField] float hookDuration;
-    float despawnDelay;
+    [SerializeField] float despawnDelay;
+    [SerializeField] float hookStrengthMultiplayer = 20f;
+    float hookDuration;
     float despawnDelayMultiplayer = 1.5f;
-
-
-    int damage = 0;
+    float hookStrenghPerDistance;
+    bool hooked;
+    
     float knockbackStrength;
     float knockbackDuration;
 
     GameObject owner;
 
     float timeWhenShot;
+
+    #endregion
+
+    #region Unity Messages
 
     private void OnEnable()
     {
@@ -84,11 +78,22 @@ public class HookController : MonoBehaviour {
     private void Update()
     {
         transform.position += transform.up * speed * Time.deltaTime;
-        despawnDelay = baseEnemy.Hit.distance / speed * despawnDelayMultiplayer;
+
+        if (gameObject.layer == LayerMask.NameToLayer("PlayerProjectile"))
+        {
+            despawnDelay = 0.5f;
+        }
+
+        if (gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
+        {
+            despawnDelay = baseEnemy.Hit.distance / speed * despawnDelayMultiplayer;
+            hookStrenghPerDistance = hookStrengthMultiplayer * 11 / baseEnemy.Hit.distance;
+            hookDuration = -0.06f * hookStrengthMultiplayer + 1.9f; // Linear Function
+        }
 
         if (Time.realtimeSinceStartup > timeWhenShot + despawnDelay)
         {
-            GameManager.Instance.PushHook(gameObject);
+            StartCoroutine(PushBackAfter(0));
         }
     }
 
@@ -97,13 +102,29 @@ public class HookController : MonoBehaviour {
         if (collision.tag == "Player" && collision.gameObject != owner)
         {
             // TODO Make particle system explode
-            collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrengthMultiplayer), Time.realtimeSinceStartup, despawnDelay / despawnDelayMultiplayer + hookDuration);
-            GameManager.Instance.PushHook(gameObject);
+            collision.GetComponent<PlayerController>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrenghPerDistance), Time.realtimeSinceStartup, despawnDelay / despawnDelayMultiplayer * hookDuration);
+            StartCoroutine(PushBackAfter(1f));
+        }
+        else if (collision.gameObject.GetComponent<BaseEnemy>() && collision.gameObject != owner)
+        {
+            collision.gameObject.GetComponent<BaseEnemy>().TakeDamage(0, transform.up * (-knockbackStrength * hookStrenghPerDistance), despawnDelay / despawnDelayMultiplayer * hookDuration);
+            StartCoroutine(PushBackAfter(1f));
         }
         else if (collision.gameObject != owner)
         {
-            // TODO Make particle system explode
-            GameManager.Instance.PushHook(gameObject);
+            StartCoroutine(PushBackAfter(1f));
         }
+    }
+
+    #endregion
+
+    IEnumerator PushBackAfter(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (gameObject.layer != LayerMask.NameToLayer("EnemyProjectile"))
+        {
+            gameObject.layer = LayerMask.NameToLayer("EnemyProjectile");
+        }
+        GameManager.Instance.PushHook(gameObject);
     }
 }

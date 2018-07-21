@@ -13,8 +13,13 @@ public class i_instakill : BaseItem {
     [SerializeField] ParticleSystem shine;
     ParticleSystem.EmissionModule shineEmission;
 
+    BaseEnemy enemy;
+    bool itemUsed;
+
     protected override void RunFunctionalityOfItem()
     {
+        enemy = FindObjectOfType<BaseEnemy>();
+        itemUsed = true;
         shine.transform.position = player.transform.position;
         shineEmission = shine.emission;
         shine.Play();
@@ -46,6 +51,7 @@ public class i_instakill : BaseItem {
             {
                 player.PlayerState = PlayerController.State.freeToMove;
                 StopCoroutine(Rise());
+                itemUsed = false;
                 Destroy(gameObject);
             }
             yield return new WaitForSeconds(cooldown);
@@ -54,10 +60,18 @@ public class i_instakill : BaseItem {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(FindObjectOfType<BaseEnemy>().gameObject);
         if (collision.gameObject.tag == "Player")
         {
-            Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), colliderOfThisGameObject, true);
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") && !itemUsed)
+        {
+            Physics2D.IgnoreCollision(enemy.GetComponent<Collider2D>(), colliderOfThisGameObject, true);
+        }
+        else
+        {
+            Destroy(enemy.gameObject);
         }
     }
 }

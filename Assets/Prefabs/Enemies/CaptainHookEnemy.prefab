@@ -28,7 +28,7 @@ GameObject:
   m_Layer: 12
   m_Name: CaptainHookEnemy
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -160,9 +160,9 @@ MonoBehaviour:
   attackAreaTolerance: 3
   highscoreValue: 0
   expToGive: 3
-  attackCooldown: 1
+  attackCooldown: 0.5
   attackDuration: 0.4
-  attackDistance: 1
+  attackDistance: 1.5
   hookCooldown: 2
 --- !u!212 &212365334665249558
 SpriteRenderer:

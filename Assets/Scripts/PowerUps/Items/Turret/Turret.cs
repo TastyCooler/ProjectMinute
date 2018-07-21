@@ -6,43 +6,75 @@ public class Turret : MonoBehaviour {
 
     PlayerController player;
 
-    int timer; // shooting Timer
     [SerializeField] int shootingRate = 30; // shooting rate
-
     [SerializeField] int lifetime = 100; // Towers lifetime, get decreased per shot
     [SerializeField] float sightreach = 7f; // towers sight reach
+    [SerializeField] int turretDamage;
+    int timer; // shooting Timer
 
     Vector3 enemypos;
     Vector3 toEnemy; // targets enemy
-
-    [SerializeField] int turretDamage;
-
-    private void OnEnable()
+    List<BaseEnemy> EnemyList;
+    List<Transform> EnemyToTransform;
+    
+    void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        EnemyList = new List<BaseEnemy>();
+        EnemyToTransform = new List<Transform>();
+        AddAllEnemies(EnemyList);
+
+        foreach (BaseEnemy enemy in EnemyList)
+        {
+            EnemyToTransform.Add(enemy.transform);
+        }
     }
 
-    private void Update()
+    void Update()
     {
         Shoot();
     }
 
+    // TODO: Delete destroyed GameObject from list.
+    // TODO: Stop searching for enemy outside of sightreach
+
     void Shoot()
     {
-        if (lifetime >= 0)
+        // Quick and dirty. This calls "try" and if theres gonna be an ErrorException it calls "catch"
+        try
+        {
+            enemypos = GetClosestEnemy(EnemyToTransform).transform.position;
+            toEnemy = enemypos - transform.position;
+        }
+        catch
+        {
+            EnemyList.Clear();
+            EnemyToTransform.Clear();
+            AddAllEnemies(EnemyList);
+
+            foreach (BaseEnemy enemy in EnemyList)
+            {
+                EnemyToTransform.Add(enemy.transform);
+            }
+        }
+
+        // Or. Go to BaseEnemy script and return something if Die() gets called
+
+        if (lifetime > 0 && EnemyToTransform.Count > 0)
         {
             //TODO: Make it destroyable?
             //TODO: Implement another shoot mechanic?
+
             if (timer <= 0 && toEnemy.magnitude < sightreach)
             {
-                ArrowController arrowToShoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
-                arrowToShoot.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
-                arrowToShoot.Owner = player.gameObject;
-                arrowToShoot.transform.up = toEnemy;
-                arrowToShoot.Damage = turretDamage;
+                ArrowController arrowtoshoot = GameManager.Instance.GetArrow(transform.position).GetComponent<ArrowController>();
+                arrowtoshoot.gameObject.layer = LayerMask.NameToLayer("PlayerProjectile");
+                arrowtoshoot.Owner = player.gameObject;
+                arrowtoshoot.transform.up = toEnemy;
+                arrowtoshoot.Damage = turretDamage;
 
                 timer = shootingRate;
-                DecreaseLifeTime();
+                lifetime--;
             }
 
             timer--;
@@ -52,16 +84,47 @@ public class Turret : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+        Debug.LogFormat("EnemyList: {0}, EnemyToTransform: {1}", EnemyList.Count, EnemyToTransform.Count);
     }
 
-    private void FixedUpdate()
+    /// <summary>
+    /// This iterates through the assigned Transform List and search for the nearest Object.
+    /// </summary>
+    /// <param name="newTransforms">You need to save the transforms from the GameObjects of GameObject List to Transform List!</param>
+    /// <returns></returns>
+    Transform GetClosestEnemy(List<Transform> newTransforms)
     {
-        enemypos = FindObjectOfType<BaseEnemy>().transform.position;
-        toEnemy = enemypos - transform.position;
+        Transform bestTarget = null;
+        Vector3 currentPosition = transform.position;
+        float closestDistanceSqr = Mathf.Infinity;
+
+        foreach (Transform potentialTarget in newTransforms)
+        {
+            Vector3 directionToTarget = potentialTarget.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialTarget;
+            }
+        }
+
+        return bestTarget;
     }
 
-    void DecreaseLifeTime()
+    /// <summary>
+    /// This adds all Objects with a specific script attached to it to this List.
+    /// </summary>
+    /// <param name="newList">You need a List where you can save the Objects into it.</param>
+    void AddAllEnemies(List<BaseEnemy> newList)
     {
-        lifetime--;
+        BaseEnemy[] enemies = FindObjectsOfType(typeof(BaseEnemy)) as BaseEnemy[];
+
+        foreach (BaseEnemy enemy in enemies)
+        {
+            newList.Add(enemy);
+        }
     }
 }
