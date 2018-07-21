@@ -22,7 +22,12 @@ public class Turret : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         EnemyList = new List<BaseEnemy>();
         EnemyToTransform = new List<Transform>();
-        
+        AddAllEnemies(EnemyList);
+
+        foreach (BaseEnemy enemy in EnemyList)
+        {
+            EnemyToTransform.Add(enemy.transform);
+        }
     }
 
     void Update()
