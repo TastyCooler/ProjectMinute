@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4356120983390946}
-  - component: {fileID: 114423636685626708}
   - component: {fileID: 212859765047225044}
+  - component: {fileID: 114396683300955274}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114423636685626708
+--- !u!114 &114396683300955274
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -52,9 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb392e5b8d433264e9904b652d73239f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingRate: 100
-  lifetime: 50
-  sightreach: 10
+  shootingRate: 60
+  lifetime: 100
+  sightreach: 100
   turretDamage: 1
 --- !u!212 &212859765047225044
 SpriteRenderer:

@@ -56,6 +56,8 @@ public class ArrowController : MonoBehaviour {
 
     #endregion
 
+    #region Private Fields
+
     protected PlayerController player;
 
     [SerializeField] float speed = 10f;
@@ -79,6 +81,10 @@ public class ArrowController : MonoBehaviour {
     GameObject owner;
 
     float timeWhenShot;
+
+    #endregion
+
+    #region Unity Messages
 
     private void Awake()
     {
@@ -148,6 +154,8 @@ public class ArrowController : MonoBehaviour {
             StartCoroutine(PushBackAfter(1f));
         }
     }
+
+    #endregion
 
     void SetTraits(bool setTo)
     {

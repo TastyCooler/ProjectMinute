@@ -56,6 +56,8 @@ public class Projectile_Bat : MonoBehaviour {
 
     #endregion
 
+    #region Private Fields
+
     protected PlayerController player;
 
     [SerializeField] float speed = 10f;
@@ -70,6 +72,10 @@ public class Projectile_Bat : MonoBehaviour {
     bool deflected = false;
 
     float timeWhenShot;
+
+    #endregion
+
+    #region Unity Messages
 
     private void OnEnable()
     {
@@ -124,6 +130,8 @@ public class Projectile_Bat : MonoBehaviour {
             StartCoroutine(PushBackAfter(1f));
         }
     }
+
+    #endregion
 
     IEnumerator PushBackAfter(float seconds)
     {

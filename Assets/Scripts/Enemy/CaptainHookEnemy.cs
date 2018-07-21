@@ -50,7 +50,6 @@ public class CaptainHookEnemy : BaseEnemy {
                 timeWhenLastAttacked = Time.realtimeSinceStartup;
 
                 HookController hookToShoot = GameManager.Instance.GetHook(transform.position).GetComponent<HookController>();
-                hookToShoot.Damage = attack;
                 hookToShoot.KnockbackDuration = knockbackDuration;
                 hookToShoot.KnockbackStrength = knockbackStrength;
                 hookToShoot.Owner = gameObject;
