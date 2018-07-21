@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootingRate: 60
   lifetime: 100
-  sightreach: 15
+  sightreach: 10
   turretDamage: 1
 --- !u!212 &212859765047225044
 SpriteRenderer:
