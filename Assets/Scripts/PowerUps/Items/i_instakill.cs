@@ -12,10 +12,13 @@ public class i_instakill : BaseItem {
 
     [SerializeField] ParticleSystem shine;
     ParticleSystem.EmissionModule shineEmission;
-
+    
     BaseEnemy enemy;
     bool itemUsed;
-
+    private void Start()
+    {
+        casttime = 0f;
+    }
     protected override void RunFunctionalityOfItem()
     {
         enemy = FindObjectOfType<BaseEnemy>();
