@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shield : MonoBehaviour {
-    
-    [SerializeField] int shieldHealth = 5;
+
+    [SerializeField] PlayerController pC;
+
+    int shieldHealth = 5;
+     public int ShieldHealth {
+        get { return shieldHealth; }
+        set { shieldHealth = value; }
+    }
+
 
 	void Update () {
         ShieldLogic();
@@ -12,8 +19,11 @@ public class Shield : MonoBehaviour {
 
     void ShieldLogic()
     {
-        if(shieldHealth <= 0)
+        
+        if(ShieldHealth <= 0)
         {
+            pC = FindObjectOfType<PlayerController>();
+            pC.Invincible = false;
             Destroy(gameObject);
         }
     }
@@ -22,11 +32,11 @@ public class Shield : MonoBehaviour {
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {   
-            shieldHealth--;
+            ShieldHealth--;
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
-            shieldHealth--;
+            ShieldHealth--;
         }
     }
 }

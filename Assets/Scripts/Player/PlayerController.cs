@@ -125,6 +125,14 @@ public class PlayerController : MonoBehaviour {
     int health;
     int maxHealth;
     bool keepAttacking = false;
+    private bool invincible= false;
+    public bool Invincible {
+        get {
+            return invincible;
+        }
+
+        set { invincible = value; }
+    }
 
     float knockBackStarted;
     float knockBackDuration;
@@ -184,6 +192,7 @@ public class PlayerController : MonoBehaviour {
         attack = baseAttack;
         health = baseHealth;
         maxHealth = baseHealth;
+        //invincible = false;
 
         expToNextLevel = (int)(Mathf.Pow(level, 2) * 2f);
 
@@ -509,6 +518,9 @@ public class PlayerController : MonoBehaviour {
     // Subtracts damage from the player health and knocks him back
     public void TakeDamage(int damage, Vector3 knockback, float time, float duration)
     {
+        if(invincible == false) { 
+            
+        
         // Player only takes damage, if he isnt already knocked back
         if(playerState != State.knockedBack)
         {
@@ -527,6 +539,7 @@ public class PlayerController : MonoBehaviour {
             {
                 OnHealthChanged(health, maxHealth);
             }
+        }
         }
     }
 
