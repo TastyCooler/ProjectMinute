@@ -72,6 +72,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject hookParent;
     Stack<GameObject> hookStack = new Stack<GameObject>();
 
+    
+
     GameObject player;
 
     [SerializeField] PostProcessingProfile bossPost;
@@ -314,6 +316,11 @@ public class GameManager : Singleton<GameManager>
         newObject.SetActive(false);
         laserStack.Push(newObject);
     }
+
+    //public GameObject GetEnemyDeathSmoke(Vector3 pos)
+    //{
+
+    //}
 
     public GameObject GetLaser(Vector3 pos)
     {
