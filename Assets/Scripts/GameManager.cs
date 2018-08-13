@@ -44,6 +44,14 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public bool IsPreparing
+    {
+        get
+        {
+            return isPreparing;
+        }
+    }
+
     #region Fields
 
     public event System.Action<int> OnTimerChanged;
@@ -180,8 +188,6 @@ public class GameManager : Singleton<GameManager>
         {
             highscoreAddition = 0;
         }
-
-        //Debug.LogFormat("arrowStack {0}, laserStack {1}", arrowStack.Count, laserStack.Count);
     }
 
     private void CallBoss()
@@ -276,7 +282,6 @@ public class GameManager : Singleton<GameManager>
             overlayAnim.SetTrigger("FadeOut");
             pauseMenu.IsShown = true;
             pauseMenu.IsGameOver = true;
-            //Time.timeScale = 0f;
             isAlreadyDead = true;
         }
     }

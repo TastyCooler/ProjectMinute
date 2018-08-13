@@ -163,6 +163,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] ParticleSystem dash;
     ParticleSystem.EmissionModule dashEmission;
 
+    [SerializeField] ParticleSystem bossSummoningParticle;
+
     public GameObject projectile;
 
     public float yOffset;
@@ -273,13 +275,23 @@ public class PlayerController : MonoBehaviour {
                 anim.SetTrigger("Attack");
                 attackStartedTime = Time.realtimeSinceStartup;
             }
-            if(input.SummonBoss && GameManager.Instance.IsStarted)
+            if(input.SummonBoss && GameManager.Instance.IsStarted && GameManager.Instance.IsPreparing)
             {
                 bossSummonCount += 0.01f;
+                if(bossSummoningParticle != null)
+                {
+                    bossSummoningParticle.Play();
+                }
+                camShake.shakeAmount = bossSummonCount * 0.5f;
+                if(camShake.shakeDuration < 0.1f)
+                {
+                    camShake.shakeDuration = 0.3f;
+                }
             }
             else if(bossSummonCount > 0f)
             {
                 bossSummonCount = 0f;
+                StartCoroutine(StopSummoningBoss());
             }
             if(bossSummonCount >= 1f)
             {
@@ -425,6 +437,16 @@ public class PlayerController : MonoBehaviour {
         if(OnExpChanged != null)
         {
             OnExpChanged(exp, expToNextLevel);
+        }
+    }
+
+    IEnumerator StopSummoningBoss()
+    {
+        camShake.shakeDuration = 1f;
+        yield return new WaitForSeconds(1f);
+        if (bossSummoningParticle != null && bossSummoningParticle.isPlaying)
+        {
+            bossSummoningParticle.Stop();
         }
     }
 
