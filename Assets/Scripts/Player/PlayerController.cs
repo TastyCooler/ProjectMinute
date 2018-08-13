@@ -81,6 +81,8 @@ public class PlayerController : MonoBehaviour {
 
     public event System.Action OnPlayerDied;
 
+    public event System.Action OnSummonBossEarly;
+
     [Header("Stats"), SerializeField] float speed = 1f;
     [SerializeField] float speedWhenAttacking = 1f;
 
@@ -168,6 +170,8 @@ public class PlayerController : MonoBehaviour {
     float layer;
     SpriteRenderer rend;
     Vector3 centerBottom;
+
+    float bossSummonCount = 0f;
 
     public enum State
     {
@@ -268,6 +272,21 @@ public class PlayerController : MonoBehaviour {
                 attackMultiplier = 1f;
                 anim.SetTrigger("Attack");
                 attackStartedTime = Time.realtimeSinceStartup;
+            }
+            if(input.SummonBoss && GameManager.Instance.IsStarted)
+            {
+                bossSummonCount += 0.01f;
+            }
+            else if(bossSummonCount > 0f)
+            {
+                bossSummonCount = 0f;
+            }
+            if(bossSummonCount >= 1f)
+            {
+                if(OnSummonBossEarly != null)
+                {
+                    OnSummonBossEarly();
+                }
             }
         }
         else if (playerState == State.attacking)

@@ -40,4 +40,10 @@ public class BossController : BaseEnemy {
         coll.enabled = false;
     }
 
+    public void CamShakeWhenDead()
+    {
+        camShake.shakeAmount = camShakeAmountWhenDamaged * 2f;
+        camShake.shakeDuration = camShakeDurationWhenDamaged;
+    }
+
 }
