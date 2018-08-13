@@ -549,6 +549,7 @@ MonoBehaviour:
   highscoreText: {fileID: 114934131096976364}
   gameOverSound: {fileID: 82189294237993924}
   quitClip: {fileID: 7400000, guid: 9e5427b1e7a65f444842e3853e843f90, type: 2}
+  restartButton: {fileID: 114834055107132554}
 --- !u!114 &114318195831340626
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -591,6 +591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 82481734960266904}
   overlayAnim: {fileID: 0}
+  startButton: {fileID: 114115293778232064}
 --- !u!114 &114339823239519976
 MonoBehaviour:
   m_ObjectHideFlags: 1

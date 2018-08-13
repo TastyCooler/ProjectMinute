@@ -56,11 +56,14 @@ public class PauseMenu : BaseMenu {
 
     [SerializeField] AnimationClip quitClip;
 
+    [SerializeField] Button restartButton;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         //camAnim = Camera.main.GetComponent<Animator>();
         GameManager.Instance.OnWinScreen += ShowWinScreen;
+
     }
 
     public void OnQuitButton()
@@ -92,6 +95,7 @@ public class PauseMenu : BaseMenu {
     {
         yield return new WaitForSeconds(seconds);
         anim.SetTrigger("Win");
+        restartButton.Select();
     }
 
     public void OnRestartButton()
@@ -116,6 +120,7 @@ public class PauseMenu : BaseMenu {
         //camAnim.enabled = true;
         //camAnim.SetTrigger("Pause");
         Cursor.visible = true;
+        restartButton.Select();
     }
 
     void Hide()
