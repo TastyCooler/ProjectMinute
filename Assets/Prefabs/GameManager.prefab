@@ -328,6 +328,9 @@ MonoBehaviour:
   laserParent: {fileID: 0}
   hook: {fileID: 1577658134831170, guid: c766d9b87ad02704e8c70fbde055a7db, type: 2}
   hookParent: {fileID: 0}
+  enemyDeathParticle: {fileID: 1525658238335772, guid: b214969846a7b1342b1d03205202aa21,
+    type: 2}
+  particleParent: {fileID: 0}
   bossPost: {fileID: 11400000, guid: d8fc6f47a591a204198f548415cac6b2, type: 2}
   preparationTime: 60
   preparationMusic: {fileID: 82498201472774718}

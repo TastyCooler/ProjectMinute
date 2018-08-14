@@ -306,6 +306,7 @@ public class BaseEnemy : MonoBehaviour
         }
         GameManager.Instance.Highscore += highscoreValue;
         player.GainExp(expToGive);
+        GameManager.Instance.GetEnemyDeathSmoke(transform.position);
         Destroy(gameObject);
     }
 

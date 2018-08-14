@@ -136,7 +136,7 @@ MonoBehaviour:
   - {fileID: 1219248141094802, guid: 1c851f4d0892b4640b107f5330d4186a, type: 2}
   - {fileID: 1910941106340430, guid: d30e89b63760d2d4eba82f5d0cc0e92c, type: 2}
   - {fileID: 1304189216887868, guid: 31bd2e5c865214d4086cb98b27cfece1, type: 2}
-  dropChance: 1
+  dropChance: 0.5
   sightReach: 10
   patrolRadius: 5
   patrollingSpeedMultiplier: 0.3

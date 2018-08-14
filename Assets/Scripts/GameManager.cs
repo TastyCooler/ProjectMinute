@@ -72,7 +72,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject hookParent;
     Stack<GameObject> hookStack = new Stack<GameObject>();
 
-    
+    [SerializeField] GameObject enemyDeathParticle;
+    [SerializeField] GameObject particleParent;
+    Stack<GameObject> enemyDeathParticleStack = new Stack<GameObject>();
 
     GameObject player;
 
@@ -147,6 +149,14 @@ public class GameManager : Singleton<GameManager>
             }
             newHook.SetActive(false);
             hookStack.Push(newHook);
+
+            GameObject newDeathParticle = Instantiate(enemyDeathParticle, transform.position, transform.rotation);
+            if(particleParent)
+            {
+                newDeathParticle.transform.parent = particleParent.transform;
+            }
+            newDeathParticle.SetActive(false);
+            enemyDeathParticleStack.Push(newDeathParticle);
         }
         timer = preparationTime;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -317,10 +327,20 @@ public class GameManager : Singleton<GameManager>
         laserStack.Push(newObject);
     }
 
-    //public GameObject GetEnemyDeathSmoke(Vector3 pos)
-    //{
+    public void GetEnemyDeathSmoke(Vector3 pos)
+    {
+        GameObject deathPar = enemyDeathParticleStack.Pop();
+        deathPar.transform.position = pos;
+        deathPar.SetActive(true);
+        StartCoroutine(TakeDeathParticleBack(deathPar, deathPar.GetComponent<ParticleSystem>().main.duration));
+    }
 
-    //}
+    IEnumerator TakeDeathParticleBack(GameObject obj, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        enemyDeathParticleStack.Push(obj);
+        obj.SetActive(false);
+    }
 
     public GameObject GetLaser(Vector3 pos)
     {
