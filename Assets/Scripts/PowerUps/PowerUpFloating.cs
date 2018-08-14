@@ -32,6 +32,14 @@ public class PowerUpFloating : MonoBehaviour {
         }
     }
 
+    public Sprite Sprite
+    {
+        get
+        {
+            return rend.sprite;
+        }
+    }
+
     [SerializeField] protected Vector3 movement = new Vector3(10f, 0, 0);
     [Range(0, 1)] protected float movementFactor;
     [Range(0, 20), SerializeField] protected float period = 2f;

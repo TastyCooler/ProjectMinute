@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 223950803448111832}
   - component: {fileID: 114733291028306532}
   - component: {fileID: 114566644328587258}
+  - component: {fileID: 114982561395271110}
   m_Layer: 5
   m_Name: LoadoutCanvas
   m_TagString: Untagged
@@ -465,7 +466,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0e44afa2518918a4982e189a9f6825d4, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -922,7 +923,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6e862051939193045977d93cafbbe272, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1029,6 +1030,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114982561395271110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1635442633296976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 437c6518189a3314dabe3f6f376c129f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 114104604755411214}
+  skill: {fileID: 114731777868067386}
 --- !u!114 &114990607402977148
 MonoBehaviour:
   m_ObjectHideFlags: 1

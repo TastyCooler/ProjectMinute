@@ -83,6 +83,9 @@ public class PlayerController : MonoBehaviour {
 
     public event System.Action OnSummonBossEarly;
 
+    public event System.Action<Sprite> OnSkillChanged;
+    public event System.Action<Sprite> OnItemChanged;
+
     [Header("Stats"), SerializeField] float speed = 1f;
     [SerializeField] float speedWhenAttacking = 1f;
 
@@ -602,11 +605,19 @@ public class PlayerController : MonoBehaviour {
         {
             collision.GetComponent<BaseItem>().Equipped = true;
             playerItem = collision.GetComponent<BaseItem>();
+            if(OnItemChanged != null)
+            {
+                OnItemChanged(playerItem.Sprite);
+            }
         }
         else if(collision.GetComponent<BaseSkill>() && !playerSkill)
         {
             collision.GetComponent<BaseSkill>().Equipped = true;
             playerSkill = collision.GetComponent<BaseSkill>();
+            if (OnSkillChanged != null)
+            {
+                OnSkillChanged(playerSkill.Sprite);
+            }
         }
     }
 
@@ -619,6 +630,10 @@ public class PlayerController : MonoBehaviour {
                 playerItem.Equipped = false;
                 collision.GetComponent<BaseItem>().Equipped = true;
                 playerItem = collision.GetComponent<BaseItem>();
+                if (OnItemChanged != null)
+                {
+                    OnItemChanged(playerItem.Sprite);
+                }
             }
         }
         else if (collision.GetComponent<BaseSkill>())
@@ -628,6 +643,10 @@ public class PlayerController : MonoBehaviour {
                 playerSkill.Equipped = false;
                 collision.GetComponent<BaseSkill>().Equipped = true;
                 playerSkill = collision.GetComponent<BaseSkill>();
+                if (OnSkillChanged != null)
+                {
+                    OnSkillChanged(playerSkill.Sprite);
+                }
             }
         }
     }
