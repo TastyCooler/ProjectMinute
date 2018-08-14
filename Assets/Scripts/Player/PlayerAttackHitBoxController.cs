@@ -9,6 +9,8 @@ public class PlayerAttackHitBoxController : MonoBehaviour {
     [SerializeField] ParticleSystem hitSlash;
     [SerializeField] float knockbackDuration = 1f;
 
+    [SerializeField] AudioSource soundWhenHit;
+
     private void Awake()
     {
         player = GetComponentInParent<PlayerController>();
@@ -18,6 +20,9 @@ public class PlayerAttackHitBoxController : MonoBehaviour {
     {
         if (collision.gameObject.GetComponent<BaseEnemy>())
         {
+            if(soundWhenHit)
+            {
+                soundWhenHit.PlayOneShot(soundWhenHit.clip);            }
             Vector3 toCollision = collision.transform.position - transform.position;
             hitSlash.transform.position = new Vector3((transform.position + (toCollision * 0.5f)).x, (transform.position + (toCollision * 0.5f)).y);
             hitSlash.Play();

@@ -271,7 +271,6 @@ public class BaseEnemy : MonoBehaviour
 
     public void TakeDamage(int damage, Vector3 knockback, float knockBackDur)
     {
-        // TODO apply knockback
         health -= damage;
         camShake.shakeAmount = camShakeAmountWhenDamaged;
         camShake.shakeDuration = camShakeDurationWhenDamaged;
