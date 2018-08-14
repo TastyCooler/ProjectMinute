@@ -332,7 +332,7 @@ MonoBehaviour:
     type: 2}
   particleParent: {fileID: 0}
   bossPost: {fileID: 11400000, guid: d8fc6f47a591a204198f548415cac6b2, type: 2}
-  preparationTime: 60
+  preparationTime: 61
   preparationMusic: {fileID: 82498201472774718}
   boss: {fileID: 1645413632767480, guid: 6e9d1feea7c11d24ab7496cbce669465, type: 2}
   pauseMenu: {fileID: 0}
