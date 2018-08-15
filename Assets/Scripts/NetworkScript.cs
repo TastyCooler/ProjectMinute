@@ -14,13 +14,28 @@ public class NetworkScript : Singleton<NetworkScript>
         }
     }
 
+    public string[] HighscoreList
+    {
+        get
+        {
+            return highscores;
+        }
+    }
+
     public static System.Action<HighscoreData> OnHighscoreDateReceived;
 
     [SerializeField] string url;
 
+    string[] highscores = new string[10];
+
     [ContextMenu("Test")]
     // Use this for initialization
     void Start()
+    {
+        StartCoroutine(GetScores());
+    }
+
+    public void UpdateHighscoreList()
     {
         StartCoroutine(GetScores());
     }
@@ -38,17 +53,22 @@ public class NetworkScript : Singleton<NetworkScript>
         else
         {
             //successful
-            Debug.Log(www.downloadHandler.text);
 
             //parse json text
             var data = JsonUtility.FromJson<HighscoreData>(www.downloadHandler.text);
-            for (int i = 0; i < data.entries.Count; i++)
+            if(data != null)
             {
-                Debug.Log(data.entries[i].user + ": " + data.entries[i].score);
-            }
-            if(OnHighscoreDateReceived != null)
-            {
-                OnHighscoreDateReceived(data);
+                for (int i = 0; i < data.entries.Count; i++)
+                {
+                    if (i < HighscoreList.Length)
+                    {
+                        highscores[i] = data.entries[i].username + ": " + data.entries[i].score;
+                    }
+                }
+                if (OnHighscoreDateReceived != null)
+                {
+                    OnHighscoreDateReceived(data);
+                }
             }
         }
     }

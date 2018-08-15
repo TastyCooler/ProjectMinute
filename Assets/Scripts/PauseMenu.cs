@@ -60,6 +60,7 @@ public class PauseMenu : BaseMenu {
     [SerializeField] Button restartButton;
 
     int playerScore = 0;
+    [SerializeField] string playerName = "";
 
     private void Awake()
     {
@@ -98,12 +99,24 @@ public class PauseMenu : BaseMenu {
 
     IEnumerator EnterHighscore()
     {
-        string url = NetworkScript.Instance.HighscoreURL + "?player=karl&newScore=" + playerScore;
+        string url = NetworkScript.Instance.HighscoreURL + "?player=" + playerName + "&newScore=" + playerScore;
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
         if(www.isNetworkError || www.isHttpError)
         {
             Debug.LogError(www.error);
+        }
+        NetworkScript.Instance.UpdateHighscoreList();
+        yield return new WaitForSeconds(1f);
+        ShowTopTen();
+    }
+
+    void ShowTopTen()
+    {
+        // Show highscore list
+        for (int i = 0; i < NetworkScript.Instance.HighscoreList.Length; i++)
+        {
+            Debug.Log(NetworkScript.Instance.HighscoreList[i]);
         }
     }
 

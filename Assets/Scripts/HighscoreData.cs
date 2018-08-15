@@ -11,11 +11,11 @@ public class HighscoreData
     {
         public HighscoreDataEntry()
         {
-            user = "";
+            username = "";
             score = 0;
         }
 
-        public string user;
+        public string username;
         public int score;
     }
 

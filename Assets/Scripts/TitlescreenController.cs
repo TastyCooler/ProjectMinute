@@ -35,7 +35,6 @@ public class TitlescreenController : BaseMenu {
         buttonSound.Play();
         Cursor.visible = false;
         anim.SetTrigger("Hide");
-        overlayAnim.SetTrigger("FadeIn");
         if(OnGameStarted != null)
         {
             OnGameStarted();

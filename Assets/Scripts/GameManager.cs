@@ -234,6 +234,7 @@ public class GameManager : Singleton<GameManager>
                 preparationMusic.Play();
             }
             isStarted = true;
+            overlayAnim.SetTrigger("FadeIn");
         }
     }
 
