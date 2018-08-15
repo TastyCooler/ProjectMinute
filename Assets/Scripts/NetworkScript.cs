@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetworkScript : MonoBehaviour
+public class NetworkScript : Singleton<NetworkScript>
 {
+
+    public string HighscoreURL
+    {
+        get
+        {
+            return url;
+        }
+    }
+
+    public static System.Action<HighscoreData> OnHighscoreDateReceived;
 
     [SerializeField] string url;
 
@@ -35,6 +45,10 @@ public class NetworkScript : MonoBehaviour
             for (int i = 0; i < data.entries.Count; i++)
             {
                 Debug.Log(data.entries[i].user + ": " + data.entries[i].score);
+            }
+            if(OnHighscoreDateReceived != null)
+            {
+                OnHighscoreDateReceived(data);
             }
         }
     }

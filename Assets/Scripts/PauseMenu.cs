@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class PauseMenu : BaseMenu {
 
@@ -89,6 +90,7 @@ public class PauseMenu : BaseMenu {
         }
         Cursor.visible = true;
         StartCoroutine(WinScreenAfterSeconds(2f));
+        UnityWebRequest www = UnityWebRequest.Get(NetworkScript.Instance.HighscoreURL + "?player=karl&score=" + GameManager.Instance.Highscore);
     }
 
     IEnumerator WinScreenAfterSeconds(float seconds)
