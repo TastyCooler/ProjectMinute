@@ -59,6 +59,8 @@ public class PauseMenu : BaseMenu {
 
     [SerializeField] Button restartButton;
 
+    int playerScore = 0;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -84,13 +86,25 @@ public class PauseMenu : BaseMenu {
 
     void ShowWinScreen(int highscore)
     {
+        playerScore = highscore;
         if(highscoreText)
         {
             highscoreText.text = "Score: " + highscore;
         }
         Cursor.visible = true;
         StartCoroutine(WinScreenAfterSeconds(2f));
-        UnityWebRequest www = UnityWebRequest.Get(NetworkScript.Instance.HighscoreURL + "?player=karl&score=" + GameManager.Instance.Highscore);
+        StartCoroutine(EnterHighscore());
+    }
+
+    IEnumerator EnterHighscore()
+    {
+        string url = NetworkScript.Instance.HighscoreURL + "?player=karl&newScore=" + playerScore;
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+        if(www.isNetworkError || www.isHttpError)
+        {
+            Debug.LogError(www.error);
+        }
     }
 
     IEnumerator WinScreenAfterSeconds(float seconds)
