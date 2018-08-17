@@ -27,7 +27,7 @@ public class s_Earthquake : BaseSkill {
     {
         base.RunFunctionalityOfItem();
         Debug.Log("USED");
-        //TODO: ADD COOLDOWN
+        //TODO ADD COOLDOWN
         IncreaseTheRadius();
     }
 
@@ -74,7 +74,7 @@ public class s_Earthquake : BaseSkill {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //TODO: STUN AND DAMAGE ENEMIES
+        //TODO STUN AND DAMAGE ENEMIES
 
         if(collision.gameObject.layer == enemyLayer)
         {

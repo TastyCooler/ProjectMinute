@@ -473,7 +473,6 @@ public class PlayerController : MonoBehaviour {
         {
             OnLevelChanged(level);
         }
-        // TODO call delegate to update level ui number
     }
     
     void GetInput()
