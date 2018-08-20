@@ -231,7 +231,7 @@ MonoBehaviour:
   attack: 1
   knockbackDuration: 0.2
   knockbackStrength: 1200
-  health: 20
+  health: 10
   speed: 4
   camShakeAmountWhenDamaged: 0.3
   camShakeDurationWhenDamaged: 0.2
