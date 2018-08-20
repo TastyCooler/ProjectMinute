@@ -116,6 +116,10 @@ public class GameManager : Singleton<GameManager>
 
     bool isStarted = false; // Stores if the counter is started or not
 
+    LayerMask playerLayer;
+
+    [SerializeField] LayerMask killLayer;
+
     #endregion
 
     #region Unity Messages
@@ -163,6 +167,8 @@ public class GameManager : Singleton<GameManager>
         player.GetComponent<PlayerController>().OnPlayerDied += OnPlayerDied;
         player.GetComponent<PlayerController>().OnSummonBossEarly += CallBossEarly;
         camShake = Camera.main.GetComponent<CameraShake>();
+        int layer = LayerMask.NameToLayer("Player");
+        playerLayer = 1 << layer;
     }
 
     private void Start()
@@ -270,7 +276,7 @@ public class GameManager : Singleton<GameManager>
         Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, destructionSizeOnBossSpawn, 0f);
         foreach (Collider2D coll in colls)
         {
-            if (coll.gameObject.tag != "Player" && coll.gameObject.tag != "GameManager" && coll.gameObject.tag != "Crater")
+            if (coll.gameObject.layer == killLayer && coll.gameObject.tag != "GameManager" && coll.gameObject.tag != "Crater")
             {
                 Destroy(coll.gameObject);
             }

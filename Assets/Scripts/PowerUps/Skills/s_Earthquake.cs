@@ -23,6 +23,12 @@ public class s_Earthquake : BaseSkill {
         enemyLayer = 1 << layer;
     }
 
+    //public override void Use()
+    //{
+    //    base.Use();
+    //    //casttime
+    //}
+
     protected override void RunFunctionalityOfItem()
     {
         base.RunFunctionalityOfItem();
