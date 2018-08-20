@@ -71,6 +71,12 @@ public class BaseEnemy : MonoBehaviour
     protected RaycastHit2D hit;
     protected LayerMask hitLayer;
 
+    [SerializeField] float flashDuration = 0.1f;
+    private Shader shaderGUItext;
+    private Shader shaderSpritesDefault;
+
+    [SerializeField] Color flashUpColor;
+
     protected virtual void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -82,6 +88,8 @@ public class BaseEnemy : MonoBehaviour
         anim = GetComponent<Animator>();
         camShake = Camera.main.GetComponent<CameraShake>();
         rend = GetComponent<SpriteRenderer>();
+        shaderGUItext = Shader.Find("GUI/Text Shader");
+        shaderSpritesDefault = Shader.Find("Sprites/Default");
     }
 
     protected virtual void Update()
@@ -275,6 +283,10 @@ public class BaseEnemy : MonoBehaviour
         camShake.shakeAmount = camShakeAmountWhenDamaged;
         camShake.shakeDuration = camShakeDurationWhenDamaged;
         FreezeFrames(freezeFrameDuration);
+        // Let the enemy sprite flash up white
+        rend.material.shader = shaderGUItext;
+        rend.color = flashUpColor;
+        StartCoroutine(SetBackToDefaultShader(flashDuration));
         if (health <= 0)
         {
             Die();
@@ -284,6 +296,18 @@ public class BaseEnemy : MonoBehaviour
         knockbackDuration = knockBackDur;
         knockBackStarted = Time.realtimeSinceStartup;
         enemyState = State.knockedBack;
+    }
+
+    /// <summary>
+    /// Make the Sprite show the normal colors again after a set amount of time
+    /// </summary>
+    /// <param name="sec"></param>
+    /// <returns></returns>
+    IEnumerator SetBackToDefaultShader(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        rend.material.shader = shaderSpritesDefault;
+        rend.color = Color.white;
     }
 
     void FreezeFrames(float seconds)

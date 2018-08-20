@@ -204,7 +204,7 @@ MonoBehaviour:
   attack: 8
   knockbackDuration: 1
   knockbackStrength: 1
-  health: 50
+  health: 300
   speed: 1
   camShakeAmountWhenDamaged: 0.5
   camShakeDurationWhenDamaged: 0.3
@@ -221,6 +221,8 @@ MonoBehaviour:
   attackCooldown: 1
   attackDuration: 0.4
   attackDistance: 1
+  flashDuration: 0.16
+  flashUpColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
   attackReach: 5
   playerKnockedBackFor: 0.5
   coll: {fileID: 61627184777633142}
