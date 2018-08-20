@@ -94,7 +94,7 @@ public class PauseMenu : BaseMenu {
         }
         Cursor.visible = true;
         StartCoroutine(WinScreenAfterSeconds(2f));
-        StartCoroutine(EnterHighscore());
+        //StartCoroutine(EnterHighscore());
     }
 
     IEnumerator EnterHighscore()

@@ -32,7 +32,7 @@ public class NetworkScript : Singleton<NetworkScript>
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(GetScores());
+        //StartCoroutine(GetScores());
     }
 
     public void UpdateHighscoreList()

@@ -222,7 +222,7 @@ MonoBehaviour:
   attackDuration: 0.4
   attackDistance: 1
   flashDuration: 0.16
-  flashUpColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
+  flashUpColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   attackReach: 5
   playerKnockedBackFor: 0.5
   coll: {fileID: 61627184777633142}

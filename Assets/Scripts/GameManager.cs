@@ -101,8 +101,8 @@ public class GameManager : Singleton<GameManager>
     bool isControllerInput = false;
     int controllerCount = 0;
 
-    int highscore = 0;
-    int highscoreAddition = 6000;
+    int highscore = 1000;
+    int highscoreAddition = 12000;
     int finalHighscore;
 
     bool isBossSpawned = false;
