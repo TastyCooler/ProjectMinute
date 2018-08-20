@@ -351,7 +351,7 @@ public class PlayerController : MonoBehaviour {
         else if (playerState == State.attackingThree)
         {
             GetInput();
-            velocity = moveDirection * 0f;
+            velocity = moveDirection * speedWhenAttacking * 0.2f;
             if (Time.realtimeSinceStartup > attackStartedTime + attackAnimations[2].length)
             {
                 playerState = State.freeToMove;
