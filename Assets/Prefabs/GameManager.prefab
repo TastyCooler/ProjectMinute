@@ -345,7 +345,7 @@ MonoBehaviour:
   camShakeAmountBossSpawn: 3
   killLayer:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294950655
 --- !u!198 &198096666274771716
 ParticleSystem:
   m_ObjectHideFlags: 1
