@@ -273,10 +273,10 @@ public class GameManager : Singleton<GameManager>
         }
         camShake.shakeAmount = camShakeAmountBossSpawn;
         camShake.shakeDuration = camShakeDurationBossSpawn;
-        Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, destructionSizeOnBossSpawn, 0f);
+        Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, destructionSizeOnBossSpawn, 0f, killLayer);
         foreach (Collider2D coll in colls)
         {
-            if (coll.gameObject.layer == killLayer && coll.gameObject.tag != "GameManager" && coll.gameObject.tag != "Crater")
+            if (coll.gameObject.tag != "GameManager" && coll.gameObject.tag != "Crater")
             {
                 Destroy(coll.gameObject);
             }
