@@ -247,7 +247,7 @@ MonoBehaviour:
   speed: 3
   camShakeAmountWhenDamaged: 0.3
   camShakeDurationWhenDamaged: 0.2
-  freezeFrameDuration: 0.1
+  freezeFrameDuration: 0.03
   powerupsToDrop:
   - {fileID: 1197648475562618, guid: 734e999dc84f5bf4ab616ee5c686da5a, type: 2}
   - {fileID: 1303017741664536, guid: d3e3fde23a8e13c44bf04991db21646f, type: 2}
