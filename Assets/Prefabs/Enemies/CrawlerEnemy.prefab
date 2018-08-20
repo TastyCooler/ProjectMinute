@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 3
   knockbackDuration: 0.4
-  knockbackStrength: 800
+  knockbackStrength: 1300
   health: 30
   speed: 3
   camShakeAmountWhenDamaged: 0.3
