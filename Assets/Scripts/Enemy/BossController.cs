@@ -44,7 +44,7 @@ public class BossController : BaseEnemy {
         if(enemies.Length > 0)
         {
             int enemyIndice = Random.Range(0, enemies.Length - 1);
-            Instantiate(enemies[enemyIndice], (Vector3)Random.insideUnitCircle * spawnDistance, transform.rotation);
+            Instantiate(enemies[enemyIndice], transform.position + (Vector3)Random.insideUnitCircle * spawnDistance, transform.rotation);
         }
     }
 

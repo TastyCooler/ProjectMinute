@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1602636622432766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.14, y: 13.66, z: 0}
+  m_LocalPosition: {x: 88.46, y: 10.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 3
   knockbackDuration: 0.4
-  knockbackStrength: 1300
+  knockbackStrength: 900
   health: 30
   speed: 3
   camShakeAmountWhenDamaged: 0.3
