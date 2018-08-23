@@ -36,7 +36,7 @@ public class BossController : BaseEnemy {
     protected override void Awake()
     {
         base.Awake();
-        InvokeRepeating("SpawnEnemy", 3f, 2f);
+        InvokeRepeating("SpawnEnemy", 3f, 3f);
     }
 
     void SpawnEnemy()

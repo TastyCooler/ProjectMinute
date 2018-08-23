@@ -337,7 +337,7 @@ public class BaseEnemy : MonoBehaviour
     {
         if (Random.value <= dropChance)
         {
-            Instantiate(powerupsToDrop[Random.Range(0, powerupsToDrop.Length - 1)], transform.position, transform.rotation);
+            Instantiate(powerupsToDrop[Random.Range(0, powerupsToDrop.Length)], transform.position, transform.rotation);
         }
     }
 
